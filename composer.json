@@ -1,0 +1,25 @@
+{
+    "name": "blockonomics/module-payment",
+    "description": "",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Mage2Gen",
+            "email": "info@mage2gen.com"
+        },
+        {
+            "name": "srinivasa rao Sunkara",
+            "email": "cnu.1439@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Blockonomics\\Payment\\": ""
+        }
+    }
+}
