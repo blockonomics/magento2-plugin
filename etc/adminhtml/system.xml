@@ -14,17 +14,15 @@
                 <field id="app_key" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>API Key</label>
                 </field>
-                <field id="callback_secret" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="0">
-                    <label>Callback Secret</label>
-                </field>
                 <field id="callback_url" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Callback URL</label>
                 </field>
-                <field id="receive_currency" translate="label" type="select" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="0">
-                    <label>Currency you want to receive</label>
-                    <source_model>Blockonomics\Merchant\Model\Config\Source\Receivecurrencies</source_model>
+                <field id="callback_secret" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Callback Secret</label>
                 </field>
-
+                <field id="secret_button" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <frontend_model>Blockonomics\Merchant\Block\System\SecretGenButton</frontend_model>
+                </field>
                 <field id="specificcountry" translate="label" type="multiselect" sortOrder="51" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Payment from Specific Countries</label>
                     <source_model>Magento\Directory\Model\Config\Source\Country</source_model>

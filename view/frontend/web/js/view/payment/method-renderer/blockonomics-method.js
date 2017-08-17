@@ -6,7 +6,7 @@ define(
         'use strict';
         return Component.extend({
             defaults: {
-                template: 'Blockonomics_Payment/payment/blockonomics'
+                template: 'Blockonomics_Merchant/payment/blockonomics'
             },
             getMailingAddress: function () {
                 return window.checkoutConfig.payment.checkmo.mailingAddress;

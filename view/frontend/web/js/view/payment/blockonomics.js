@@ -11,7 +11,7 @@ define(
         rendererList.push(
             {
                 type: 'blockonomics',
-                component: 'Blockonomics_Payment/js/view/payment/method-renderer/blockonomics-method'
+                component: 'Blockonomics_Merchant/js/view/payment/method-renderer/blockonomics-method'
             }
         );
         return Component.extend({});

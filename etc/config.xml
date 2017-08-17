@@ -4,7 +4,7 @@
 		<payment>
 			<blockonomics>
 				<active>1</active>
-				<model>Blockonomics\Payment\Model\Payment\Blockonomics</model>
+				<model>Blockonomics\Merchant\Model\Payment\Blockonomics</model>
 				<order_status>pending</order_status>
 				<title>blockonomics</title>
 				<allowspecific>0</allowspecific>

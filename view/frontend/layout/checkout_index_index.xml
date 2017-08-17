@@ -16,7 +16,7 @@
 														<item name="renders" xsi:type="array">
 															<item name="children" xsi:type="array">
 																<item name="offline-payments" xsi:type="array">
-																	<item name="component" xsi:type="string">Blockonomics_Payment/js/view/payment/offline-payments</item>
+																	<item name="component" xsi:type="string">Blockonomics_Merchant/js/view/payment/offline-payments</item>
 																	<item name="methods" xsi:type="array">
 																		<item name="blockonomics" xsi:type="array">
 																			<item name="isBillingAddressRequired" xsi:type="boolean">true</item>

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Blockonomics\Payment\Setup;
+namespace Blockonomics\Merchant\Setup;
 
 use Magento\Framework\Setup\InstallSchemaInterface;
 use Magento\Framework\Setup\ModuleContextInterface;

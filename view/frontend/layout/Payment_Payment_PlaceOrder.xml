@@ -2,7 +2,7 @@
 <page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
 	<body>
 		<referenceContainer name="content">
-			<block class="Blockonomics\Payment\Block\Payment\PlaceOrder" name="Payment.PlaceOrder" template="Blockonomics_Payment::Payment/PlaceOrder.phtml"/>
+			<block class="Blockonomics\Merchant\Block\Payment\PlaceOrder" name="Payment.PlaceOrder" template="Blockonomics_Merchant::Payment/PlaceOrder.phtml"/>
 		</referenceContainer>
 	</body>
 </page>
