@@ -12,3 +12,11 @@ Install
     composer require blockonomics/module-merchant:dev-master
     ```
    Wait while dependencies are updated.
+   
+3. Enter following commands to enable module:
+
+    ```bash
+    php bin/magento module:enable Blockonomics_Merchant --clear-static-content
+    php bin/magento setup:upgrade
+    ```
+4. Enable and configure Stripe in Magento Admin under Stores/Configuration/Payment Methods/blockonomics
