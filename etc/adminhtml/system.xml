@@ -4,11 +4,11 @@
 		<section id="payment" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="1000" translate="label">
 			<group id="blockonomics" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
 				<label>blockonomics</label>
-				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="1" translate="label" type="select">
 					<label>Enabled</label>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
-				<field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+				<field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="2" translate="label" type="text">
 					<label>Title</label>
 				</field>
                 <field id="app_key" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="0">
@@ -16,16 +16,7 @@
                 </field>
                 <field id="callback_url" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Callback URL</label>
-                </field>
-                <field id="callback_secret" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="0">
-                    <label>Callback Secret</label>
-                </field>
-                <field id="secret_button" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <frontend_model>Blockonomics\Merchant\Block\System\SecretGenButton</frontend_model>
-                </field>
-                <field id="specificcountry" translate="label" type="multiselect" sortOrder="51" showInDefault="1" showInWebsite="1" showInStore="0">
-                    <label>Payment from Specific Countries</label>
-                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                    <frontend_model>Blockonomics\Merchant\Block\System\Config\Form\Field\Disable</frontend_model>
                 </field>
 			</group>
 		</section>

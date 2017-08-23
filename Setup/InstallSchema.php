@@ -6,6 +6,7 @@ namespace Blockonomics\Merchant\Setup;
 use Magento\Framework\Setup\InstallSchemaInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\SchemaSetupInterface;
+use Magento\Framework\DB\Ddl\Table;
 
 class InstallSchema implements InstallSchemaInterface
 {
@@ -54,13 +55,13 @@ class InstallSchema implements InstallSchemaInterface
                 )
                 ->addColumn(
                     'addr',
-                    Table::TYPE_VARCHAR,
+                    Table::TYPE_TEXT,
                     null, [ 'nullable' => false ],
                     'Bitcoin Address'
                 )
                 ->addColumn(
                     'txid',
-                    Table::TYPE_VARCHAR,
+                    Table::TYPE_TEXT,
                     null, ['nullable' => false ],
                     'Transaction ID'
                 )
@@ -72,7 +73,7 @@ class InstallSchema implements InstallSchemaInterface
                 )
                 ->addColumn(
                     'value',
-                    Table::TYPE_DOUBLE,
+                    Table::TYPE_FLOAT,
                     null, ['nullable' => false ],
                     'Transaction value in BTC'
                 )

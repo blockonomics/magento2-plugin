@@ -21,15 +21,44 @@
 
 namespace Blockonomics\Merchant\Model\Payment;
 
-class Blockonomics extends \Magento\Payment\Model\Method\AbstractMethod
+use Magento\Framework\Model\Context;
+use Magento\Payment\Helper\Data;
+use Magento\Payment\Model\Method\AbstractMethod;
+use Magento\Payment\Model\Method\Logger;
+use Magento\Framework\UrlInterface;
+use Magento\Sales\Model\Order;
+use Magento\Store\Model\StoreManagerInterface;
+
+class Blockonomics extends AbstractMethod
 {
 
-    protected $_code = "blockonomics";
+    protected $_code = "blockonomics_merchant";
     protected $_isOffline = true;
 
-    public function isAvailable(
-        \Magento\Quote\Api\Data\CartInterface $quote = null
-    ) {
-        return parent::isAvailable($quote);
+    protected $urlBuilder;
+    protected $storeManager;
+
+    public function __construct(
+        Context $context,
+        Data $paymentData,
+        Logger $logger,
+        UrlInterface $urlBuilder,
+        StoreManagerInterface $storeManager
+    )
+    {
+        parent::__construct(
+            $context,
+            $paymentData,
+            $logger
+        );
+
+        $this->urlBuilder = $urlBuilder;
+        $this->storeManager = $storeManager;
+
+				//Include configuration from the local file.
+        $BLOCKONOMICS_BASE_URL = 'https://www.blockonomics.co';
+        $BLOCKONOMICS_WEBSOCKET_URL = 'wss://www.blockonomics.co';
+        $BLOCKONOMICS_NEW_ADDRESS_URL = $BLOCKONOMICS_BASE_URL.'/api/new_address';
+        $BLOCKONOMICS_PRICE_URL = $BLOCKONOMICS_BASE_URL.'/api/price?currency=';
     }
 }
