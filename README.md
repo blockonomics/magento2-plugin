@@ -19,4 +19,4 @@ Install
     php bin/magento module:enable Blockonomics_Merchant --clear-static-content
     php bin/magento setup:upgrade
     ```
-4. Enable and configure Stripe in Magento Admin under Stores/Configuration/Payment Methods/blockonomics
+4. Enable and configure Blockonomics in Magento Admin under Stores/Configuration/Payment Methods/blockonomics
