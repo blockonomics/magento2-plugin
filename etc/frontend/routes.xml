@@ -1,8 +1,9 @@
-<?xml version="1.0" ?>
+<?xml version="1.0"?>
+
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
-	<router id="standard">
-		<route frontName="Payment" id="Payment">
-			<module name="Blockonomics_Merchant"/>
-		</route>
-	</router>
+    <router id="standard">
+        <route id="blockonomivs" frontName="blockonomics">
+            <module name="Blockonomics_Merchant" />
+        </route>
+    </router>
 </config>

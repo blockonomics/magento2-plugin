@@ -1,15 +1,26 @@
-<?xml version="1.0" ?>
+<?xml version="1.0"?>
+<!--
+/**
+* Blockonomics module dependency
+*
+* @category    Blockonomics
+* @package     Blockonomics_Merchant
+* @author      Blockonomics
+* @copyright   Blockonomics (https://blockonomics.com)
+* @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+*/
+-->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
-	<default>
-		<payment>
-			<blockonomics>
-				<active>1</active>
-				<model>Blockonomics\Merchant\Model\Payment\Blockonomics</model>
-				<order_status>pending</order_status>
-				<title>blockonomics</title>
-				<allowspecific>0</allowspecific>
-				<group>Offline</group>
-			</blockonomics>
-		</payment>
-	</default>
+    <default>
+        <payment>
+            <blockonomics_merchant>
+                <active>0</active>
+                <model>Blockonomics\Merchant\Model\Payment</model>
+                <order_status>pending_payment</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>Bitcoin via Blockonomics</title>
+                <api_secret backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
+            </blockonomics_merchant>
+        </payment>
+    </default>
 </config>

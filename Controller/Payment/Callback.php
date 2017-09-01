@@ -1,52 +1,55 @@
 <?php
 /**
- * A Magento 2 module named Blockonomics/Merchant
- * Copyright (C) 2017  
- * 
- * This file is part of Blockonomics/Merchant.
- * 
- * Blockonomics/Merchant is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Blockonomics Callback controller
+ *
+ * @category    Blockonomics
+ * @package     Blockonomics_Merchant
+ * @author      Blockonomics
+ * @copyright   Blockonomics (https://blockonomics.co)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-
 namespace Blockonomics\Merchant\Controller\Payment;
 
-class Callback extends \Magento\Framework\App\Action\Action
-{
+use Blockonomics\Merchant\Model\Payment as BlockonomicsPayment;
+use Magento\Framework\App\Action\Action;
+use Magento\Framework\App\Action\Context;
+use Magento\Sales\Model\Order;
 
-    protected $resultPageFactory;
+class Callback extends Action
+{
+    protected $order;
+    protected $blockonomicsPayment;
 
     /**
-     * Constructor
-     *
-     * @param \Magento\Framework\App\Action\Context  $context
-     * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
+     * @param Context $context
+     * @param Order $order
+     * @param Payment|BlockonomicsPayment $blockonomicsPayment
+     * @internal param \Magento\Framework\View\Result\PageFactory $resultPageFactory
      */
     public function __construct(
-        \Magento\Framework\App\Action\Context $context,
-        \Magento\Framework\View\Result\PageFactory $resultPageFactory
-    ) {
-        $this->resultPageFactory = $resultPageFactory;
+        Context $context,
+        Order $order,
+        BlockonomicsPayment $blockonomicsPayment
+    )
+    {
         parent::__construct($context);
+
+        $this->order = $order;
+        $this->blockonomicsPayment = $blockonomicsPayment;
     }
 
     /**
-     * Execute view action
+     * Default customer account page
      *
-     * @return \Magento\Framework\Controller\ResultInterface
+     * @return void
      */
     public function execute()
     {
-        return $this->resultPageFactory->create();
+        $request_order_id = (filter_input(INPUT_POST, 'order_id') ? filter_input(INPUT_POST, 'order_id') : filter_input(INPUT_GET, 'order_id'));
+
+        $order = $this->order->loadByIncrementId($request_order_id);
+        $this->blockonomicsPayment->validateBlockonomicsCallback($order);
+
+        $this->getResponse()->setBody('OK');
     }
 }

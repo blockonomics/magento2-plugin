@@ -1,52 +1,64 @@
 <?php
 /**
- * A Magento 2 module named Blockonomics/Merchant
- * Copyright (C) 2017  
- * 
- * This file is part of Blockonomics/Merchant.
- * 
- * Blockonomics/Merchant is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Blockonomics PlaceOrder controller
+ *
+ * @category    Blockonomics
+ * @package     Blockonomics_Merchant
+ * @author      Blockonomics
+ * @copyright   Blockonomics (https://blockonomics.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-
 namespace Blockonomics\Merchant\Controller\Payment;
 
-class PlaceOrder extends \Magento\Framework\App\Action\Action
-{
+use Blockonomics\Merchant\Model\Payment as BlockonomicsPayment;
+use Magento\Checkout\Model\Session;
+use Magento\Framework\App\Action\Action;
+use Magento\Framework\App\Action\Context;
+use Magento\Sales\Model\OrderFactory;
 
-    protected $resultPageFactory;
+class PlaceOrder extends Action
+{
+    protected $orderFactory;
+    protected $blockonomicsPayment;
+    protected $checkoutSession;
 
     /**
-     * Constructor
-     *
-     * @param \Magento\Framework\App\Action\Context  $context
-     * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
+     * @param Context $context
+     * @param OrderFactory $orderFactory
+     * @param Session $checkoutSession
+     * @param BlockonomicsPayment $blockonomicsPayment
      */
     public function __construct(
-        \Magento\Framework\App\Action\Context $context,
-        \Magento\Framework\View\Result\PageFactory $resultPageFactory
-    ) {
-        $this->resultPageFactory = $resultPageFactory;
+        Context $context,
+        OrderFactory $orderFactory,
+        Session $checkoutSession,
+        BlockonomicsPayment $blockonomicsPayment
+    )
+    {
         parent::__construct($context);
+
+        $this->orderFactory = $orderFactory;
+        $this->blockonomicsPayment = $blockonomicsPayment;
+        $this->checkoutSession = $checkoutSession;
     }
 
-    /**
-     * Execute view action
-     *
-     * @return \Magento\Framework\Controller\ResultInterface
-     */
     public function execute()
     {
-        return $this->resultPageFactory->create();
+        $id = $this->checkoutSession->getLastOrderId();
+
+        $order = $this->orderFactory->create()->load($id);
+
+        if (!$order->getIncrementId()) {
+            $this->getResponse()->setBody(json_encode(array(
+                'status' => false,
+                'reason' => 'Order Not Found',
+            )));
+
+            return;
+        }
+
+        $this->getResponse()->setBody(json_encode($this->blockonomicsPayment->getBlockonomicsRequest($order)));
+
+        return;
     }
 }

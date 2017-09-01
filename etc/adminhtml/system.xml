@@ -1,8 +1,19 @@
-<?xml version="1.0" ?>
+<?xml version="1.0"?>
+<!--
+/**
+* Blockonomics admin configuration
+*
+* @category    Blockonomics
+* @package     Blockonomics_Merchant
+* @author      Blockonomics
+* @copyright   Blockonomics (https://blockonomics.com)
+* @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+*/
+-->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
-	<system>
-		<section id="payment" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="1000" translate="label">
-			<group id="blockonomics" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+    <system>
+        <section id="payment">
+           <group id="blockonomics_merchant" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
 				<label>blockonomics</label>
 				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="1" translate="label" type="select">
 					<label>Enabled</label>
@@ -18,7 +29,7 @@
                     <label>Callback URL</label>
                     <frontend_model>Blockonomics\Merchant\Block\System\Config\Form\Field\Disable</frontend_model>
                 </field>
-			</group>
-		</section>
-	</system>
+			</group> 
+        </section>
+    </system>
 </config>

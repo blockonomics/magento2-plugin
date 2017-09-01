@@ -1,3 +1,14 @@
+/**
+ * Blockonomics JS
+ *
+ * @category    Blockonomics
+ * @package     Blockonomics_Merchant
+ * @author      Blockonomics
+ * @copyright   Blockonomics (https://blockonomics.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+ /*browser:true*/
+ /*global define*/
  define(
  [
      'jquery',
@@ -22,7 +33,7 @@
 
      return Component.extend({
          defaults: {
-             template: 'Blockonomics_Merchant/payment/blockonomics'
+             template: 'Blockonomics_Merchant/payment/blockonomics-form'
          },
 
          placeOrder: function (data, event) {
@@ -41,7 +52,7 @@
                  this.isPlaceOrderActionAllowed(false);
                  placeOrder = placeOrderAction(this.getData(), false, this.messageContainer);
 
-                 $.when(placeOrder).fail(function () {
+
                      self.isPlaceOrderActionAllowed(true);
                  }).done(this.afterPlaceOrder.bind(this));
                  return true;
@@ -57,7 +68,7 @@
 
          afterPlaceOrder: function (quoteId) {
            var request = $.ajax({
-             url: url.build('coingate/payment/placeOrder'),
+             url: url.build('blockonomics/payment/placeOrder'),
              type: 'POST',
              dataType: 'json',
              data: {quote_id: quoteId}

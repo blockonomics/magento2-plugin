@@ -1,19 +1,24 @@
 {
-    "name": "blockonomics/module-merchant",
-    "description": "",
-    "license": "GPL-3.0",
+    "name": "blockonomics/magento2-plugin",
+    "type": "magento2-module",
+    "description": "Bitcoin integration for Magento 2 via Blockonomics",
+    "version": "1.0.0",
+    "keywords": [
+      "blockonomics",
+      "bitcoin",
+      "merchant",
+      "magento"
+    ],
+    "homepage": "https://blockonomics.co",
+    "license": "OSL-3.0",
     "authors": [
         {
             "name": "Blockonomics",
-            "email": "admin@blockonomics.co"
+            "homepage": "https://blockonomics.co"
         }
     ],
-    "minimum-stability": "dev",
-    "require": {},
     "autoload": {
-        "files": [
-            "registration.php"
-        ],
+        "files": [ "registration.php" ],
         "psr-4": {
             "Blockonomics\\Merchant\\": ""
         }
