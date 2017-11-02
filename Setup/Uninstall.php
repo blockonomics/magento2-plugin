@@ -1,5 +1,5 @@
 <?php
-namespace Mageplaza\Example\Setup;
+namespace Blockonomics\Merchant\Setup;
 
 use Magento\Framework\Setup\UninstallInterface;
 use Magento\Framework\Setup\SchemaSetupInterface;
