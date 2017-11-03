@@ -2,7 +2,7 @@
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
     <router id="standard">
-        <route id="blockonomivs" frontName="blockonomics">
+        <route id="blockonomics" frontName="blockonomics">
             <module name="Blockonomics_Merchant" />
         </route>
     </router>
