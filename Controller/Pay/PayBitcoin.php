@@ -15,6 +15,7 @@ use \Magento\Framework\View\Result\PageFactory;
 use \Magento\Framework\View\Result\Page;
 use \Magento\Framework\App\Action\Context;
 use \Magento\Framework\Exception\LocalizedException;
+use \Magento\Framework\Registry;
 
 class PayBitcoin extends Action
 {
@@ -41,14 +42,14 @@ class PayBitcoin extends Action
      */
     public function __construct(
         Context $context,
-        Registry $coreRegistry,
-        PageFactory $resultPageFactory
+        PageFactory $resultPageFactory,
+        Registry $coreRegistry
     ) {
         parent::__construct(
             $context
         );
-        $this->_coreRegistry = $coreRegistry;
         $this->_resultPageFactory = $resultPageFactory;
+        $this->_coreRegistry = $coreRegistry;
     }
 
     /**
@@ -57,7 +58,7 @@ class PayBitcoin extends Action
      */
     public function execute()
     {
-        $this->_coreRegistry->register(self::REGISTRY_KEY_POST_ID, (int) $this->_request->getParam('orderId'));
+        $this->_coreRegistry->register(self::REGISTRY_KEY_ORDER_ID, (int) $this->_request->getParam('orderId'));
         $resultPage = $this->_resultPageFactory->create();
         return $resultPage;
     }
