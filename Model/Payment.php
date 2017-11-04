@@ -30,7 +30,7 @@ use Magento\Store\Model\StoreManagerInterface;
 
 class Payment extends AbstractMethod
 {
-    const COINGATE_MAGENTO_VERSION = '1.0.0';
+    //const BLOCKONOMICS_MAGENTO_VERSION = '1.0.0';
     const CODE = 'blockonomics_merchant';
 
     protected $_code = 'blockonomics_merchant';
