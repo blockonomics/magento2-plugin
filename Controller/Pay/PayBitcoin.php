@@ -1,6 +1,6 @@
 <?php
 /**
- * Blockonomics PlaceOrder controller
+ * Blockonomics PayBitcoin controller
  *
  * @category    Blockonomics
  * @package     Blockonomics_Merchant
@@ -18,7 +18,7 @@ use \Magento\Framework\Exception\LocalizedException;
 
 class PayBitcoin extends Action
 {
-    const REGISTRY_KEY_POST_ID = 'blockonomics_order_id';
+    const REGISTRY_KEY_ORDER_ID = 'blockonomics_order_id';
 
     /**
      * Core registry
