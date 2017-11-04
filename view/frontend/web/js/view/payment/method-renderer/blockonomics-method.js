@@ -67,6 +67,7 @@
          },
 
          afterPlaceOrder: function (quoteId) {
+
            var request = $.ajax({
              url: url.build('blockonomics/payment/placeOrder'),
              type: 'POST',
@@ -75,11 +76,16 @@
            });
 
            request.done(function(response) {
+
+            console.log("Response order id = " + response.orderId);
+
+            /*
              if (response.status) {
                window.location.replace(response.payment_url);
              } else {
                window.location.replace('/checkout/onepage/failure');
              }
+             */
            });
          }
      });
