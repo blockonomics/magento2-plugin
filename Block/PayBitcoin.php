@@ -14,7 +14,7 @@ use \Magento\Framework\Exception\LocalizedException;
 use \Magento\Framework\View\Element\Template;
 use \Magento\Framework\View\Element\Template\Context;
 use \Magento\Framework\Registry;
-use \Blockonomics\Merchant\Controller\Pay\PayBitcoin as ViewAction;
+use \Blockonomics\Merchant\Controller\Pay\PayBitcoin as PayBitcoinAction;
 
 class PayBitcoin extends Template
 {
@@ -34,7 +34,6 @@ class PayBitcoin extends Template
         Context $context,
         Registry $coreRegistry
     ) {
-        $this->_postFactory = $postFactory;
         $this->_coreRegistry = $coreRegistry;
         parent::__construct($context);
     }
@@ -46,7 +45,7 @@ class PayBitcoin extends Template
     public function getOrderId()
     {
         return (int) $this->_coreRegistry->registry(
-            ViewAction::REGISTRY_KEY_ORDER_ID
+            PayBitcoinAction::REGISTRY_KEY_ORDER_ID
         );
     }
 }
