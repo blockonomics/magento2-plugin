@@ -57,7 +57,12 @@ class PlaceOrder extends Action
             return;
         }
 
-        $this->getResponse()->setBody(json_encode($this->blockonomicsPayment->getBlockonomicsRequest($order)));
+        //$this->getResponse()->setBody(json_encode($this->blockonomicsPayment->getBlockonomicsRequest($order)));
+
+        $this->getResponse()->setBody(json_encode(array(
+            'status' => true,
+            'orderId' => $id,
+        )));
 
         return;
     }
