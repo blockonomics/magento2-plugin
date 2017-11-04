@@ -8,7 +8,7 @@ Install
 2. Enter following commands to install module:
 
     ```bash
-    composer config repositories.blockonomicsmerchant git https://github.com/cnu1439/magento2-plugin.git
+    composer config repositories.blockonomicsmerchant git https://github.com/jusasiiv/magento2-plugin.git
     composer require blockonomics/magento2-plugin:dev-master
     ```
    Wait while dependencies are updated.
