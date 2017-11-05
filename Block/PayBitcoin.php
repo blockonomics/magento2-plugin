@@ -15,6 +15,7 @@ use \Magento\Framework\View\Element\Template;
 use \Magento\Framework\View\Element\Template\Context;
 use \Magento\Framework\Registry;
 use \Blockonomics\Merchant\Controller\Pay\PayBitcoin as PayBitcoinAction;
+use Magento\Checkout\Model\Session;
 
 class PayBitcoin extends Template
 {
@@ -24,6 +25,8 @@ class PayBitcoin extends Template
      */
     protected $_coreRegistry;
 
+    protected $_checkoutSession;
+
     /**
      * Constructor
      * @param Context $context
@@ -32,9 +35,11 @@ class PayBitcoin extends Template
      */
     public function __construct(
         Context $context,
+        Session $checkoutSession,
         Registry $coreRegistry
     ) {
         $this->_coreRegistry = $coreRegistry;
+        $this->_checkoutSession = $checkoutSession;
         parent::__construct($context);
     }
 
@@ -44,8 +49,8 @@ class PayBitcoin extends Template
      */
     public function getOrderId()
     {
-        return (int) $this->_coreRegistry->registry(
-            PayBitcoinAction::REGISTRY_KEY_ORDER_ID
-        );
+        $id = $this->checkoutSession->getLastOrderId();
+
+        return $id;
     }
 }
