@@ -12,6 +12,7 @@ namespace Blockonomics\Merchant\Controller\Payment;
 
 use Blockonomics\Merchant\Model\Payment as BlockonomicsPayment;
 use Magento\Checkout\Model\Session;
+use Magento\Backend\Model\Session as BackendSession;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Sales\Model\OrderFactory;
@@ -21,6 +22,7 @@ class PlaceOrder extends Action
     protected $orderFactory;
     protected $blockonomicsPayment;
     protected $checkoutSession;
+    protected $backendSession;
 
     /**
      * @param Context $context
@@ -32,14 +34,16 @@ class PlaceOrder extends Action
         Context $context,
         OrderFactory $orderFactory,
         Session $checkoutSession,
+        BackendSession $backendSession,
         BlockonomicsPayment $blockonomicsPayment
     )
     {
         parent::__construct($context);
 
         $this->orderFactory = $orderFactory;
-        $this->blockonomicsPayment = $blockonomicsPayment;
         $this->checkoutSession = $checkoutSession;
+        $this->backendSession = $backendSession;
+        $this->blockonomicsPayment = $blockonomicsPayment;
     }
 
     public function execute()
@@ -47,6 +51,8 @@ class PlaceOrder extends Action
         $id = $this->checkoutSession->getLastOrderId();
 
         $order = $this->orderFactory->create()->load($id);
+
+        $this->backendSession->setData('orderId', $id);
 
         if (!$order->getIncrementId()) {
             $this->getResponse()->setBody(json_encode(array(
@@ -57,11 +63,8 @@ class PlaceOrder extends Action
             return;
         }
 
-        //$this->getResponse()->setBody(json_encode($this->blockonomicsPayment->getBlockonomicsRequest($order)));
-
         $this->getResponse()->setBody(json_encode(array(
-            'status' => true,
-            'orderId' => $id,
+            'status' => true
         )));
 
         return;

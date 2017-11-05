@@ -77,7 +77,7 @@
 
            request.done(function(response) {
              if (response.status) {
-               window.location.replace('/magento2/blockonomics/pay/paybitcoin/orderId/' + response.orderId);
+               window.location.replace('/magento2/blockonomics/pay/paybitcoin');
              } else {
                window.location.replace('/magento2/checkout/onepage/failure');
              }

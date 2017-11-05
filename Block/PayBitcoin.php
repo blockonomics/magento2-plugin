@@ -13,9 +13,8 @@ namespace Blockonomics\Merchant\Block;
 use \Magento\Framework\Exception\LocalizedException;
 use \Magento\Framework\View\Element\Template;
 use \Magento\Framework\View\Element\Template\Context;
-use \Magento\Framework\Registry;
-use \Blockonomics\Merchant\Controller\Pay\PayBitcoin as PayBitcoinAction;
-use Magento\Checkout\Model\Session;
+use \Magento\Backend\Model\Session;
+use \Blockonomics\Merchant\Controller\Payment\PlaceOrder as PlaceOrderAction;
 
 class PayBitcoin extends Template
 {
@@ -25,22 +24,19 @@ class PayBitcoin extends Template
      */
     protected $_coreRegistry;
 
-    protected $_checkoutSession;
+    protected $backendSession;
 
     /**
      * Constructor
      * @param Context $context
-     * @param Registry $coreRegistry
      * @param array $data
      */
     public function __construct(
         Context $context,
-        Session $checkoutSession,
-        Registry $coreRegistry
+        Session $backendSession
     ) {
-        $this->_coreRegistry = $coreRegistry;
-        $this->_checkoutSession = $checkoutSession;
         parent::__construct($context);
+        $this->backendSession = $backendSession;
     }
 
     /**
@@ -49,8 +45,6 @@ class PayBitcoin extends Template
      */
     public function getOrderId()
     {
-        $id = $this->checkoutSession->getLastOrderId();
-
-        return $id;
+        return $this->backendSession->getData('orderId', false);
     }
 }

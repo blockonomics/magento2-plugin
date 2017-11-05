@@ -15,18 +15,9 @@ use \Magento\Framework\View\Result\PageFactory;
 use \Magento\Framework\View\Result\Page;
 use \Magento\Framework\App\Action\Context;
 use \Magento\Framework\Exception\LocalizedException;
-use \Magento\Framework\Registry;
 
 class PayBitcoin extends Action
 {
-    const REGISTRY_KEY_ORDER_ID = 'blockonomics_order_id';
-
-    /**
-     * Core registry
-     * @var Registry
-     */
-    protected $_coreRegistry;
-
     /**
      * @var PageFactory
      */
@@ -42,14 +33,12 @@ class PayBitcoin extends Action
      */
     public function __construct(
         Context $context,
-        PageFactory $resultPageFactory,
-        Registry $coreRegistry
+        PageFactory $resultPageFactory
     ) {
         parent::__construct(
             $context
         );
         $this->_resultPageFactory = $resultPageFactory;
-        $this->_coreRegistry = $coreRegistry;
     }
 
     /**
@@ -58,7 +47,6 @@ class PayBitcoin extends Action
      */
     public function execute()
     {
-        $this->_coreRegistry->register(self::REGISTRY_KEY_ORDER_ID, (int) $this->_request->getParam('orderId'));
         $resultPage = $this->_resultPageFactory->create();
         return $resultPage;
     }
