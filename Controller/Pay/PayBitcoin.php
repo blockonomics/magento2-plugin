@@ -15,30 +15,29 @@ use \Magento\Framework\View\Result\PageFactory;
 use \Magento\Framework\View\Result\Page;
 use \Magento\Framework\App\Action\Context;
 use \Magento\Framework\Exception\LocalizedException;
+use \Magento\Sales\Model\Service\InvoiceService:
 
 class PayBitcoin extends Action
 {
-    /**
-     * @var PageFactory
-     */
+
     protected $_resultPageFactory;
+    protected $_invoiceService;
 
     /**
      * @param Context $context
      * @param Registry $coreRegistry
      * @param PageFactory $resultPageFactory
-     *
-     * @codeCoverageIgnore
-     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
         Context $context,
-        PageFactory $resultPageFactory
+        PageFactory $resultPageFactory,
+        InvoiceService $invoiceService
     ) {
         parent::__construct(
             $context
         );
         $this->_resultPageFactory = $resultPageFactory;
+        $this->_invoiceService = $invoiceService;
     }
 
     /**
