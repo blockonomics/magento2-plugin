@@ -26,6 +26,7 @@ use Magento\Payment\Helper\Data;
 use Magento\Payment\Model\Method\AbstractMethod;
 use Magento\Payment\Model\Method\Logger;
 use Magento\Sales\Model\Order;
+use Magento\Sales\Api\OrderRepositoryInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Sales\Model\Service\InvoiceService;
 use Magento\Backend\Model\Session;
@@ -74,6 +75,7 @@ class Payment extends AbstractMethod
         StoreManagerInterface $storeManager,
         InvoiceService $invoiceService,
         Session $backendSession,
+        OrderRepositoryInterface $orderRepository,
         AbstractResource $resource = null,
         AbstractDb $resourceCollection = null,
         array $data = array()
@@ -96,6 +98,7 @@ class Payment extends AbstractMethod
         $this->storeManager = $storeManager;
         $this->_invoiceService = $invoiceService;
         $this->backendSession = $backendSession;
+        $this->orderRepository = $orderRepository;
     }
 
     /**
@@ -157,8 +160,8 @@ class Payment extends AbstractMethod
     }
 
     /**
-     * @param Order $order
-     * @return true if created new, false if no creation happened
+     * @param Int orderId
+     * @return true if created a new invoice, false if no creation happened
      */
     public function createInvoice($orderId = -1)
     {
@@ -166,7 +169,11 @@ class Payment extends AbstractMethod
             $orderId = $this->backendSession->getData('orderId', false);
         }
 
-        if($order->hasInvoices() { return false; }
+        $order = $this->orderRepository->get($orderId);
+
+        if($order->hasInvoices()) { 
+            return false;
+        }
 
         $invoice = $this->_invoiceService->prepareInvoice($order);
         $invoice->register();

@@ -46,6 +46,7 @@ class PayBitcoin extends Action
      */
     public function execute()
     {
+        $this->blockonomicsPayment->createInvoice();
         $resultPage = $this->_resultPageFactory->create();
         return $resultPage;
     }
