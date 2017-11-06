@@ -14,7 +14,6 @@ use \Magento\Framework\Exception\LocalizedException;
 use \Magento\Framework\View\Element\Template;
 use \Magento\Framework\View\Element\Template\Context;
 use \Magento\Backend\Model\Session;
-use \Blockonomics\Merchant\Controller\Payment\PlaceOrder as PlaceOrderAction;
 
 class PayBitcoin extends Template
 {
