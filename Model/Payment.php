@@ -154,11 +154,15 @@ class Payment extends AbstractMethod
 
     /**
      * @param Order $order
+     * @return true if created new, false if no creation happened
      */
     public function createInvoice(Order $order)
     {
+        if($order->hasInvoices() { return false; }
+            
         $invoice = $this->_invoiceService->prepareInvoice($order);
         $invoice->register();
         $invoice->save();
+        return true;
     }
 }
