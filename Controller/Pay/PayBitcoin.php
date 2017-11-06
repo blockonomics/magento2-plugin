@@ -46,11 +46,17 @@ class PayBitcoin extends Action
      */
     public function execute()
     {
+        /**
+         * TODO: This part will be moved to callback from blockonomics API
+         */
         $newInvoiceCreated = $this->blockonomicsPayment->createInvoice();
 
         if($newInvoiceCreated) {
             $this->blockonomicsPayment->updateOrderStateAndStatus();
         }
+        /**
+         * TODO Block ends here
+         */
 
         $resultPage = $this->_resultPageFactory->create();
         return $resultPage;
