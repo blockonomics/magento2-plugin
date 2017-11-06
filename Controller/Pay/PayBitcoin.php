@@ -46,7 +46,12 @@ class PayBitcoin extends Action
      */
     public function execute()
     {
-        $this->blockonomicsPayment->createInvoice();
+        $newInvoiceCreated = $this->blockonomicsPayment->createInvoice();
+
+        if($newInvoiceCreated) {
+            $this->blockonomicsPayment->updateOrderStateAndStatus();
+        }
+
         $resultPage = $this->_resultPageFactory->create();
         return $resultPage;
     }

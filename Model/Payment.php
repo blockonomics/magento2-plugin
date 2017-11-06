@@ -180,4 +180,20 @@ class Payment extends AbstractMethod
         $invoice->save();
         return true;
     }
+
+    /**
+     * @param Int orderId
+     */
+    public function updateOrderStateAndStatus($orderId = -1)
+    {
+        if($orderId === -1) {
+            $orderId = $this->backendSession->getData('orderId', false);
+        }
+
+        $order = $this->orderRepository->get($orderId);
+        
+        $order->setState(Order::STATE_PROCESSING);
+        $order->setStatus($order->getConfig()->getStateDefaultStatus(Order::STATE_PROCESSING));
+        $order->save();
+    }
 }
