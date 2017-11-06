@@ -10,15 +10,18 @@
  */
 namespace Blockonomics\Merchant\Controller\Pay;
 
+use Blockonomics\Merchant\Model\Payment as BlockonomicsPayment;
 use \Magento\Framework\App\Action\Action;
 use \Magento\Framework\View\Result\PageFactory;
 use \Magento\Framework\View\Result\Page;
 use \Magento\Framework\App\Action\Context;
 use \Magento\Framework\Exception\LocalizedException;
+
 class PayBitcoin extends Action
 {
 
     protected $_resultPageFactory;
+    protected $blockonomicsPayment;
 
     /**
      * @param Context $context
@@ -27,12 +30,14 @@ class PayBitcoin extends Action
      */
     public function __construct(
         Context $context,
-        PageFactory $resultPageFactory
+        PageFactory $resultPageFactory,
+        BlockonomicsPayment $blockonomicsPayment
     ) {
         parent::__construct(
             $context
         );
         $this->_resultPageFactory = $resultPageFactory;
+        $this->blockonomicsPayment = $blockonomicsPayment;
     }
 
     /**
