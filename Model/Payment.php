@@ -27,6 +27,7 @@ use Magento\Payment\Model\Method\AbstractMethod;
 use Magento\Payment\Model\Method\Logger;
 use Magento\Sales\Model\Order;
 use Magento\Store\Model\StoreManagerInterface;
+use Magento\Sales\Model\Service\InvoiceService;
 
 class Payment extends AbstractMethod
 {
@@ -39,6 +40,7 @@ class Payment extends AbstractMethod
 
     protected $urlBuilder;
     protected $storeManager;
+    protected $_invoiceService;
 
     /**
      * @param Context $context
@@ -68,6 +70,7 @@ class Payment extends AbstractMethod
         Logger $logger,
         UrlInterface $urlBuilder,
         StoreManagerInterface $storeManager,
+        InvoiceService $invoiceService,
         AbstractResource $resource = null,
         AbstractDb $resourceCollection = null,
         array $data = array()
@@ -88,6 +91,7 @@ class Payment extends AbstractMethod
 
         $this->urlBuilder = $urlBuilder;
         $this->storeManager = $storeManager;
+        $this->_invoiceService = $invoiceService;
     }
 
     /**
@@ -146,5 +150,15 @@ class Payment extends AbstractMethod
         } catch (\Exception $e) {
             exit('Error occurred: ' . $e);
         }
+    }
+
+    /**
+     * @param Order $order
+     */
+    public function createInvoice(Order $order)
+    {
+        $invoice = $this->_invoiceService->prepareInvoice($order);
+        $invoice->register();
+        $invoice->save();
     }
 }

@@ -15,13 +15,10 @@ use \Magento\Framework\View\Result\PageFactory;
 use \Magento\Framework\View\Result\Page;
 use \Magento\Framework\App\Action\Context;
 use \Magento\Framework\Exception\LocalizedException;
-use \Magento\Sales\Model\Service\InvoiceService:
-
 class PayBitcoin extends Action
 {
 
     protected $_resultPageFactory;
-    protected $_invoiceService;
 
     /**
      * @param Context $context
@@ -30,14 +27,12 @@ class PayBitcoin extends Action
      */
     public function __construct(
         Context $context,
-        PageFactory $resultPageFactory,
-        InvoiceService $invoiceService
+        PageFactory $resultPageFactory
     ) {
         parent::__construct(
             $context
         );
         $this->_resultPageFactory = $resultPageFactory;
-        $this->_invoiceService = $invoiceService;
     }
 
     /**
