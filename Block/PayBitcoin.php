@@ -84,19 +84,29 @@ class PayBitcoin extends Template
         return $new_address->address;
     }
 
+
+    /**
+     * @return Convert currency to fiat currency
+     */
+    public function getOrderPriceInFiat()
+    {
+        $orderId = $this->getOrderId();
+        $order = $this->getOrderById($orderId);
+        return $order->getGrandTotal();
+    }
+
     /**
      * @return Convert currency to bitcoin from Blockonomics API
      */
-    public function getOrderPriceInBitcoin() 
+    public function getOrderPriceInBitcoin()
     {
         $options = array( 'http' => array( 'method'  => 'GET') );
         $context = stream_context_create($options);
-        $contents = file_get_contents(Blockonomics::PRICE_URL. "?currency=USD", false, $context);
+        $contents = file_get_contents($this::PRICE_URL. "?currency=USD", false, $context);
         $price = json_decode($contents);
 
         $orderId = $this->getOrderId();
         $order = $this->getOrderById($orderId);
-
         $order_total_price = $order->getGrandTotal();
 
         return intval(1.0e8*$order_total_price/$price->price);
