@@ -83,4 +83,12 @@ class PayBitcoin extends Template
         $new_address = json_decode($contents);
         return $new_address->address;
     }
+
+    /**
+     * @return Convert currency to bitcoin from Blockonomics API
+     */
+    public function getPrice() 
+    {
+
+    }
 }
