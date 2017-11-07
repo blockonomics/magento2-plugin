@@ -14,6 +14,8 @@ use \Magento\Framework\Exception\LocalizedException;
 use \Magento\Framework\View\Element\Template;
 use \Magento\Framework\View\Element\Template\Context;
 use \Magento\Backend\Model\Session;
+use Magento\Sales\Model\Order;
+use Magento\Sales\Api\OrderRepositoryInterface;
 
 class PayBitcoin extends Template
 {
@@ -32,10 +34,12 @@ class PayBitcoin extends Template
      */
     public function __construct(
         Context $context,
-        Session $backendSession
+        Session $backendSession,
+        OrderRepositoryInterface $orderRepository
     ) {
         parent::__construct($context);
         $this->backendSession = $backendSession;
+        $this->orderRepository = $orderRepository;
     }
 
     /**
@@ -45,5 +49,13 @@ class PayBitcoin extends Template
     public function getOrderId()
     {
         return $this->backendSession->getData('orderId', false);
+    }
+
+    /**
+     * @return Order by id
+     */
+    public function getOrderById($orderId)
+    {
+        return $this->orderRepository->get($orderId);
     }
 }
