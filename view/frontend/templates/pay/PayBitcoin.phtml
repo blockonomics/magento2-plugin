@@ -1,6 +1,7 @@
 <?php /** @var Blockonomics\Merchant\Block\PayBitcoin $block */ ?>
 <div>
-	<span>Order# <?php echo $block->getOrderId(); ?></span>
+	<span>Order# <?php /*echo $block->getOrderId(); */?></span>
 </div>
 
 <h3>To pay, send exact amount of BTC to the given address</h3>
+<h4><?php echo $block->getNewAddress(); ?><</h4>
