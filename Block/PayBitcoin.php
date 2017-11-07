@@ -89,6 +89,10 @@ class PayBitcoin extends Template
      */
     public function getPrice() 
     {
-
+        $options = array( 'http' => array( 'method'  => 'GET') );
+        $context = stream_context_create($options);
+        $contents = file_get_contents(Blockonomics::PRICE_URL. "?currency=usd", false, $context);
+        $price = json_decode($contents);
+        return $price->price;
     }
 }
