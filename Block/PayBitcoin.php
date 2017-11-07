@@ -21,13 +21,11 @@ use Magento\Store\Model\ScopeInterface;
 
 class PayBitcoin extends Template
 {
-    /**
-     * Core registry
-     * @var Registry
-     */
-    protected $_coreRegistry;
-
     protected $backendSession;
+
+    const BASE_URL = 'https://www.blockonomics.co';
+    const NEW_ADDRESS_URL = 'https://www.blockonomics.co/api/new_address';
+    const PRICE_URL = 'https://www.blockonomics.co/api/price';
 
     /**
      * Constructor
@@ -69,6 +67,20 @@ class PayBitcoin extends Template
      */
     public function getNewAddress() 
     {
-        $this->scopeConfig->getValue('payment/blockonomics_merchant/app_key', ScopeInterface::SCOPE_STORE);
+        $api_key = $this->scopeConfig->getValue('payment/blockonomics_merchant/app_key', ScopeInterface::SCOPE_STORE);
+        $secret = $this->scopeConfig->getValue('payment/blockonomics_merchant/callback_url', ScopeInterface::SCOPE_STORE);
+
+        $options = array(
+            'http' => array(
+                'header'  => 'Authorization: Bearer '.$api_key,
+                'method'  => 'POST',
+                'content' => ''
+            )
+        );
+
+        $context = stream_context_create($options);
+        $contents = file_get_contents($this::NEW_ADDRESS_URL."?match_callback=$secret", false, $context);
+        $new_address = json_decode($contents);
+        return $new_address->address;
     }
 }
