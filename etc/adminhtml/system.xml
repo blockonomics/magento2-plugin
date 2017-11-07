@@ -27,7 +27,7 @@
                 </field>
                 <field id="callback_url" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Callback URL</label>
-                    <frontend_model>Blockonomics\Merchant\Block\System\Config\Form\Field\Disable</frontend_model>
+                    <!--<frontend_model>Blockonomics\Merchant\Block\System\Config\Form\Field\Disable</frontend_model>-->
                 </field>
 			</group> 
         </section>
