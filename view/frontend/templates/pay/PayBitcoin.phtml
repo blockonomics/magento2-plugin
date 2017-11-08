@@ -1,8 +1,29 @@
-<?php /** @var Blockonomics\Merchant\Block\PayBitcoin $block */ ?>
+<?php 
+	$btc_address = $block->getNewAddress(); 
+	$satoshi_amount = $block->getOrderPriceInBitcoin()/1.0e8;
+	$fiat_amount = $block->getOrderPriceInFiat();
+	$btc_href = "bitcoin:".$btc_address."?amount=".$satoshi_amount;
+?>
+
+<div id="btc-address" data-address="<?= $btc_href ?>"></div>
+
+<script type="text/x-magento-init">
+{
+	"#qrcode": {
+		"Blockonomics_Merchant/js/createQr": {}
+	} 
+}
+</script>
+
 <div>
 	<span>Order# <?php echo $block->getOrderId(); ?></span>
 </div>
 
 <h3>To pay, send exact amount of BTC to the given address</h3>
-<h4><?php echo $block->getNewAddress(); ?><</h4>
-<h5><?php echo $block->getOrderPriceInBitcoin()/1.0e8; ?>BTC ⇌ <?php echo $block->getOrderPriceInFiat(); ?>USD</h5>
+<h4><?= $btc_address ?></h4>
+
+<a href="<?= $btc_href ?>">
+	<div id="qrcode"></div>
+</a>
+
+<h5><?= $satoshi_amount ?>BTC ⇌ <?= $fiat_amount ?>USD</h5>
