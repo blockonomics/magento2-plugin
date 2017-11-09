@@ -9,7 +9,7 @@ Install
 
     ```bash
     composer config repositories.blockonomicsmerchant git https://github.com/jusasiiv/magento2-plugin.git
-    composer require blockonomics/magento2-plugin:dev-master
+    composer require blockonomics/module-merchant:dev-master
     ```
    Wait while dependencies are updated.
    
