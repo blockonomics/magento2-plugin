@@ -17,7 +17,10 @@ function($, qrcode, reconnectingWebsocket) {
 	var d = new Date();
 	var seconds = Math.round(d.getTime() / 1000);
 
+	console.log(btcAddress, seconds);
+
 	//Websocket
+	/*
 	var ws = new ReconnectingWebSocket("wss://www.blockonomics.co/payment/" + btcAddress + "?timestamp=" + seconds);
 	ws.onmessage = function (evt) {
 		ws.close();
@@ -27,7 +30,7 @@ function($, qrcode, reconnectingWebsocket) {
 			//Wait for 2 seconds for order status
 			//to update on server
 		}, 2000, 1);
-	}
+	}*/
 
   //window.setInterval(tick, 1000);
 });
