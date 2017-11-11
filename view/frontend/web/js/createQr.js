@@ -3,7 +3,7 @@ define([
   "Blockonomics_Merchant/js/qrcode",
   'Blockonomics_Merchant/js/reconnecting-websocket.min'
 ], 
-function($, qrcode, reconnectingWebsocket) {
+function($, qrcode, ReconnectingWebSocket) {
   "use strict";
 
   var btcHrefDiv = document.getElementById("btc-href");
@@ -20,17 +20,16 @@ function($, qrcode, reconnectingWebsocket) {
 	console.log(btcAddress, seconds);
 
 	//Websocket
-	/*
 	var ws = new ReconnectingWebSocket("wss://www.blockonomics.co/payment/" + btcAddress + "?timestamp=" + seconds);
 	ws.onmessage = function (evt) {
 		ws.close();
-		$interval(function(){
+		//$interval(function(){
 			//Redirect to order received page
 			window.location = "#";
 			//Wait for 2 seconds for order status
 			//to update on server
-		}, 2000, 1);
-	}*/
+		//}, 2000, 1);
+	}
 
   //window.setInterval(tick, 1000);
 });
