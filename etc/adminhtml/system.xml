@@ -14,7 +14,7 @@
     <system>
         <section id="payment">
            <group id="blockonomics_merchant" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
-				<label>Blockonomics</label>
+				<label>Bitcoin - Blockonomics</label>
 				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="1" translate="label" type="select">
 					<label>Enabled</label>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
