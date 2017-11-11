@@ -6,11 +6,28 @@ define([
 function($, qrcode, reconnectingWebsocket) {
   "use strict";
 
-  var btcArddressDiv = document.getElementById("btc-address");
-  var btcAddress = btcArddressDiv.dataset.address;
-  new QRCode(document.getElementById("qrcode"), btcAddress);
+  var btcHrefDiv = document.getElementById("btc-href");
+  var btcHref = btcHrefDiv.dataset.href;
+  new QRCode(document.getElementById("qrcode"), btcHref);
 
-  
+  var btcAddressDiv = document.getElementById("btc-address");
+  var btcAddress = btcAddressDiv.dataset.address;
+
+  // Seconds now from epoch
+	var d = new Date();
+	var seconds = Math.round(d.getTime() / 1000);
+
+	//Websocket
+	var ws = new ReconnectingWebSocket("wss://www.blockonomics.co/payment/" + btcAddress + "?timestamp=" + seconds);
+	ws.onmessage = function (evt) {
+		ws.close();
+		$interval(function(){
+			//Redirect to order received page
+			window.location = "#";
+			//Wait for 2 seconds for order status
+			//to update on server
+		}, 2000, 1);
+	}
 
   //window.setInterval(tick, 1000);
 });
