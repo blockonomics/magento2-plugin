@@ -1,17 +1,18 @@
 define([
   "jquery",
-  "Blockonomics_Merchant/js/qrcode"
+  "Blockonomics_Merchant/js/qrcode",
+  'Blockonomics_Merchant/js/reconnecting-websocket.min'
 ], 
-function($, qrcode) {
+function($, qrcode, reconnectingWebsocket) {
   "use strict";
 
   var btcArddressDiv = document.getElementById("btc-address");
   var btcAddress = btcArddressDiv.dataset.address;
-
-  //window.setInterval(tick, 1000);
-  
   new QRCode(document.getElementById("qrcode"), btcAddress);
 
+  
+
+  //window.setInterval(tick, 1000);
 });
 
 /*
