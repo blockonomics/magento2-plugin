@@ -39,16 +39,11 @@ class Callback extends Action
     }
 
     /**
-     * Default customer account page
-     *
      * @return void
      */
     public function execute()
     {
-        $request_order_id = (filter_input(INPUT_POST, 'order_id') ? filter_input(INPUT_POST, 'order_id') : filter_input(INPUT_GET, 'order_id'));
 
-        $order = $this->order->loadByIncrementId($request_order_id);
-        $this->blockonomicsPayment->validateBlockonomicsCallback($order);
 
         $this->getResponse()->setBody('OK');
     }
