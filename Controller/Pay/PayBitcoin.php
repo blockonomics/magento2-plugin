@@ -16,6 +16,7 @@ use \Magento\Framework\View\Result\PageFactory;
 use \Magento\Framework\View\Result\Page;
 use \Magento\Framework\App\Action\Context;
 use \Magento\Framework\Exception\LocalizedException;
+use \Magento\Framework\App\ObjectManager;
 
 class PayBitcoin extends Action
 {
@@ -59,6 +60,12 @@ class PayBitcoin extends Action
         /**
          * TODO Block ends here
          */
+
+
+        $objectManager = ObjectManager::getInstance();       
+        $bitcoinTransaction = $objectManager->create('Blockonomics\Merchant\Model\BitcoinTransaction');
+        $bitcoinTransaction->setValue(30);
+        $bitcoinTransaction->save();
 
         $resultPage = $this->_resultPageFactory->create();
         return $resultPage;
