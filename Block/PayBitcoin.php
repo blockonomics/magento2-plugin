@@ -18,6 +18,7 @@ use Magento\Sales\Model\Order;
 use Magento\Sales\Api\OrderRepositoryInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface;
+use \Magento\Framework\App\ObjectManager;
 
 class PayBitcoin extends Template
 {
@@ -110,5 +111,20 @@ class PayBitcoin extends Template
         $order_total_price = $order->getGrandTotal();
 
         return intval(1.0e8*$order_total_price/$price->price);
+    }
+
+    public function createNewBitcoinTransaction($address)
+    {  
+        $objectManager = ObjectManager::getInstance();       
+        $bitcoinTransaction = $objectManager->create('Blockonomics\Merchant\Model\BitcoinTransaction');
+
+        $bitcoinTransaction->setIdOrder($this->getOrderId());
+        $bitcoinTransaction->setTimestamp(time());
+        $bitcoinTransaction->setAddr($address);
+        $bitcoinTransaction->setStatus(-1);
+        $bitcoinTransaction->setValue($this->getOrderPriceInFiat());
+        $bitcoinTransaction->setBits($this->getOrderPriceInBitcoin());
+
+        $bitcoinTransaction->save();
     }
 }
