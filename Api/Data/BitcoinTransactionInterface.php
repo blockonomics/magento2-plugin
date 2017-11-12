@@ -2,7 +2,7 @@
 
 namespace Toptal\Blog\Api\Data;
 
-interface PostInterface
+interface BitcoinTransactionInterface
 {
     const ID            = 'id';
     const ID_ORDER      = 'id_order';
