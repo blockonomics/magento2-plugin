@@ -14,11 +14,15 @@ use Blockonomics\Merchant\Model\Payment as BlockonomicsPayment;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Sales\Model\Order;
+use \Magento\Framework\App\ObjectManager;
+use Blockonomics\Merchant\Model\BitcoinTransaction;
+use Blockonomics\Merchant\Model\ResourceModel\BitcoinTransaction\Collection;
 
 class Callback extends Action
 {
     protected $order;
     protected $blockonomicsPayment;
+    protected $transactionCollection;
 
     /**
      * @param Context $context
@@ -29,13 +33,15 @@ class Callback extends Action
     public function __construct(
         Context $context,
         Order $order,
-        BlockonomicsPayment $blockonomicsPayment
+        BlockonomicsPayment $blockonomicsPayment,
+        Collection $transactionCollection
     )
     {
         parent::__construct($context);
 
         $this->order = $order;
         $this->blockonomicsPayment = $blockonomicsPayment;
+        $this->transactionCollection = $transactionCollection;
     }
 
     /**
@@ -44,11 +50,31 @@ class Callback extends Action
     public function execute()
     {
 
-        $newInvoiceCreated = $this->blockonomicsPayment->createInvoice();
+        $secret = $this->getRequest()->getParam('secret');
 
-        if($newInvoiceCreated) {
-            $this->blockonomicsPayment->updateOrderStateAndStatus();
+        $status = $this->getRequest()->getParam('status');
+        $addr   = $this->getRequest()->getParam('addr');
+        $value  = $this->getRequest()->getParam('value');
+        $txid   = $this->getRequest()->getParam('txid');
+
+        $collection = $this->transactionCollection->addFieldToFilter('addr', $addr);
+
+        foreach($collection as $item){
+
+            $orderId = $item->getIdOrder();
+
+            $newInvoiceCreated = $this->blockonomicsPayment->createInvoice($orderId);
+            if($newInvoiceCreated) {
+                $this->blockonomicsPayment->updateOrderStateAndStatus($orderId);
+            }
+
+            $item->setStatus($status);
+            $item->setBitsPayed($value);
+            $item->setTxId($txid);
+            $item->save();
         }
+        
+
         $this->getResponse()->setBody('OK');
     }
 }

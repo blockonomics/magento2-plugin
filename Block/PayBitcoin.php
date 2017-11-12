@@ -115,7 +115,7 @@ class PayBitcoin extends Template
 
     public function createNewBitcoinTransaction($address)
     {  
-        $objectManager = ObjectManager::getInstance();       
+        $objectManager = ObjectManager::getInstance();
         $bitcoinTransaction = $objectManager->create('Blockonomics\Merchant\Model\BitcoinTransaction');
 
         $bitcoinTransaction->setIdOrder($this->getOrderId());
