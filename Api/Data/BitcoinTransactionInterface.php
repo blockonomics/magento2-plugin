@@ -1,6 +1,6 @@
 <?php
 
-namespace Toptal\Blog\Api\Data;
+namespace Blockonomics\Merchant\Api\Data;
 
 interface BitcoinTransactionInterface
 {

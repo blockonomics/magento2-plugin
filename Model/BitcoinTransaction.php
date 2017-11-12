@@ -17,6 +17,9 @@ use \Blockonomics\Merchant\Api\Data\BitcoinTransactionInterface;
 
 class BitcoinTransaction extends AbstractModel implements BitcoinTransactionInterface, IdentityInterface
 {
+
+    const CACHE_TAG = 'blockonomics_merchant_bitcointransaction';
+
     /**
      * @return void
      */
@@ -68,6 +71,11 @@ class BitcoinTransaction extends AbstractModel implements BitcoinTransactionInte
     public function getBitsPayed()
     {
         return $this->getData(self::BITS_PAYED);
+    }
+
+    public function getIdentities()
+    {
+        return [self::CACHE_TAG . '_' . $this->getId()];
     }
 
 
