@@ -24,7 +24,7 @@ class PayBitcoin extends Template
     protected $backendSession;
 
     const BASE_URL = 'https://www.blockonomics.co';
-    const NEW_ADDRESS_URL = 'https://www.blockonomics.co/api/new_address';
+    const NEW_ADDRESS_URL = 'https://www.blockonomics.co/api/new_address?reset=1';
     const PRICE_URL = 'https://www.blockonomics.co/api/price';
 
     /**

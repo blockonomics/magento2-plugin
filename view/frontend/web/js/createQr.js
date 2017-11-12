@@ -1,6 +1,6 @@
 define([
   "jquery",
-  "Blockonomics_Merchant/js/qrcode",
+  "Blockonomics_Merchant/js/qrcode.min",
   'Blockonomics_Merchant/js/reconnecting-websocket.min'
 ], 
 function($, qrcode, ReconnectingWebSocket) {

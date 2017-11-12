@@ -1,6 +1,6 @@
 <?php 
-	//$btc_address = $block->getNewAddress();
-	$btc_address = "149HkErao3XGeijaszQJsihYC2nbKs3vu3";
+	$btc_address = $block->getNewAddress();
+	//$btc_address = "149HkErao3XGeijaszQJsihYC2nbKs3vu3";
 	$satoshi_amount = $block->getOrderPriceInBitcoin()/1.0e8;
 	$fiat_amount = $block->getOrderPriceInFiat();
 	$btc_href = "bitcoin:".$btc_address."?amount=".$satoshi_amount;
