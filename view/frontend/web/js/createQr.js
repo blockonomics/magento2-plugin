@@ -25,7 +25,7 @@ function($, qrcode, ReconnectingWebSocket) {
 		ws.close();
 		//$interval(function(){
 			//Redirect to order received page
-			window.location = "#callback";
+			window.location = "/magento2/checkout/onepage/success";
 			//Wait for 2 seconds for order status
 			//to update on server
 		//}, 2000, 1);

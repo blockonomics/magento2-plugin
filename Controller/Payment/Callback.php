@@ -44,7 +44,11 @@ class Callback extends Action
     public function execute()
     {
 
+        $newInvoiceCreated = $this->blockonomicsPayment->createInvoice();
 
+        if($newInvoiceCreated) {
+            $this->blockonomicsPayment->updateOrderStateAndStatus();
+        }
         $this->getResponse()->setBody('OK');
     }
 }
