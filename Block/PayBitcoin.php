@@ -24,7 +24,7 @@ class PayBitcoin extends Template
     protected $backendSession;
 
     const BASE_URL = 'https://www.blockonomics.co';
-    const NEW_ADDRESS_URL = 'https://www.blockonomics.co/api/new_address?reset=1';
+    const NEW_ADDRESS_URL = 'https://www.blockonomics.co/api/new_address';
     const PRICE_URL = 'https://www.blockonomics.co/api/price';
 
     /**
@@ -79,7 +79,7 @@ class PayBitcoin extends Template
         );
 
         $context = stream_context_create($options);
-        $contents = file_get_contents($this::NEW_ADDRESS_URL."?match_callback=$secret", false, $context);
+        $contents = file_get_contents($this::NEW_ADDRESS_URL."?match_callback=$secret&reset=1", false, $context);
         $new_address = json_decode($contents);
         return $new_address->address;
     }

@@ -25,7 +25,7 @@ function($, qrcode, ReconnectingWebSocket) {
 		ws.close();
 		//$interval(function(){
 			//Redirect to order received page
-			window.location = "#";
+			window.location = "#callback";
 			//Wait for 2 seconds for order status
 			//to update on server
 		//}, 2000, 1);
@@ -35,7 +35,7 @@ function($, qrcode, ReconnectingWebSocket) {
 });
 
 /*
- * This will be functionla in Ver 0.2
+ * This will be functional in Ver 0.2
 var timeLeftElem = document.getElementById("time-left");
 var totalTime = 600;
 var timeLeft = totalTime;
