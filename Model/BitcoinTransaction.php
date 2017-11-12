@@ -13,14 +13,13 @@ namespace Blockonomics\Merchant\Model;
 
 use \Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 
-class Post extends AbstractDb
+class BitcoinTransaction extends AbstractDb
 {
     /**
-     * Post Abstract Resource Constructor
      * @return void
      */
     protected function _construct()
     {
-        $this->_init('toptal_blog_post', 'post_id');
+        $this->_init('blockonomics_bitcoin_orders', 'id');
     }
 }
