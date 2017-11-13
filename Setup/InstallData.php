@@ -51,14 +51,14 @@ class InstallData implements InstallDataInterface
 				$storeManager = $objectManager->get('\Magento\Store\Model\StoreManagerInterface');
 				$base_url = $storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_WEB);
 
-				$data_secret = [
+				$data_callback_url = [
 					'scope' => 'default',
 					'scope_id' => 0,
 					'path' => 'payment/blockonomics_merchant/callback_url',
 					'value' => $base_url . 'blockonomics/payment/callback?secret=' . $callback_secret,
 				];
 				$setup->getConnection()
-					->insertOnDuplicate($setup->getTable('core_config_data'), $data_secret, ['value']);
+					->insertOnDuplicate($setup->getTable('core_config_data'), $data_callback_url, ['value']);
 
     }
 }
