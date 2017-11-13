@@ -1,3 +1,29 @@
 #qrcode {
 	
 }
+
+#address-div, #amount-div {
+	float: left;
+}
+
+#amount-div {
+	float: left;
+  margin-left: 5em;
+}
+
+#address-div h4, #amount-div h4 {
+	color: #767676;
+	font-size: 1em;
+	font-weight: 800;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+  text-align: center;
+}
+
+#amount-div h4 {
+	line-height: 1.1;
+	font-size: 1.6rem;
+	margin-top: 2rem;
+	margin-bottom: 2rem;
+	font-weight: 500;
+}
