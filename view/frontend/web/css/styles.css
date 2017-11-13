@@ -1,9 +1,15 @@
-#qrcode {
-	
+#qrcode img {
+	margin-left: auto;
+	margin-right: auto;
+	left: 0;
+	right: 0;
+	position: relative;
+	text-align: center;	
 }
 
 #address-div, #amount-div {
 	float: left;
+	max-width: 250px;
 }
 
 #amount-div {
@@ -20,10 +26,22 @@
   text-align: center;
 }
 
-#amount-div h4 {
+#amount-div h5 {
 	line-height: 1.1;
 	font-size: 1.6rem;
 	margin-top: 2rem;
 	margin-bottom: 2rem;
 	font-weight: 500;
+}
+
+#btc-address-input {
+	text-align: center;
+	width: 100%;
+	border: 1px solid grey;
+	box-shadow: none;
+	background-color: unset;
+	font-size: 1.2em;
+	padding: 1.3em;
+	max-width: 500px;
+	color: #666;
 }
