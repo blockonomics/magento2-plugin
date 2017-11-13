@@ -29,8 +29,9 @@
                     <label>Callback URL</label>
                     <frontend_model>Blockonomics\Merchant\Block\System\Config\Form\Field\Disable</frontend_model>
                 </field>
-                <field id="secret" translate="label" type="text" sortOrder="5" showInDefault="0" showInWebsite="0" showInStore="0">
+                <field id="callback_secret" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Callback secret</label>
+                    <frontend_model>Blockonomics\Merchant\Block\System\Config\Form\Field\Disable</frontend_model>
                 </field>
 			</group> 
         </section>

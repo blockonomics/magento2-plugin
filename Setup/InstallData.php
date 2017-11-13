@@ -35,6 +35,16 @@ class InstallData implements InstallDataInterface
         ModuleDataSetupInterface $setup,
         ModuleContextInterface $context
     ) {
-        //Your install script
+
+    		$callback_secret = sha1(openssl_random_pseudo_bytes(20));
+
+				$data = [
+					'scope' => 'default',
+					'scope_id' => 0,
+					'path' => 'payment/blockonomics_merchant/callback_secret',
+					'value' => $callback_secret,
+				];
+				$setup->getConnection()
+					->insertOnDuplicate($setup->getTable('core_config_data'), $data, ['value']);
     }
 }
