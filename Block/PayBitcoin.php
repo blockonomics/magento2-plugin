@@ -69,7 +69,7 @@ class PayBitcoin extends Template
     public function getNewAddress() 
     {
         $api_key = $this->scopeConfig->getValue('payment/blockonomics_merchant/app_key', ScopeInterface::SCOPE_STORE);
-        $secret = $this->scopeConfig->getValue('payment/blockonomics_merchant/callback_url', ScopeInterface::SCOPE_STORE);
+        $secret = $this->scopeConfig->getValue('payment/blockonomics_merchant/callback_secret', ScopeInterface::SCOPE_STORE);
 
         $options = array(
             'http' => array(
@@ -80,7 +80,7 @@ class PayBitcoin extends Template
         );
 
         $context = stream_context_create($options);
-        $contents = file_get_contents($this::NEW_ADDRESS_URL."?match_callback=$secret&reset=1", false, $context);
+        $contents = file_get_contents($this::NEW_ADDRESS_URL."?match_callback=$secret", false, $context);
         $new_address = json_decode($contents);
         return $new_address->address;
     }
