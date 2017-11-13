@@ -2,10 +2,7 @@
     "name": "blockonomics/module-merchant",
     "type": "magento2-module",
     "description": "Bitcoin integration for Magento 2 via Blockonomics",
-    "version": "1.0.1",
-    "require": {
-        "magento/module-checkout": "*"
-    },
+    "version": "0.1.0",
     "keywords": [
       "blockonomics",
       "bitcoin",
