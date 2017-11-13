@@ -38,13 +38,27 @@ class InstallData implements InstallDataInterface
 
     		$callback_secret = sha1(openssl_random_pseudo_bytes(20));
 
-				$data = [
+				$data_secret = [
 					'scope' => 'default',
 					'scope_id' => 0,
 					'path' => 'payment/blockonomics_merchant/callback_secret',
 					'value' => $callback_secret,
 				];
 				$setup->getConnection()
-					->insertOnDuplicate($setup->getTable('core_config_data'), $data, ['value']);
+					->insertOnDuplicate($setup->getTable('core_config_data'), $data_secret, ['value']);
+
+				$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+				$storeManager = $objectManager->get('\Magento\Store\Model\StoreManagerInterface');
+				$base_url = $storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_WEB);
+
+				$data_secret = [
+					'scope' => 'default',
+					'scope_id' => 0,
+					'path' => 'payment/blockonomics_merchant/callback_url',
+					'value' => $base_url . 'blockonomics/payment/callback?secret=' . $callback_secret,
+				];
+				$setup->getConnection()
+					->insertOnDuplicate($setup->getTable('core_config_data'), $data_secret, ['value']);
+
     }
 }
