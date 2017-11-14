@@ -77,9 +77,11 @@
 
            request.done(function(response) {
              if (response.status) {
-               window.location.replace('/magento2/blockonomics/pay/paybitcoin');
+                var urlToRedir = url.build('blockonomics/pay/paybitcoin');
+                window.location.href = urlToRedir;
              } else {
-               window.location.replace('/magento2/checkout/onepage/failure');
+                var urlToRedir = url.build('checkout/onepage/failure');
+                window.location.href = urlToRedir;
              }
            });
          }
