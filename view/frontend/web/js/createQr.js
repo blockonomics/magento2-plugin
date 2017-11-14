@@ -1,9 +1,10 @@
 define([
   "jquery",
   "Blockonomics_Merchant/js/qrcode.min",
-  'Blockonomics_Merchant/js/reconnecting-websocket.min'
+  'Blockonomics_Merchant/js/reconnecting-websocket.min',
+	'mage/url'
 ], 
-function($, qrcode, ReconnectingWebSocket) {
+function($, qrcode, ReconnectingWebSocket, url) {
   "use strict";
 
   var btcHrefDiv = document.getElementById("btc-href");
@@ -28,7 +29,8 @@ function($, qrcode, ReconnectingWebSocket) {
 		ws.close();
 		//$interval(function(){
 			//Redirect to order received page
-			window.location = "/magento2/checkout/onepage/success";
+			var urlToRedir = url.build('checkout/onepage/success');
+			window.location.href = urlToRedir;
 			//Wait for 2 seconds for order status
 			//to update on server
 		//}, 2000, 1);
