@@ -35,7 +35,8 @@ class UpgradeData implements UpgradeDataInterface
         ModuleDataSetupInterface $setup,
         ModuleContextInterface $context
     ) {
-        $setup->startSetup();
+        $installer = $setup;
+        $installer->startSetup();
         if (version_compare($context->getVersion(), "0.1.1", "<")) {
             if ( $installer->getTableRow( $installer->getTable('core_config_data'), 'path', 'payment/blockonomics_merchant/title' ) ) {
                 $installer->updateTableRow(
@@ -45,7 +46,8 @@ class UpgradeData implements UpgradeDataInterface
                     'value',
                     'Bitcoin'
                 );
-        }
+            }
         $setup->endSetup();
+        }
     }
 }
