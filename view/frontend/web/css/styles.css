@@ -34,14 +34,14 @@
 	font-weight: 500;
 }
 
-#btc-address-input {
+#btc-address-label {
 	text-align: center;
 	width: 100%;
 	border: 1px solid grey;
 	box-shadow: none;
 	background-color: unset;
 	font-size: 1.2em;
-	padding: 1.3em;
+	padding: 0.5em 2em 0.5em 2em;
 	max-width: 500px;
 	color: #666;
 }
