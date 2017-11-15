@@ -4,6 +4,7 @@
 	$block->createNewBitcoinTransaction($btc_address);
 	$satoshi_amount = $block->getOrderPriceInBitcoin()/1.0e8;
 	$fiat_amount = $block->getOrderPriceInFiat();
+	$currency_code = $block->getCurrencyCode();
 	$btc_href = "bitcoin:".$btc_address."?amount=".$satoshi_amount;
 ?>
 
@@ -40,7 +41,7 @@
 
 <div id="amount-div">
 	<h4>Amount</h4>
-	<h5><?= $satoshi_amount ?>BTC ⇌ <?= $fiat_amount ?>USD</h5>
+	<h5><?= $satoshi_amount ?> BTC ⇌ <?= $fiat_amount?> <?= $currency_code?></h5>
 </div>
 
 <div style="clear: both;"></div>

@@ -67,6 +67,9 @@ class PayBitcoin extends Template
         return $this->orderRepository->get($orderId);
     }
 
+    /**
+     * @return Order bitcoin payment address if has any, if not return empty string
+     */
     public function getOrderBitcoinAddress() 
     {
         $collection = $this->transactionCollection->addFieldToFilter('id_order', $this->getOrderId());
@@ -113,14 +116,21 @@ class PayBitcoin extends Template
         return $order->getGrandTotal();
     }
 
+    public function getCurrencyCode()
+    {
+        return $this->_storeManager->getStore()->getCurrentCurrency()->getCode();
+    }   
+
     /**
      * @return Convert currency to bitcoin from Blockonomics API
      */
     public function getOrderPriceInBitcoin()
     {
+        $currency_code = $this->getCurrencyCode();
+
         $options = array( 'http' => array( 'method'  => 'GET') );
         $context = stream_context_create($options);
-        $contents = file_get_contents($this::PRICE_URL. "?currency=USD", false, $context);
+        $contents = file_get_contents($this::PRICE_URL. "?currency=$currency_code", false, $context);
         $price = json_decode($contents);
 
         $orderId = $this->getOrderId();
