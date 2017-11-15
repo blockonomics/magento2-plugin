@@ -7,7 +7,8 @@
         <referenceContainer name="content">
             <block class="Blockonomics\Merchant\Block\PayBitcoin"
                    name="PayBitcoin.view"
-                   template="Blockonomics_Merchant::pay/PayBitcoin.phtml" />
+                   template="Blockonomics_Merchant::pay/PayBitcoin.phtml"
+                   cacheable="false" />
         </referenceContainer>
     </body>
 </page>
