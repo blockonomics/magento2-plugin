@@ -18,7 +18,7 @@
                 <model>Blockonomics\Merchant\Model\Payment</model>
                 <order_status>pending_payment</order_status>
                 <payment_action>authorize_capture</payment_action>
-                <title>Bitcoin - Blockonomics</title>
+                <title>Bitcoin</title>
             </blockonomics_merchant>
         </payment>
     </default>

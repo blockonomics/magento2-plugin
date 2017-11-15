@@ -36,8 +36,15 @@ class UpgradeData implements UpgradeDataInterface
         ModuleContextInterface $context
     ) {
         $setup->startSetup();
-        if (version_compare($context->getVersion(), "1.0.0", "<")) {
-        //Your upgrade script
+        if (version_compare($context->getVersion(), "0.1.1", "<")) {
+            if ( $installer->getTableRow( $installer->getTable('core_config_data'), 'path', 'payment/blockonomics_merchant/title' ) ) {
+                $installer->updateTableRow(
+                    $installer->getTable('core_config_data'),
+                    'path',
+                    'payment/blockonomics_merchant/title',
+                    'value',
+                    'Bitcoin'
+                );
         }
         $setup->endSetup();
     }
