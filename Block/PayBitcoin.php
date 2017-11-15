@@ -18,11 +18,14 @@ use Magento\Sales\Model\Order;
 use Magento\Sales\Api\OrderRepositoryInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface;
-use \Magento\Framework\App\ObjectManager;
+use Magento\Framework\App\ObjectManager;
+use Blockonomics\Merchant\Model\BitcoinTransaction;
+use Blockonomics\Merchant\Model\ResourceModel\BitcoinTransaction\Collection;
 
 class PayBitcoin extends Template
 {
     protected $backendSession;
+    protected $transactionCollection;
 
     const BASE_URL = 'https://www.blockonomics.co';
     const NEW_ADDRESS_URL = 'https://www.blockonomics.co/api/new_address';
@@ -37,12 +40,14 @@ class PayBitcoin extends Template
         Context $context,
         Session $backendSession,
         OrderRepositoryInterface $orderRepository,
-        ScopeConfigInterface $scopeConfig
+        ScopeConfigInterface $scopeConfig,
+        Collection $transactionCollection
     ) {
         parent::__construct($context);
         $this->backendSession = $backendSession;
         $this->orderRepository = $orderRepository;
         $this->scopeConfig = $scopeConfig;
+        $this->transactionCollection = $transactionCollection;
     }
 
     /**
@@ -62,6 +67,18 @@ class PayBitcoin extends Template
         return $this->orderRepository->get($orderId);
     }
 
+    public function getOrderBitcoinAddress() 
+    {
+        $collection = $this->transactionCollection->addFieldToFilter('id_order', $this->getOrderId());
+
+        $orderAddr = '';
+
+        foreach($collection as $item){
+            $orderAddr = $item->getAddr();
+        }
+
+        return $orderAddr;
+    }
 
     /**
      * @return New bitcoin address from Blockonomics API

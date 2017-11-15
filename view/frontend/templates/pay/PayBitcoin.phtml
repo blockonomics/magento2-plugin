@@ -1,5 +1,6 @@
-<?php 
-	$btc_address = $block->getNewAddress();
+<?php
+	$btc_address = $block->getOrderBitcoinAddress();
+	if($btc_address === '')	$btc_address = $block->getNewAddress();
 	$block->createNewBitcoinTransaction($btc_address);
 	$satoshi_amount = $block->getOrderPriceInBitcoin()/1.0e8;
 	$fiat_amount = $block->getOrderPriceInFiat();
