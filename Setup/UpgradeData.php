@@ -24,6 +24,7 @@ namespace Blockonomics\Merchant\Setup;
 use Magento\Framework\Setup\UpgradeDataInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
+use Magento\Framework\App\ObjectManager;
 
 class UpgradeData implements UpgradeDataInterface
 {
@@ -37,6 +38,7 @@ class UpgradeData implements UpgradeDataInterface
     ) {
         $installer = $setup;
         $installer->startSetup();
+
         if (version_compare($context->getVersion(), "0.1.1", "<")) {
             if ( $installer->getTableRow( $installer->getTable('core_config_data'), 'path', 'payment/blockonomics_merchant/title' ) ) {
                 $installer->updateTableRow(
@@ -47,7 +49,14 @@ class UpgradeData implements UpgradeDataInterface
                     'Bitcoin'
                 );
             }
-        $setup->endSetup();
         }
+
+        if (version_compare($context->getVersion(), "0.1.2", "<")) {
+            $objectManager = ObjectManager::getInstance();
+            $status = $objectManager->create('Magento\Sales\Model\Order\Status');
+            $status->setData('status', 'pending_bitcoin_confirmation')->setData('label', 'Pending bitcoin confirmation')->save();
+        }
+        
+        $setup->endSetup();
     }
 }
