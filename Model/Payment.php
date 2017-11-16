@@ -102,64 +102,6 @@ class Payment extends AbstractMethod
     }
 
     /**
-     * @param Order $order
-     * @return array
-     */
-    public function getBlockonomicsRequest(Order $order)
-    {
-        $token = substr(md5(rand()), 0, 32);
-
-        $payment = $order->getPayment();
-        $payment->setAdditionalInformation('blockonomics_order_token', $token);
-        $payment->save();
-
-        $description = array();
-        foreach ($order->getAllItems() as $item) {
-            $description[] = number_format($item->getQtyOrdered(), 0) . ' × ' . $item->getName();
-        }
-
-        $params = array(
-            'order_id' => $order->getIncrementId(),
-            'price' => number_format($order->getGrandTotal(), 2, '.', ''),
-            'currency' => $order->getOrderCurrencyCode(),
-            'receive_currency' => $this->getConfigData('receive_currency'),
-            'callback_url' => ($this->urlBuilder->getUrl('blockonomics/payment/callback') . '?token=' . $payment->getAdditionalInformation('blockonomics_order_token')),
-            'cancel_url' => $this->urlBuilder->getUrl('checkout/onepage/failure'),
-            'success_url' => $this->urlBuilder->getUrl('checkout/onepage/success'),
-            'title' => $this->storeManager->getWebsite()->getName(),
-            'description' => join($description, ', ')
-        );
-    }
-
-    /**
-     * @param Order $order
-     */
-    public function validateBlockonomicsCallback(Order $order)
-    {
-        try {
-            if (!$order || !$order->getIncrementId()) {
-                $request_order_id = (filter_input(INPUT_POST, 'order_id') ? filter_input(INPUT_POST, 'order_id') : filter_input(INPUT_GET, 'order_id'));
-
-                throw new \Exception('Order #' . $request_order_id . ' does not exists');
-            }
-
-            $payment = $order->getPayment();
-            $get_token = filter_input(INPUT_GET, 'token');
-            $token1 = $get_token ? $get_token : '';
-            $token2 = $payment->getAdditionalInformation('blockonomics_order_token');
-
-            if ($token2 == '' || $token1 != $token2) {
-                throw new \Exception('Tokens do match.');
-            }
-
-            $request_id = (filter_input(INPUT_POST, 'id') ? filter_input(INPUT_POST, 'id') : filter_input(INPUT_GET, 'id'));
-
-        } catch (\Exception $e) {
-            exit('Error occurred: ' . $e);
-        }
-    }
-
-    /**
      * @param Int orderId
      * @return true if created a new invoice, false if no creation happened
      */
