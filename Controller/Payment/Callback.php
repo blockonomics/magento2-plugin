@@ -66,7 +66,7 @@ class Callback extends Action
         $stored_secret = $this->scopeConfig->getValue('payment/blockonomics_merchant/callback_secret', ScopeInterface::SCOPE_STORE);
 
         // If callback secret does not match, return
-        if($secret !== $stored_secret) {
+        if($secret != $stored_secret) {
             $this->getResponse()->setBody('AUTH ERROR');
             return;
         }
@@ -77,12 +77,19 @@ class Callback extends Action
 
             $orderId = $item->getIdOrder();
 
-            // Check if paid amount is greater or equal to order sum
-            if($value >= $item->getBits()) {
-                $newInvoiceCreated = $this->blockonomicsPayment->createInvoice($orderId);
+            if($status == 0) {
+                $this->blockonomicsPayment->updateOrderStateAndStatus($orderId, 'pending');
+            }
 
-                if($newInvoiceCreated) {
-                    $this->blockonomicsPayment->updateOrderStateAndStatus($orderId);
+            if($status == 2) {
+                // Check if paid amount is greater or equal to order sum
+                if($value >= $item->getBits()) {
+                    $newInvoiceCreated = $this->blockonomicsPayment->createInvoice($orderId);
+                    $this->blockonomicsPayment->updateOrderStateAndStatus($orderId, 'processing');
+                }
+
+                if($value < $item->getBits()) {
+                    $this->blockonomicsPayment->updateOrderStateAndStatus($orderId, 'holded');
                 }
             }
 
@@ -92,7 +99,6 @@ class Callback extends Action
 
             $item->save();
         }
-        
 
         $this->getResponse()->setBody('OK');
     }

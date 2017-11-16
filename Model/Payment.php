@@ -126,16 +126,27 @@ class Payment extends AbstractMethod
     /**
      * @param Int orderId
      */
-    public function updateOrderStateAndStatus($orderId = -1)
+    public function updateOrderStateAndStatus($orderId = -1, $state)
     {
-        if($orderId === -1) {
+        if($orderId == -1) {
             $orderId = $this->backendSession->getData('orderId', false);
         }
 
         $order = $this->orderRepository->get($orderId);
-        
-        $order->setState(Order::STATE_PROCESSING);
-        $order->setStatus($order->getConfig()->getStateDefaultStatus(Order::STATE_PROCESSING));
+
+        if($state == 'processing') {
+            $order->setState(Order::STATE_PROCESSING);
+            $order->setStatus($order->getConfig()->getStateDefaultStatus(Order::STATE_PROCESSING));
+        }
+
+        if($state == 'pending') {
+            $order->setStatus('pending_bitcoin_confirmation');
+        }
+
+        if($state == 'holded') {
+            $order->setStatus($order->getConfig()->getStateDefaultStatus(Order::STATE_HOLDED));
+        }
+
         $order->save();
     }
 }
