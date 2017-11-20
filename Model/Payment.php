@@ -140,6 +140,7 @@ class Payment extends AbstractMethod
         }
 
         if($state == 'pending') {
+            $order->setState(Order::STATE_PROCESSING);
             $order->setStatus('pending_bitcoin_confirmation');
         }
 

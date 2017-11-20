@@ -38,6 +38,8 @@ class UpgradeData implements UpgradeDataInterface
     ) {
         $installer = $setup;
         $installer->startSetup();
+        
+        $objectManager = ObjectManager::getInstance();
 
         if (version_compare($context->getVersion(), "0.1.1", "<")) {
             if ( $installer->getTableRow( $installer->getTable('core_config_data'), 'path', 'payment/blockonomics_merchant/title' ) ) {
@@ -52,9 +54,17 @@ class UpgradeData implements UpgradeDataInterface
         }
 
         if (version_compare($context->getVersion(), "0.1.2", "<")) {
-            $objectManager = ObjectManager::getInstance();
             $status = $objectManager->create('Magento\Sales\Model\Order\Status');
             $status->setData('status', 'pending_bitcoin_confirmation')->setData('label', 'Pending bitcoin confirmation')->save();
+        }
+        
+        if (version_compare($context->getVersion(), "0.1.3", "<")) {
+            $statuses = $objectManager->create('Magento\Sales\Model\ResourceModel\Order\Status\Collection');
+
+            foreach($statuses as $status){
+                if($status->getStatus() == 'pending_bitcoin_confirmation')
+                $status->assignState('processing', false, true)->save();
+            }
         }
         
         $setup->endSetup();
