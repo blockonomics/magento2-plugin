@@ -36,8 +36,8 @@ class PlaceOrder extends Action
         Session $checkoutSession,
         BackendSession $backendSession,
         BlockonomicsPayment $blockonomicsPayment
-    )
-    {
+    ) {
+    
         parent::__construct($context);
 
         $this->orderFactory = $orderFactory;
@@ -55,17 +55,17 @@ class PlaceOrder extends Action
         $this->backendSession->setData('orderId', $id);
 
         if (!$order->getIncrementId()) {
-            $this->getResponse()->setBody(json_encode(array(
+            $this->getResponse()->setBody(json_encode([
                 'status' => false,
                 'reason' => 'Order Not Found',
-            )));
+            ]));
 
             return;
         }
 
-        $this->getResponse()->setBody(json_encode(array(
+        $this->getResponse()->setBody(json_encode([
             'status' => true
-        )));
+        ]));
 
         return;
     }

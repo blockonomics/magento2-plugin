@@ -21,13 +21,12 @@ class InstallSchema implements InstallSchemaInterface
         $installer = $setup;
         $installer->startSetup();
 
-		// Get tutorial_simplenews table
+        // Get tutorial_simplenews table
         $tableName = $installer->getTable('blockonomics_bitcoin_orders');
 
-		// Check if the table already exists
-        if ($installer->getConnection()->isTableExists($tableName) != true) 
-		{
-			$table = $installer->getConnection()
+        // Check if the table already exists
+        if ($installer->getConnection()->isTableExists($tableName) != true) {
+            $table = $installer->getConnection()
                 ->newTable($tableName)
                 ->addColumn(
                     'id',
@@ -44,57 +43,65 @@ class InstallSchema implements InstallSchemaInterface
                 ->addColumn(
                     'id_order',
                     Table::TYPE_INTEGER,
-                    null, [ 'unsigned' => true, 'nullable' => false ],
+                    null,
+                    [ 'unsigned' => true, 'nullable' => false ],
                     'Order ID'
                 )
                 ->addColumn(
                     'timestamp',
                     Table::TYPE_INTEGER,
-                    null, [ 'nullable' => false ],
+                    null,
+                    [ 'nullable' => false ],
                     'Order time stamp'
                 )
                 ->addColumn(
                     'addr',
                     Table::TYPE_TEXT,
-                    null, [ 'nullable' => false ],
+                    null,
+                    [ 'nullable' => false ],
                     'Bitcoin Address'
                 )
                 ->addColumn(
                     'txid',
                     Table::TYPE_TEXT,
-                    null, ['nullable' => false ],
+                    null,
+                    ['nullable' => false ],
                     'Transaction ID'
                 )
                 ->addColumn(
                     'status',
                     Table::TYPE_INTEGER,
-                    null, ['nullable' => false ],
+                    null,
+                    ['nullable' => false ],
                     'Transaction Status'
                 )
                 ->addColumn(
                     'value',
                     Table::TYPE_FLOAT,
-                    null, ['nullable' => false ],
+                    null,
+                    ['nullable' => false ],
                     'Transaction value in BTC'
                 )
                 ->addColumn(
                     'bits',
                     Table::TYPE_INTEGER,
-                    null, ['nullable' => false ],
+                    null,
+                    ['nullable' => false ],
                     'Value in satoshi'
                 )
                 ->addColumn(
                     'bits_payed',
                     Table::TYPE_INTEGER,
-                    null, ['nullable' => false ],
+                    null,
+                    ['nullable' => false ],
                     'Bitcoins payed(from transaction) in satoshi'
                 )
-				->setComment('Blockonomics News Table')
+                ->setComment('Blockonomics News Table')
                 ->setOption('type', 'InnoDB')
                 ->setOption('charset', 'utf8');
 
-			$installer->getConnection()->createTable($table);
-		}
+            $installer->getConnection()->createTable($table);
+        }
 
         $setup->endSetup();
     }

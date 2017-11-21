@@ -7,13 +7,13 @@ use Magento\Framework\Setup\ModuleContextInterface;
 
 class Uninstall implements UninstallInterface
 {
-	public function uninstall(SchemaSetupInterface $setup, ModuleContextInterface $context)
-	{
-		$installer = $setup;
-		$installer->startSetup();
+    public function uninstall(SchemaSetupInterface $setup, ModuleContextInterface $context)
+    {
+        $installer = $setup;
+        $installer->startSetup();
 
-		$installer->getConnection()->dropTable($installer->getTable('blockonomics_bitcoin_orders'));
+        $installer->getConnection()->dropTable($installer->getTable('blockonomics_bitcoin_orders'));
 
-		$installer->endSetup();
-	}
+        $installer->endSetup();
+    }
 }

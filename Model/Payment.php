@@ -78,9 +78,9 @@ class Payment extends AbstractMethod
         OrderRepositoryInterface $orderRepository,
         AbstractResource $resource = null,
         AbstractDb $resourceCollection = null,
-        array $data = array()
-    )
-    {
+        array $data = []
+    ) {
+    
         parent::__construct(
             $context,
             $registry,
@@ -107,13 +107,13 @@ class Payment extends AbstractMethod
      */
     public function createInvoice($orderId = -1)
     {
-        if($orderId === -1) {
+        if ($orderId === -1) {
             $orderId = $this->backendSession->getData('orderId', false);
         }
 
         $order = $this->orderRepository->get($orderId);
 
-        if($order->hasInvoices()) { 
+        if ($order->hasInvoices()) {
             return false;
         }
 
@@ -128,23 +128,23 @@ class Payment extends AbstractMethod
      */
     public function updateOrderStateAndStatus($orderId = -1, $state)
     {
-        if($orderId == -1) {
+        if ($orderId == -1) {
             $orderId = $this->backendSession->getData('orderId', false);
         }
 
         $order = $this->orderRepository->get($orderId);
 
-        if($state == 'processing') {
+        if ($state == 'processing') {
             $order->setState(Order::STATE_PROCESSING);
             $order->setStatus($order->getConfig()->getStateDefaultStatus(Order::STATE_PROCESSING));
         }
 
-        if($state == 'pending') {
+        if ($state == 'pending') {
             $order->setState(Order::STATE_PROCESSING);
             $order->setStatus('pending_bitcoin_confirmation');
         }
 
-        if($state == 'holded') {
+        if ($state == 'holded') {
             $order->setStatus($order->getConfig()->getStateDefaultStatus(Order::STATE_HOLDED));
         }
 

@@ -70,13 +70,13 @@ class PayBitcoin extends Template
     /**
      * @return Order bitcoin payment address if has any, if not return empty string
      */
-    public function getOrderBitcoinAddress() 
+    public function getOrderBitcoinAddress()
     {
         $collection = $this->transactionCollection->addFieldToFilter('id_order', $this->getOrderId());
 
         $orderAddr = '';
 
-        foreach($collection as $item){
+        foreach ($collection as $item) {
             $orderAddr = $item->getAddr();
         }
 
@@ -86,18 +86,18 @@ class PayBitcoin extends Template
     /**
      * @return New bitcoin address from Blockonomics API
      */
-    public function getNewAddress() 
+    public function getNewAddress()
     {
         $api_key = $this->scopeConfig->getValue('payment/blockonomics_merchant/app_key', ScopeInterface::SCOPE_STORE);
         $secret = $this->scopeConfig->getValue('payment/blockonomics_merchant/callback_secret', ScopeInterface::SCOPE_STORE);
 
-        $options = array(
-            'http' => array(
+        $options = [
+            'http' => [
                 'header'  => 'Authorization: Bearer '.$api_key,
                 'method'  => 'POST',
                 'content' => ''
-            )
-        );
+            ]
+        ];
 
         $context = stream_context_create($options);
         $contents = file_get_contents($this::NEW_ADDRESS_URL."?match_callback=$secret", false, $context);
@@ -119,7 +119,7 @@ class PayBitcoin extends Template
     public function getCurrencyCode()
     {
         return $this->_storeManager->getStore()->getCurrentCurrency()->getCode();
-    }   
+    }
 
     /**
      * @return Convert currency to bitcoin from Blockonomics API
@@ -128,7 +128,7 @@ class PayBitcoin extends Template
     {
         $currency_code = $this->getCurrencyCode();
 
-        $options = array( 'http' => array( 'method'  => 'GET') );
+        $options = [ 'http' => [ 'method'  => 'GET'] ];
         $context = stream_context_create($options);
         $contents = file_get_contents($this::PRICE_URL. "?currency=$currency_code", false, $context);
         $price = json_decode($contents);
@@ -141,7 +141,7 @@ class PayBitcoin extends Template
     }
 
     public function createNewBitcoinTransaction($address)
-    {  
+    {
         $objectManager = ObjectManager::getInstance();
         $bitcoinTransaction = $objectManager->create('Blockonomics\Merchant\Model\BitcoinTransaction');
 

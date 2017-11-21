@@ -1,16 +1,16 @@
 <?php
-	$btc_address = $block->getOrderBitcoinAddress();
+    $btc_address = $block->getOrderBitcoinAddress();
 
-	if($btc_address === '') {
-		$btc_address = $block->getNewAddress();
-		$block->createNewBitcoinTransaction($btc_address);
-	}	
+if ($btc_address === '') {
+    $btc_address = $block->getNewAddress();
+    $block->createNewBitcoinTransaction($btc_address);
+}
 
-	$satoshi_amount = $block->getOrderPriceInBitcoin()/1.0e8;
-	$fiat_amount = $block->getOrderPriceInFiat();
-	$currency_code = $block->getCurrencyCode();
-	
-	$btc_href = "bitcoin:".$btc_address."?amount=".$satoshi_amount;
+    $satoshi_amount = $block->getOrderPriceInBitcoin()/1.0e8;
+    $fiat_amount = $block->getOrderPriceInFiat();
+    $currency_code = $block->getCurrencyCode();
+    
+    $btc_href = "bitcoin:".$btc_address."?amount=".$satoshi_amount;
 ?>
 
 <div id="btc-href" data-href="<?= $btc_href ?>"></div>
@@ -18,35 +18,35 @@
 
 <script type="text/x-magento-init">
 {
-	"#qrcode": {
-		"Blockonomics_Merchant/js/createQr": {}
-	}
+    "#qrcode": {
+        "Blockonomics_Merchant/js/createQr": {}
+    }
 }
 </script>
 
 <!-- This will be functional in Ver 0.2
 <div style="width: 100%;height: 7px;background: #ddd;margin: 20px 0;overflow: hidden;position: relative;">
-	<div id="time-left" style="width: 100%;height: 7px;background: #666;left: 0;position: absolute;top: 0;"></div>
+    <div id="time-left" style="width: 100%;height: 7px;background: #666;left: 0;position: absolute;top: 0;"></div>
 </div>
 -->
 
 <div>
-	<span>Order# <?php echo $block->getOrderId(); ?></span>
+    <span>Order# <?php echo $block->getOrderId(); ?></span>
 </div>
 
 <h2>To pay, send exact amount of BTC to the given address</h2>
 
 <div id="address-div">
-	<h4>Bitcoin address</h4>
-	<a id="btc-address-a" href="<?= $btc_href ?>">
-		<div id="qrcode"></div>
-	</a>
-	<h4>Click on the qr code above to open in wallet</h4>
+    <h4>Bitcoin address</h4>
+    <a id="btc-address-a" href="<?= $btc_href ?>">
+        <div id="qrcode"></div>
+    </a>
+    <h4>Click on the qr code above to open in wallet</h4>
 </div>
 
 <div id="amount-div">
-	<h4>Amount</h4>
-	<h5><?= $satoshi_amount ?> BTC ⇌ <?= $fiat_amount?> <?= $currency_code?></h5>
+    <h4>Amount</h4>
+    <h5><?= $satoshi_amount ?> BTC ⇌ <?= $fiat_amount?> <?= $currency_code?></h5>
 </div>
 
 <div style="clear: both;"></div>

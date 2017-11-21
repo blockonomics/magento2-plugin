@@ -7,7 +7,7 @@ interface BitcoinTransactionInterface
     const ID            = 'id';
     const ID_ORDER      = 'id_order';
     const TIMESTAMP     = 'timestamp';
-    const ADDR          = 'addr';    
+    const ADDR          = 'addr';
     const TXID          = 'txid';
     const STATUS        = 'status';
     const VALUE         = 'value';

@@ -39,8 +39,8 @@ class Callback extends Action
         BlockonomicsPayment $blockonomicsPayment,
         ScopeConfigInterface $scopeConfig,
         Collection $transactionCollection
-    )
-    {
+    ) {
+    
         parent::__construct($context);
 
         $this->order = $order;
@@ -66,29 +66,28 @@ class Callback extends Action
         $stored_secret = $this->scopeConfig->getValue('payment/blockonomics_merchant/callback_secret', ScopeInterface::SCOPE_STORE);
 
         // If callback secret does not match, return
-        if($secret != $stored_secret) {
+        if ($secret != $stored_secret) {
             $this->getResponse()->setBody('AUTH ERROR');
             return;
         }
 
         $collection = $this->transactionCollection->addFieldToFilter('addr', $addr);
 
-        foreach($collection as $item){
-
+        foreach ($collection as $item) {
             $orderId = $item->getIdOrder();
 
-            if($status == 0) {
+            if ($status == 0) {
                 $this->blockonomicsPayment->updateOrderStateAndStatus($orderId, 'pending');
             }
 
-            if($status == 2) {
+            if ($status == 2) {
                 // Check if paid amount is greater or equal to order sum
-                if($value >= $item->getBits()) {
+                if ($value >= $item->getBits()) {
                     $newInvoiceCreated = $this->blockonomicsPayment->createInvoice($orderId);
                     $this->blockonomicsPayment->updateOrderStateAndStatus($orderId, 'processing');
                 }
 
-                if($value < $item->getBits()) {
+                if ($value < $item->getBits()) {
                     $this->blockonomicsPayment->updateOrderStateAndStatus($orderId, 'holded');
                 }
             }
