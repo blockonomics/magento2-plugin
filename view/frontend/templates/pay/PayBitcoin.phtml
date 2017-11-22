@@ -1,20 +1,30 @@
 <?php
-    $btc_address = $block->getOrderBitcoinAddress();
+/**
+ * Blockonomics schema installation
+ *
+ * @category    Blockonomics
+ * @package     Blockonomics_Merchant
+ * @author      Blockonomics
+ * @copyright   Blockonomics (https://blockonomics.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+
+ $btc_address = $block->getOrderBitcoinAddress();
 
 if ($btc_address === '') {
     $btc_address = $block->getNewAddress();
     $block->createNewBitcoinTransaction($btc_address);
 }
 
-    $satoshi_amount = $block->getOrderPriceInBitcoin()/1.0e8;
-    $fiat_amount = $block->getOrderPriceInFiat();
-    $currency_code = $block->getCurrencyCode();
-    
-    $btc_href = "bitcoin:".$btc_address."?amount=".$satoshi_amount;
+$satoshi_amount = $block->getOrderPriceInBitcoin()/1.0e8;
+$fiat_amount = $block->getOrderPriceInFiat();
+$currency_code = $block->getCurrencyCode();
+$btc_href = "bitcoin:".$btc_address."?amount=".$satoshi_amount;
+
 ?>
 
-<div id="btc-href" data-href="<?= $btc_href ?>"></div>
-<div id="btc-address" data-address="<?= $btc_address ?>"></div>
+<div id="btc-href" data-href="<?php echo $btc_href ?>"></div>
+<div id="btc-address" data-address="<?php echo $btc_address ?>"></div>
 
 <script type="text/x-magento-init">
 {
@@ -38,7 +48,7 @@ if ($btc_address === '') {
 
 <div id="address-div">
     <h4>Bitcoin address</h4>
-    <a id="btc-address-a" href="<?= $btc_href ?>">
+    <a id="btc-address-a" href="<?php echo $btc_href ?>">
         <div id="qrcode"></div>
     </a>
     <h4>Click on the qr code above to open in wallet</h4>
@@ -46,9 +56,9 @@ if ($btc_address === '') {
 
 <div id="amount-div">
     <h4>Amount</h4>
-    <h5><?= $satoshi_amount ?> BTC ⇌ <?= $fiat_amount?> <?= $currency_code?></h5>
+    <h5><?php echo $satoshi_amount ?> BTC ⇌ <?php echo $fiat_amount?> <?php echo $currency_code?></h5>
 </div>
 
 <div style="clear: both;"></div>
 
-<label id="btc-address-label"><?= $btc_address ?></label>
+<label id="btc-address-label"><?php echo $btc_address ?></label>

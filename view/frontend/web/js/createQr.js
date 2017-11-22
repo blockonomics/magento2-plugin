@@ -1,3 +1,12 @@
+/**
+ * Blockonomics qr creation and display methods
+ *
+ * @category    Blockonomics
+ * @package     Blockonomics_Merchant
+ * @author      Blockonomics
+ * @copyright   Blockonomics (https://blockonomics.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
 define([
   "jquery",
   "Blockonomics_Merchant/js/qrcode.min",

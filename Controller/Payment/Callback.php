@@ -8,6 +8,7 @@
  * @copyright   Blockonomics (https://blockonomics.co)
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
+
 namespace Blockonomics\Merchant\Controller\Payment;
 
 use Blockonomics\Merchant\Model\Payment as BlockonomicsPayment;
@@ -27,12 +28,6 @@ class Callback extends Action
     protected $transactionCollection;
     protected $scopeConfig;
 
-    /**
-     * @param Context $context
-     * @param Order $order
-     * @param Payment|BlockonomicsPayment $blockonomicsPayment
-     * @internal param \Magento\Framework\View\Result\PageFactory $resultPageFactory
-     */
     public function __construct(
         Context $context,
         Order $order,
@@ -50,6 +45,13 @@ class Callback extends Action
     }
 
     /**
+     * When this callback is called, get parameters from GET query and decide
+     * correct action using them
+     * 
+     * If status = 0, set payment pending
+     * If status = 2 and paid amoun >= order total, set order processing and create invoice
+     * If status = 2 and paid amoun < order total, set payment on hold
+     *
      * @return void
      */
     public function execute()

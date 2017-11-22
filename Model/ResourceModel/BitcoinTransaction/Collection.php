@@ -1,6 +1,6 @@
 <?php
 /**
- * Blockonomics payment method model
+ * Blockonomics bitcoin transaction collection
  *
  * @category    Blockonomics
  * @package     Blockonomics_Merchant

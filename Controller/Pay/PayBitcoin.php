@@ -8,6 +8,7 @@
  * @copyright   Blockonomics (https://blockonomics.com)
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
+
 namespace Blockonomics\Merchant\Controller\Pay;
 
 use \Magento\Framework\App\Action\Action;
@@ -21,11 +22,6 @@ class PayBitcoin extends Action
 
     protected $_resultPageFactory;
 
-    /**
-     * @param Context $context
-     * @param Registry $coreRegistry
-     * @param PageFactory $resultPageFactory
-     */
     public function __construct(
         Context $context,
         PageFactory $resultPageFactory
@@ -38,7 +34,6 @@ class PayBitcoin extends Action
 
     /**
      * @return Page
-     * @throws LocalizedException
      */
     public function execute()
     {

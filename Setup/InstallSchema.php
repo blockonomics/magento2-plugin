@@ -1,5 +1,13 @@
 <?php
-
+/**
+ * Blockonomics schema installation
+ *
+ * @category    Blockonomics
+ * @package     Blockonomics_Merchant
+ * @author      Blockonomics
+ * @copyright   Blockonomics (https://blockonomics.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
 
 namespace Blockonomics\Merchant\Setup;
 
@@ -21,7 +29,6 @@ class InstallSchema implements InstallSchemaInterface
         $installer = $setup;
         $installer->startSetup();
 
-        // Get tutorial_simplenews table
         $tableName = $installer->getTable('blockonomics_bitcoin_orders');
 
         // Check if the table already exists

@@ -1,6 +1,6 @@
 <?php
 /**
- * Blockonomics payment method model
+ * Blockonomics payment model
  *
  * @category    Blockonomics
  * @package     Blockonomics_Merchant
@@ -8,6 +8,7 @@
  * @copyright   Blockonomics (https://blockonomics.com)
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
+
 namespace Blockonomics\Merchant\Model;
 
 use Magento\Directory\Model\CountryFactory;
@@ -33,7 +34,6 @@ use Magento\Backend\Model\Session;
 
 class Payment extends AbstractMethod
 {
-    //const BLOCKONOMICS_MAGENTO_VERSION = '1.0.0';
     const CODE = 'blockonomics_merchant';
 
     protected $_code = 'blockonomics_merchant';
@@ -45,24 +45,6 @@ class Payment extends AbstractMethod
     protected $_invoiceService;
     protected $backendSession;
 
-    /**
-     * @param Context $context
-     * @param Registry $registry
-     * @param ExtensionAttributesFactory $extensionFactory
-     * @param AttributeValueFactory $customAttributeFactory
-     * @param Data $paymentData
-     * @param ScopeConfigInterface $scopeConfig
-     * @param Logger $logger
-     * @param UrlInterface $urlBuilder
-     * @param StoreManagerInterface $storeManager
-     * @param AbstractResource|null $resource
-     * @param AbstractDb|null $resourceCollection
-     * @param array $data
-     * @internal param ModuleListInterface $moduleList
-     * @internal param TimezoneInterface $localeDate
-     * @internal param CountryFactory $countryFactory
-     * @internal param Http $response
-     */
     public function __construct(
         Context $context,
         Registry $registry,
@@ -102,7 +84,7 @@ class Payment extends AbstractMethod
     }
 
     /**
-     * @param Int orderId
+     * @param Int $orderId
      * @return true if created a new invoice, false if no creation happened
      */
     public function createInvoice($orderId = -1)
@@ -124,7 +106,10 @@ class Payment extends AbstractMethod
     }
 
     /**
-     * @param Int orderId
+     * Set state and status of order
+     *
+     * @param Str $state
+     * @param Int $orderId
      */
     public function updateOrderStateAndStatus($orderId = -1, $state)
     {

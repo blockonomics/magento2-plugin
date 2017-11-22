@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!--
 /**
- * Blockonomics payment method model
+ * Blockonomics checkout view
  *
  * @category    Blockonomics
  * @package     Blockonomics_Merchant

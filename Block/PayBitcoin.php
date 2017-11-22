@@ -1,13 +1,14 @@
 <?php
 /**
- * Blockonomics PayBitcoin block
+ * Blockonomics block for paying bitcoin
  *
  * @category    Blockonomics
  * @package     Blockonomics_Merchant
  * @author      Blockonomics
- * @copyright   Blockonomics (https://blockonomics.com)
+ * @copyright   Blockonomics (https://blockonomics.co)
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
+
 namespace Blockonomics\Merchant\Block;
 
 use Magento\Framework\Exception\LocalizedException;
@@ -31,11 +32,6 @@ class PayBitcoin extends Template
     const NEW_ADDRESS_URL = 'https://www.blockonomics.co/api/new_address';
     const PRICE_URL = 'https://www.blockonomics.co/api/price';
 
-    /**
-     * Constructor
-     * @param Context $context
-     * @param array $data
-     */
     public function __construct(
         Context $context,
         Session $backendSession,
@@ -51,8 +47,7 @@ class PayBitcoin extends Template
     }
 
     /**
-     * @return Current order id
-     * @throws LocalizedException
+     * @return Current order id from backend session
      */
     public function getOrderId()
     {
@@ -60,6 +55,7 @@ class PayBitcoin extends Template
     }
 
     /**
+     * @param int $orderId
      * @return Order by id
      */
     public function getOrderById($orderId)
@@ -68,7 +64,7 @@ class PayBitcoin extends Template
     }
 
     /**
-     * @return Order bitcoin payment address if has any, if not return empty string
+     * @return Order bitcoin payment address from db if has any, if not return empty string
      */
     public function getOrderBitcoinAddress()
     {
@@ -105,7 +101,6 @@ class PayBitcoin extends Template
         return $new_address->address;
     }
 
-
     /**
      * @return Convert currency to fiat currency
      */
@@ -116,6 +111,9 @@ class PayBitcoin extends Template
         return $order->getGrandTotal();
     }
 
+    /**
+     * @return Currency code from store
+     */
     public function getCurrencyCode()
     {
         return $this->_storeManager->getStore()->getCurrentCurrency()->getCode();
@@ -140,6 +138,9 @@ class PayBitcoin extends Template
         return intval(1.0e8*$order_total_price/$price->price);
     }
 
+    /**
+     * Create new order into database
+     */
     public function createNewBitcoinTransaction($address)
     {
         $objectManager = ObjectManager::getInstance();

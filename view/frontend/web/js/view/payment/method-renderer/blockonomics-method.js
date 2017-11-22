@@ -1,5 +1,5 @@
 /**
- * Blockonomics JS
+ * Blockonomics method renderer
  *
  * @category    Blockonomics
  * @package     Blockonomics_Merchant

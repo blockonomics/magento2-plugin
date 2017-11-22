@@ -8,6 +8,7 @@
  * @copyright   Blockonomics (https://blockonomics.com)
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
+
 namespace Blockonomics\Merchant\Controller\Payment;
 
 use Blockonomics\Merchant\Model\Payment as BlockonomicsPayment;
@@ -24,12 +25,6 @@ class PlaceOrder extends Action
     protected $checkoutSession;
     protected $backendSession;
 
-    /**
-     * @param Context $context
-     * @param OrderFactory $orderFactory
-     * @param Session $checkoutSession
-     * @param BlockonomicsPayment $blockonomicsPayment
-     */
     public function __construct(
         Context $context,
         OrderFactory $orderFactory,
@@ -46,6 +41,11 @@ class PlaceOrder extends Action
         $this->blockonomicsPayment = $blockonomicsPayment;
     }
 
+    /**
+     * On calling this, get checkout session order id and save it to backend session
+     *
+     * @return void
+     */
     public function execute()
     {
         $id = $this->checkoutSession->getLastOrderId();
