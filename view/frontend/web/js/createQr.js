@@ -34,6 +34,7 @@ function($, qrcode, ReconnectingWebSocket, url) {
 
 	//Websocket
 	var ws = new ReconnectingWebSocket("wss://www.blockonomics.co/payment/" + btcAddress + "?timestamp=" + seconds);
+	
 	ws.onmessage = function (evt) {
 		ws.close();
 		var urlToRedir = url.build('checkout/onepage/success');
@@ -47,6 +48,7 @@ var timeLeftElem = document.getElementById("time-left");
 var totalTime = 600;
 var timeLeft = totalTime;
 
+// On every tick, update progressbar width to be percentage of total time divided by time left
 function tick() {
 	timeLeft--;
 	var timeLeftPercentage = timeLeft / totalTime * 100;
