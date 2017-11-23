@@ -36,20 +36,13 @@ function($, qrcode, ReconnectingWebSocket, url) {
 	var ws = new ReconnectingWebSocket("wss://www.blockonomics.co/payment/" + btcAddress + "?timestamp=" + seconds);
 	ws.onmessage = function (evt) {
 		ws.close();
-		//$interval(function(){
-			//Redirect to order received page
-			var urlToRedir = url.build('checkout/onepage/success');
-			window.location.href = urlToRedir;
-			//Wait for 2 seconds for order status
-			//to update on server
-		//}, 2000, 1);
+		var urlToRedir = url.build('checkout/onepage/success');
+		window.location.href = urlToRedir;
 	}
 
-  //window.setInterval(tick, 1000);
+  window.setInterval(tick, 1000);
 });
 
-/*
- * This will be functional in Ver 0.2
 var timeLeftElem = document.getElementById("time-left");
 var totalTime = 600;
 var timeLeft = totalTime;
@@ -59,4 +52,3 @@ function tick() {
 	var timeLeftPercentage = timeLeft / totalTime * 100;
 	timeLeftElem.style.width = timeLeftPercentage + "%";
 }
-*/
