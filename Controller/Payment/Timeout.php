@@ -1,3 +1,4 @@
+
 <?php
 /**
  * Blockonomics Callback controller
@@ -45,12 +46,7 @@ class Callback extends Action
     }
 
     /**
-     * When this callback is called, get parameters from GET query and decide
-     * correct action using them
-     *
-     * If status = 0, set payment pending
-     * If status = 2 and paid amoun >= order total, set order processing and create invoice
-     * If status = 2 and paid amoun < order total, set payment on hold
+     * When order payment has timed out, this page is called, update payment status to On Hold
      *
      * @return void
      */
@@ -59,10 +55,7 @@ class Callback extends Action
 
         // GET parameters from callback
         $secret = $this->getRequest()->getParam('secret');
-        $status = $this->getRequest()->getParam('status');
         $addr   = $this->getRequest()->getParam('addr');
-        $value  = $this->getRequest()->getParam('value');
-        $txid   = $this->getRequest()->getParam('txid');
 
         // Get secret set in core_config_data
         $stored_secret = $this->scopeConfig->getValue('payment/blockonomics_merchant/callback_secret', ScopeInterface::SCOPE_STORE);
@@ -77,30 +70,13 @@ class Callback extends Action
 
         foreach ($collection as $item) {
             $orderId = $item->getIdOrder();
-
-            if ($status == 0) {
-                $this->blockonomicsPayment->updateOrderStateAndStatus($orderId, 'pending');
-            }
-
-            if ($status == 2) {
-                // Check if paid amount is greater or equal to order sum
-                if ($value >= $item->getBits()) {
-                    $newInvoiceCreated = $this->blockonomicsPayment->createInvoice($orderId);
-                    $this->blockonomicsPayment->updateOrderStateAndStatus($orderId, 'processing');
-                }
-
-                if ($value < $item->getBits()) {
-                    $this->blockonomicsPayment->updateOrderStateAndStatus($orderId, 'holded');
-                }
-            }
-
-            $item->setStatus($status);
-            $item->setBitsPayed($value);
-            $item->setTxId($txid);
-
-            $item->save();
+            $this->blockonomicsPayment->updateOrderStateAndStatus($orderId, 'holded');
         }
 
-        $this->getResponse()->setBody('OK');
+        $item->setStatus(-1);
+        $item->setBitsPayed(0);
+
+        $item->save();
+
     }
 }
