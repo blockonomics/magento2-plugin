@@ -1,4 +1,3 @@
-
 <?php
 /**
  * Blockonomics Callback controller
@@ -10,7 +9,7 @@
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
-namespace Blockonomics\Merchant\Controller\Payment;
+namespace Blockonomics\Merchant\Controller\Timeout;
 
 use Blockonomics\Merchant\Model\Payment as BlockonomicsPayment;
 use Magento\Framework\App\Action\Action;
@@ -22,7 +21,7 @@ use Blockonomics\Merchant\Model\ResourceModel\BitcoinTransaction\Collection;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface;
 
-class Callback extends Action
+class Timeout extends Action
 {
     protected $order;
     protected $blockonomicsPayment;
@@ -72,9 +71,6 @@ class Callback extends Action
             $orderId = $item->getIdOrder();
             $this->blockonomicsPayment->updateOrderStateAndStatus($orderId, 'holded');
         }
-
-        $item->setStatus(-1);
-        $item->setBitsPayed(0);
 
         $item->save();
 
