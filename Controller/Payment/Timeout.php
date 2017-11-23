@@ -78,5 +78,6 @@ class Callback extends Action
 
         $item->save();
 
+        $this->getResponse()->setBody('OK');
     }
 }
