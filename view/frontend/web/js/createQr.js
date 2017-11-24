@@ -37,20 +37,30 @@ function($, qrcode, ReconnectingWebSocket, url) {
 	
 	ws.onmessage = function (evt) {
 		ws.close();
-		var urlToRedir = url.build('checkout/onepage/success');
-		window.location.href = urlToRedir;
+		redirectToURL('checkout/onepage/success');
 	}
 
   window.setInterval(tick, 1000);
+
+	var timeLeftElem = document.getElementById("time-left");
+	var totalTime = 12;
+	var timeLeft = totalTime;
+
+	// On every tick, update progressbar width to be percentage of total time divided by time left
+	function tick() {
+		timeLeft--;
+		
+		var timeLeftPercentage = timeLeft / totalTime * 100;
+		timeLeftElem.style.width = timeLeftPercentage + "%";
+
+		if(timeLeft <= 0) {
+			redirectToURL('blockonomics/payment/timeout');
+		}
+	}
+
+	// Build url and redirect to it
+	function redirectToURL(urlToDir) {
+		var urlToRedir = url.build(urlToDir);
+		window.location.href = urlToRedir;
+	}
 });
-
-var timeLeftElem = document.getElementById("time-left");
-var totalTime = 600;
-var timeLeft = totalTime;
-
-// On every tick, update progressbar width to be percentage of total time divided by time left
-function tick() {
-	timeLeft--;
-	var timeLeftPercentage = timeLeft / totalTime * 100;
-	timeLeftElem.style.width = timeLeftPercentage + "%";
-}
