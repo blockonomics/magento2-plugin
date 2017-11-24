@@ -9,9 +9,10 @@
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
-namespace Blockonomics\Merchant\Controller\Timeout;
+namespace Blockonomics\Merchant\Controller\Payment;
 
 use Blockonomics\Merchant\Model\Payment as BlockonomicsPayment;
+use Blockonomics\Merchant\Block\PayBitcoin;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Sales\Model\Order;
@@ -26,12 +27,14 @@ class Timeout extends Action
     protected $order;
     protected $blockonomicsPayment;
     protected $transactionCollection;
+    protected $payBitcoin;
     protected $scopeConfig;
 
     public function __construct(
         Context $context,
         Order $order,
         BlockonomicsPayment $blockonomicsPayment,
+        PayBitcoin $payBitcoin,
         ScopeConfigInterface $scopeConfig,
         Collection $transactionCollection
     ) {
@@ -40,6 +43,7 @@ class Timeout extends Action
 
         $this->order = $order;
         $this->blockonomicsPayment = $blockonomicsPayment;
+        $this->payBitcoin = $payBitcoin;
         $this->scopeConfig = $scopeConfig;
         $this->transactionCollection = $transactionCollection;
     }
@@ -70,10 +74,15 @@ class Timeout extends Action
         foreach ($collection as $item) {
             $orderId = $item->getIdOrder();
             $this->blockonomicsPayment->updateOrderStateAndStatus($orderId, 'holded');
+
+            $order = $this->payBitcoin->getOrderById($orderId);
+            $order->addStatusHistoryComment('Order payment has timed out');
+            $order->save();
         }
 
         $item->save();
 
-        $this->getResponse()->setBody('OK');
+        $this->_redirect('checkout/onepage/failure');
+        //$this->getResponse()->setBody('OK');
     }
 }
