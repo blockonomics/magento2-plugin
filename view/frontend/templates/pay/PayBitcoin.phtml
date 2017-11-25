@@ -13,7 +13,9 @@ $btc_address = $block->getOrderBitcoinAddress();
 
 if ($btc_address === '') {
     $btc_address = $block->getNewAddress();
-    $block->createNewBitcoinTransaction($btc_address);
+    $orderTimestamp = $block->createNewBitcoinTransaction($btc_address);
+} else {
+    $orderTimestamp = $block->getOrderTimestamp();
 }
 
 $satoshi_amount = $block->getOrderPriceInBitcoin()/1.0e8;
@@ -28,6 +30,7 @@ $btc_href = "bitcoin:".$btc_address."?amount=".$satoshi_amount;
 
 <div id="btc-href" data-href="<?php echo $btc_href ?>"></div>
 <div id="btc-address" data-address="<?php echo $btc_address ?>"></div>
+<div id="order-timestamp" data-timestamp="<?php echo $orderTimestamp ?>"></div>
 
 <script type="text/x-magento-init">
 {

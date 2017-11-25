@@ -29,7 +29,7 @@ class PayBitcoin extends Template
     protected $transactionCollection;
 
     // If debug mode is enabled, reuse bitcoin addresses
-    const DEBUG = false;
+    const DEBUG = true;
 
     const BASE_URL = 'https://www.blockonomics.co';
     const PRICE_URL = 'https://www.blockonomics.co/api/price';
@@ -152,21 +152,33 @@ class PayBitcoin extends Template
         $objectManager = ObjectManager::getInstance();
         $bitcoinTransaction = $objectManager->create('Blockonomics\Merchant\Model\BitcoinTransaction');
 
+        $orderTimestamp = time();
+        $this->backendSession->setData('orderTimestamp', $orderTimestamp);
+
         $bitcoinTransaction->setIdOrder($this->getOrderId());
-        $bitcoinTransaction->setTimestamp(time());
+        $bitcoinTransaction->setTimestamp($orderTimestamp);
         $bitcoinTransaction->setAddr($address);
         $bitcoinTransaction->setStatus(-1);
         $bitcoinTransaction->setValue($this->getOrderPriceInFiat());
         $bitcoinTransaction->setBits($this->getOrderPriceInBitcoin());
 
         $bitcoinTransaction->save();
+
+        return $orderTimestamp;
+    }
+
+    /**
+     * @return Order timestamp
+     */
+    public function getOrderTimestamp() {
+        return $this->backendSession->getData('orderTimestamp', false);
     }
 
     /**
      * @return Secret from core_config
      */
     public function getSecret() {
-        return $this->scopeConfig->getValue('payment/blockonomics_merchant/callback_secret', ScopeInterface::SCOPE_STORE);;
+        $session_secret = $this->backendSession->getData('sessionSecret', true);
     }
 
     /**
