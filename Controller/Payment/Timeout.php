@@ -21,6 +21,8 @@ use Blockonomics\Merchant\Model\BitcoinTransaction;
 use Blockonomics\Merchant\Model\ResourceModel\BitcoinTransaction\Collection;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface;
+use \Magento\Framework\View\Result\PageFactory;
+use \Magento\Framework\View\Result\Page;
 
 class Timeout extends Action
 {
@@ -29,6 +31,7 @@ class Timeout extends Action
     protected $transactionCollection;
     protected $payBitcoin;
     protected $scopeConfig;
+    protected $resultPageFactory;
 
     public function __construct(
         Context $context,
@@ -36,7 +39,8 @@ class Timeout extends Action
         BlockonomicsPayment $blockonomicsPayment,
         PayBitcoin $payBitcoin,
         ScopeConfigInterface $scopeConfig,
-        Collection $transactionCollection
+        Collection $transactionCollection,
+        PageFactory $resultPageFactory
     ) {
     
         parent::__construct($context);
@@ -46,6 +50,7 @@ class Timeout extends Action
         $this->payBitcoin = $payBitcoin;
         $this->scopeConfig = $scopeConfig;
         $this->transactionCollection = $transactionCollection;
+        $this->resultPageFactory = $resultPageFactory;
     }
 
     /**
@@ -81,8 +86,11 @@ class Timeout extends Action
         }
 
         $item->save();
+        
+        $resultPage = $this->_resultPageFactory->create();
+        return $resultPage;
 
-        $this->_redirect('checkout/onepage/failure');
+        //$this->_redirect('checkout/onepage/failure');
         //$this->getResponse()->setBody('OK');
     }
 }
