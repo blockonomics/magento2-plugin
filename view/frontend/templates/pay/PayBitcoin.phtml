@@ -44,9 +44,13 @@ $btc_href = "bitcoin:".$btc_address."?amount=".$satoshi_amount;
     <div id="time-left" style="width: 100%;height: 7px;background: #666;left: 0;position: absolute;top: 0;"></div>
 </div>
 
-<div>
+<div class="left">
     <span>Order# <?php echo $block->getOrderId(); ?></span>
 </div>
+<div class="right big-text">
+    <span id="time-left-span"></span>
+</div>
+<div class="clear"></div>
 
 <h2>To pay, send exact amount of BTC to the given address</h2>
 

@@ -7,7 +7,7 @@
  * @copyright   Blockonomics (https://blockonomics.com)
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
- 
+
 define([
   "jquery",
   "Blockonomics_Merchant/js/qrcode.min",
@@ -31,6 +31,8 @@ function($, qrcode, ReconnectingWebSocket, url) {
 
   var timestampDiv = document.getElementById("order-timestamp");
   var orderTimestamp = timestampDiv.dataset.timestamp;
+
+  var timeLeftSpan = document.getElementById("time-left-span");
 
   // Seconds now from epoch
 	var d = new Date();
@@ -59,10 +61,11 @@ function($, qrcode, ReconnectingWebSocket, url) {
 		var timeLeftPercentage = timeLeft / totalTime * 100;
 		timeLeftElem.style.width = timeLeftPercentage + "%";
 
-		if(timeLeft <= 0) {
-			//redirectToURL('blockonomics/payment/timeout?addr=' + btcAddress);
+		timeLeftSpan.innerHTML = new Date(timeLeft * 1000).toISOString().substr(14, 5);
+
+		if(timeLeft < 0) {
+			redirectToURL('blockonomics/payment/timeout?addr=' + btcAddress);
 		}
-		console.log(timeLeft);
 	}
 
 	// Build url and redirect to it

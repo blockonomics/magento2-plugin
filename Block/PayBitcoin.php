@@ -29,7 +29,7 @@ class PayBitcoin extends Template
     protected $transactionCollection;
 
     // If debug mode is enabled, reuse bitcoin addresses
-    const DEBUG = true;
+    const DEBUG = false;
 
     const BASE_URL = 'https://www.blockonomics.co';
     const PRICE_URL = 'https://www.blockonomics.co/api/price';

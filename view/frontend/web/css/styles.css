@@ -49,3 +49,19 @@
 .red {
 	color: #FF0000;
 }
+
+.left {
+	float: left;
+}
+
+.right {
+	float: right;
+}
+
+.big-text {
+	font-size: 1.5em;
+}
+
+.clear {
+	clear: both;
+}
