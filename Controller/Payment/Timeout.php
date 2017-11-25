@@ -23,6 +23,7 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface;
 use \Magento\Framework\View\Result\PageFactory;
 use \Magento\Framework\View\Result\Page;
+use Magento\Backend\Model\Session as BackendSession;
 
 class Timeout extends Action
 {
@@ -32,10 +33,12 @@ class Timeout extends Action
     protected $payBitcoin;
     protected $scopeConfig;
     protected $resultPageFactory;
+    protected $backendSession;
 
     public function __construct(
         Context $context,
         Order $order,
+        BackendSession $backendSession,
         BlockonomicsPayment $blockonomicsPayment,
         PayBitcoin $payBitcoin,
         ScopeConfigInterface $scopeConfig,
@@ -51,6 +54,7 @@ class Timeout extends Action
         $this->scopeConfig = $scopeConfig;
         $this->transactionCollection = $transactionCollection;
         $this->resultPageFactory = $resultPageFactory;
+        $this->backendSession = $backendSession;
     }
 
     /**
@@ -67,9 +71,10 @@ class Timeout extends Action
 
         // Get secret set in core_config_data
         $stored_secret = $this->scopeConfig->getValue('payment/blockonomics_merchant/callback_secret', ScopeInterface::SCOPE_STORE);
+        $session_secret = $this->backendSession->getData('sessionSecret', false);
 
         // If callback secret does not match, return
-        if ($secret != $stored_secret) {
+        if ($session_secret != $stored_secret) {
             $this->getResponse()->setBody('AUTH ERROR');
             return;
         }
@@ -86,8 +91,8 @@ class Timeout extends Action
         }
 
         $item->save();
-        
-        $resultPage = $this->_resultPageFactory->create();
+
+        $resultPage = $this->resultPageFactory->create();
         return $resultPage;
 
         //$this->_redirect('checkout/onepage/failure');

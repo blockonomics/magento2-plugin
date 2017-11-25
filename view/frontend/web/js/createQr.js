@@ -28,9 +28,6 @@ function($, qrcode, ReconnectingWebSocket, url) {
   var btcAddressDiv = document.getElementById("btc-address");
   var btcAddress = btcAddressDiv.dataset.address;
 
-  var secretDiv = document.getElementById("secret");
-  var secret = secretDiv.dataset.secret;
-
   // Seconds now from epoch
 	var d = new Date();
 	var seconds = Math.round(d.getTime() / 1000);
@@ -57,7 +54,7 @@ function($, qrcode, ReconnectingWebSocket, url) {
 		timeLeftElem.style.width = timeLeftPercentage + "%";
 
 		if(timeLeft <= 0) {
-			redirectToURL('blockonomics/payment/timeout?secret=' + secret + '&addr=' + btcAddress);
+			redirectToURL('blockonomics/payment/timeout?addr=' + btcAddress);
 		}
 	}
 

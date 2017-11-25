@@ -168,4 +168,13 @@ class PayBitcoin extends Template
     public function getSecret() {
         return $this->scopeConfig->getValue('payment/blockonomics_merchant/callback_secret', ScopeInterface::SCOPE_STORE);;
     }
+
+    /**
+     * Set secret from core_config to session data
+     * This way we can easily authenticate the timeout
+     */
+    public function setSectretToSession() {
+        $secret = $this->getSecret();
+        $this->backendSession->setData('sessionSecret', $secret);
+    }
 }
