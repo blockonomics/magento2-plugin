@@ -28,9 +28,12 @@ class PayBitcoin extends Template
     protected $backendSession;
     protected $transactionCollection;
 
+    // If debug mode is enabled, reuse bitcoin addresses
+    const DEBUG = false;
+
     const BASE_URL = 'https://www.blockonomics.co';
-    const NEW_ADDRESS_URL = 'https://www.blockonomics.co/api/new_address';
     const PRICE_URL = 'https://www.blockonomics.co/api/price';
+    const NEW_ADDRESS_URL = 'https://www.blockonomics.co/api/new_address';
 
     public function __construct(
         Context $context,
@@ -96,7 +99,10 @@ class PayBitcoin extends Template
         ];
 
         $context = stream_context_create($options);
-        $contents = file_get_contents($this::NEW_ADDRESS_URL."?match_callback=$secret", false, $context);
+
+        $separator = $this::DEBUG ? '?reset=1&' : '?';
+
+        $contents = file_get_contents($this::NEW_ADDRESS_URL.$separator."match_callback=$secret", false, $context);
         $new_address = json_decode($contents);
         return $new_address->address;
     }
