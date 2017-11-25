@@ -71,7 +71,7 @@ class Timeout extends Action
 
         // Get secret set in core_config_data
         $stored_secret = $this->scopeConfig->getValue('payment/blockonomics_merchant/callback_secret', ScopeInterface::SCOPE_STORE);
-        $session_secret = $this->backendSession->getData('sessionSecret', false);
+        $session_secret = $this->backendSession->getData('sessionSecret', true);
 
         // If callback secret does not match, return
         if ($session_secret != $stored_secret) {
@@ -94,8 +94,5 @@ class Timeout extends Action
 
         $resultPage = $this->resultPageFactory->create();
         return $resultPage;
-
-        //$this->_redirect('checkout/onepage/failure');
-        //$this->getResponse()->setBody('OK');
     }
 }
