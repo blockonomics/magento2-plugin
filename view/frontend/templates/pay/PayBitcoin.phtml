@@ -19,12 +19,15 @@ if ($btc_address === '') {
 $satoshi_amount = $block->getOrderPriceInBitcoin()/1.0e8;
 $fiat_amount = $block->getOrderPriceInFiat();
 $currency_code = $block->getCurrencyCode();
+$secret = $block->getSecret();
+
 $btc_href = "bitcoin:".$btc_address."?amount=".$satoshi_amount;
 
 ?>
 
 <div id="btc-href" data-href="<?php echo $btc_href ?>"></div>
 <div id="btc-address" data-address="<?php echo $btc_address ?>"></div>
+<div id="secret" data-secret="<?php echo $secret ?>"></div>
 
 <script type="text/x-magento-init">
 {

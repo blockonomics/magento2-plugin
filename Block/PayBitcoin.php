@@ -161,4 +161,11 @@ class PayBitcoin extends Template
 
         $bitcoinTransaction->save();
     }
+
+    /**
+     * @return Secret from core_config
+     */
+    public function getSecret() {
+        return $this->scopeConfig->getValue('payment/blockonomics_merchant/callback_secret', ScopeInterface::SCOPE_STORE);;
+    }
 }
