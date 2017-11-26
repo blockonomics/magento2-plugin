@@ -39,7 +39,11 @@ class Custom extends Template
         	$paid = $item->getBitsPayed();
         }
 
-        if($expected && $paid) {
+        if($expected && !$paid) {
+        	$paid = '0';
+        }
+
+        if($expected || $paid) {
         	return array('expected'=>$expected, 'paid'=>$paid);
         }
 

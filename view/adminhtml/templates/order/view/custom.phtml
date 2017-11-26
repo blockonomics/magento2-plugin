@@ -2,18 +2,14 @@
 $paymentInfo = $block->getOrderPaymentAmounts();
 
 if($paymentInfo['expected']) {
-	$expected = $paymentInfo['expected'];
+	$expected = $paymentInfo['expected']/1.0e8;
+	$paid = $paymentInfo['paid']/1.0e8;
 } else {
 	$expected = 'Info not available';
-}
-
-if($paymentInfo['paid']) {
-	$paid = $paymentInfo['paid'];
-} else {
 	$paid = 'Info not available';
 }
 
 ?>
 
-<div class="top-margin"><b>Expected amount: </b><?php echo $expected?></div>
-<div class="top-margin"><b>Paid amount: </b> <?php echo $paid?></div>
+<div class="top-margin"><b>Expected amount: </b><?php echo $expected?> BTC</div>
+<div class="top-margin"><b>Paid amount: </b> <?php echo $paid?> BTC</div>
