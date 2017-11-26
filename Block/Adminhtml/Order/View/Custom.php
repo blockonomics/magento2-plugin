@@ -13,13 +13,36 @@ namespace Blockonomics\Merchant\Block\Adminhtml\Order\View;
 
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
+use Blockonomics\Merchant\Model\BitcoinTransaction;
+use Blockonomics\Merchant\Model\ResourceModel\BitcoinTransaction\Collection;
 
 class Custom extends Template
 {
+    protected $transactionCollection;
 
     public function __construct(
-        Context $context
+        Context $context,
+        Collection $transactionCollection
     ) {
         parent::__construct($context);
+        $this->transactionCollection = $transactionCollection;
+    }
+
+    public function getOrderPaymentAmounts() {
+        $order_id = $this->getRequest()->getParam('order_id');
+        $collection = $this->transactionCollection->addFieldToFilter('id_order', $order_id);
+        $expected = '';
+        $paid = '';
+
+        foreach ($collection as $item) {
+        	$expected = $item->getBits();
+        	$paid = $item->getBitsPayed();
+        }
+
+        if($expected && $paid) {
+        	return array('expected'=>$expected, 'paid'=>$paid);
+        }
+
+        return null;
     }
 }

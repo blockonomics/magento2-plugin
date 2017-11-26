@@ -1,1 +1,19 @@
-<h1>Hi, I am here!</h1>
+<?php
+$paymentInfo = $block->getOrderPaymentAmounts();
+
+if($paymentInfo['expected']) {
+	$expected = $paymentInfo['expected'];
+} else {
+	$expected = 'Info not available';
+}
+
+if($paymentInfo['paid']) {
+	$paid = $paymentInfo['paid'];
+} else {
+	$paid = 'Info not available';
+}
+
+?>
+
+<div class="top-margin"><b>Expected amount: </b><?php echo $expected?></div>
+<div class="top-margin"><b>Paid amount: </b> <?php echo $paid?></div>
