@@ -28,10 +28,6 @@ $btc_href = "bitcoin:".$btc_address."?amount=".$satoshi_amount;
 
 ?>
 
-<div id="btc-href" data-href="<?php echo $btc_href ?>"></div>
-<div id="btc-address" data-address="<?php echo $btc_address ?>"></div>
-<div id="order-timestamp" data-timestamp="<?php echo $orderTimestamp ?>"></div>
-
 <script type="text/x-magento-init">
 {
     "#qrcode": {
@@ -40,33 +36,43 @@ $btc_href = "bitcoin:".$btc_address."?amount=".$satoshi_amount;
 }
 </script>
 
-<div style="width: 100%;height: 7px;background: #ddd;margin: 20px 0;overflow: hidden;position: relative;">
-    <div id="time-left" style="width: 100%;height: 7px;background: #666;left: 0;position: absolute;top: 0;"></div>
+<div id="payment-view">
+    <div id="btc-href" data-href="<?php echo $btc_href ?>"></div>
+    <div id="btc-address" data-address="<?php echo $btc_address ?>"></div>
+    <div id="order-timestamp" data-timestamp="<?php echo $orderTimestamp ?>"></div>
+
+    <div style="width: 100%;height: 7px;background: #ddd;margin: 20px 0;overflow: hidden;position: relative;">
+        <div id="time-left" style="width: 100%;height: 7px;background: #666;left: 0;position: absolute;top: 0;"></div>
+    </div>
+
+    <div class="left big-text">
+        <span>Order# <?php echo $block->getOrderId(); ?></span>
+    </div>
+    <div class="right big-text">
+        <span id="time-left-span"></span>
+    </div>
+    <div class="clear"></div>
+
+    <h2>To pay, send exact amount of BTC to the given address</h2>
+
+    <div id="address-div">
+        <h4>Bitcoin address</h4>
+        <a id="btc-address-a" href="<?php echo $btc_href ?>">
+            <div id="qrcode"></div>
+        </a>
+        <h4>Click on the qr code above to open in wallet</h4>
+    </div>
+
+    <div id="amount-div">
+        <h4>Amount</h4>
+        <h5><?php echo $satoshi_amount ?> BTC ⇌ <?php echo $fiat_amount?> <?php echo $currency_code?></h5>
+    </div>
+
+    <div style="clear: both;"></div>
+
+    <label id="btc-address-label"><?php echo $btc_address ?></label>
+
+    <div class="padding">
+        <h3>Powered by <a href="https://www.blockonomics.co/" target="_blank">Blockonomics</a></h3>
+    </div>
 </div>
-
-<div class="left">
-    <span>Order# <?php echo $block->getOrderId(); ?></span>
-</div>
-<div class="right big-text">
-    <span id="time-left-span"></span>
-</div>
-<div class="clear"></div>
-
-<h2>To pay, send exact amount of BTC to the given address</h2>
-
-<div id="address-div">
-    <h4>Bitcoin address</h4>
-    <a id="btc-address-a" href="<?php echo $btc_href ?>">
-        <div id="qrcode"></div>
-    </a>
-    <h4>Click on the qr code above to open in wallet</h4>
-</div>
-
-<div id="amount-div">
-    <h4>Amount</h4>
-    <h5><?php echo $satoshi_amount ?> BTC ⇌ <?php echo $fiat_amount?> <?php echo $currency_code?></h5>
-</div>
-
-<div style="clear: both;"></div>
-
-<label id="btc-address-label"><?php echo $btc_address ?></label>

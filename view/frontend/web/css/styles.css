@@ -65,3 +65,24 @@
 .clear {
 	clear: both;
 }
+
+.padding {
+	padding: 1em;
+}
+
+@media (max-width: 601px) {
+	#payment-view {
+		text-align: center;
+	}
+	#address-div, #amount-div {
+		float: none;
+		max-width: none;
+		margin-left: 0;
+	}
+}
+
+@media (max-width: 430px) {
+	#btc-address-label {
+		font-size: 1em;
+	}
+}
