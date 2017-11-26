@@ -22,6 +22,10 @@
 				<field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="2" translate="label" type="text">
 					<label>Title</label>
 				</field>
+                <comment>
+                    <![CDATA[<a href="https://www.blockonomics.co/blockonomics#/settings" target="_blank">Get your API key</a> | 
+                    <a href="https://www.blockonomics.co/merchants#/page6" target="_blank">Set your callback</a> ]]>
+                </comment>
                 <field id="app_key" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>API Key</label>
                 </field>
