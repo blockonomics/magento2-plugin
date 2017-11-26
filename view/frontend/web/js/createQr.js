@@ -49,7 +49,7 @@ function($, qrcode, ReconnectingWebSocket, url) {
   window.setInterval(tick, 1000);
 
 	var timeLeftElem = document.getElementById("time-left");
-	var totalTime = 300;
+	var totalTime = 600;
 	var timeLeft = totalTime;
 
 	// On every tick, update progressbar width to be percentage of total time divided by time left

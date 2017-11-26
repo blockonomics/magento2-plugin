@@ -178,7 +178,7 @@ class PayBitcoin extends Template
      * @return Secret from core_config
      */
     public function getSecret() {
-        $session_secret = $this->backendSession->getData('sessionSecret', true);
+        return $this->scopeConfig->getValue('payment/blockonomics_merchant/callback_secret', ScopeInterface::SCOPE_STORE);
     }
 
     /**
