@@ -11,6 +11,9 @@
 */
 -->
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	  <head>
+        <css src="Blockonomics_Merchant::css/styles.css" />
+    </head>
     <body>      
         <referenceBlock name="payment_additional_info">
             <block class="Blockonomics\Merchant\Block\Adminhtml\Order\View\Custom" name="sales_order_view_custom" template="order/view/custom.phtml" />
