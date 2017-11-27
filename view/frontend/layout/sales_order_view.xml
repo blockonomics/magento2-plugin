@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Blockonomics Customer custom order view
+ *
+ * @category    Blockonomics
+ * @package     Blockonomics_Merchant
+ * @author      Blockonomics
+ * @copyright   Blockonomics (https://blockonomics.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+<body>
+    <referenceContainer name="content">
+        <block class="Blockonomics\Merchant\Block\CustomOrderView" template="Blockonomics_Merchant::CustomOrderView.phtml"></block>
+    </referenceContainer>
+</body>
+</page>
