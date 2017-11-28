@@ -31,6 +31,7 @@ use Magento\Sales\Api\OrderRepositoryInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Sales\Model\Service\InvoiceService;
 use Magento\Backend\Model\Session;
+use Magento\Framework\App\ObjectManager;
 
 class Payment extends AbstractMethod
 {
@@ -42,7 +43,7 @@ class Payment extends AbstractMethod
 
     protected $urlBuilder;
     protected $storeManager;
-    protected $_invoiceService;
+    protected $_invoiceService;    
     protected $backendSession;
 
     public function __construct(
@@ -102,6 +103,12 @@ class Payment extends AbstractMethod
         $invoice = $this->_invoiceService->prepareInvoice($order);
         $invoice->register();
         $invoice->save();
+        
+        $objectManager = ObjectManager::getInstance();
+
+        $this->objectManager->create('Magento\Sales\Model\Service\InvoiceService')->send($invoice);
+        $order->setIsCustomerNotified(true)->save();
+
         return true;
     }
 
