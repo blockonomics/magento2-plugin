@@ -3,7 +3,12 @@ $paymentInfo = $block->getOrderPaymentAmounts();
 
 if($paymentInfo['expected']) {
 	$expected = $paymentInfo['expected']/1.0e8;
-	$paid = $paymentInfo['paid']/1.0e8;
+	
+	if(is_numeric($paymentInfo['paid'])) {
+		$paid = $paymentInfo['paid']/1.0e8 . ' BTC';
+	} else {
+		$paid = $paymentInfo['paid'];
+	}
 } else {
 	$expected = 'Info not available';
 	$paid = 'Info not available';
@@ -15,6 +20,6 @@ $addr = $block->getOrderAddr();
 ?>
 
 <div class="top-margin"><b>Expected amount: </b><?php echo $expected?> BTC</div>
-<div class="top-margin"><b>Paid amount: </b> <?php echo $paid?> BTC</div>
+<div class="top-margin"><b>Paid amount: </b> <?php echo $paid?></div>
 <div class="top-margin"><b>Bitcoin Transaction ID: </b> <a href="https://www.blockonomics.co/api/tx?txid=<?php echo $txid?>&addr=<?php echo $addr?>" target="_blank"><?php echo $txid?></a></div>
 <div class="top-margin"><b>Order address: </b> <?php echo $addr?></div>

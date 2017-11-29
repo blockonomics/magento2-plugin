@@ -40,7 +40,7 @@ class Custom extends Template
         }
 
         if($expected && !$paid) {
-        	$paid = '0';
+        	$paid = 'No payment made';
         }
 
         if($expected || $paid) {
