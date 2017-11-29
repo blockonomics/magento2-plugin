@@ -84,11 +84,11 @@ class Timeout extends Action
         foreach ($collection as $item) {
             $orderId = $item->getIdOrder();
             $this->blockonomicsPayment->updateOrderStateAndStatus($orderId, 'holded');
-
-            $order = $this->payBitcoin->getOrderById($orderId);
-            $order->addStatusHistoryComment('Order payment has timed out');
-            $order->save();
         }
+
+        $order = $this->payBitcoin->getOrderById($orderId);
+        $order->addStatusHistoryComment('Order payment has timed out');
+        $order->save();
 
         $item->save();
 
