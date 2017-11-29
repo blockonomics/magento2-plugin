@@ -106,7 +106,7 @@ class Payment extends AbstractMethod
         
         $objectManager = ObjectManager::getInstance();
 
-        $this->objectManager->create('Magento\Sales\Model\Service\InvoiceService')->send($invoice);
+        $this->$objectManager->create('Magento\Sales\Model\Service\InvoiceService')->send($invoice);
         $order->setIsCustomerNotified(true)->save();
 
         return true;
@@ -140,6 +140,24 @@ class Payment extends AbstractMethod
             $order->setStatus($order->getConfig()->getStateDefaultStatus(Order::STATE_HOLDED));
         }
 
+        $order->save();
+    }
+
+    /**
+     * Add a comment to order
+     *
+     * @param Str $comment
+     * @param Int $orderId
+     */
+    public function addCommentToOrder($comment, $orderId = -1) {
+
+        if ($orderId == -1) {
+            $orderId = $this->backendSession->getData('orderId', false);
+        }
+
+        $order = $this->orderRepository->get($orderId);
+
+        $order->addStatusHistoryComment($comment);
         $order->save();
     }
 }

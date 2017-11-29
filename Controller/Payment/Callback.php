@@ -83,13 +83,21 @@ class Callback extends Action
             }
 
             if ($status == 2) {
-                // Check if paid amount is greater or equal to order sum
-                if ($value >= $item->getBits()) {
+
+                if ($value > $item->getBits()) {
+                    $newInvoiceCreated = $this->blockonomicsPayment->createInvoice($orderId);
+                    $this->blockonomicsPayment->updateOrderStateAndStatus($orderId, 'processing');
+                    $this->blockonomicsPayment->addCommentToOrder('Warning: Paid BTC amount more than expected', $orderId);
+                }
+
+
+                if ($value == $item->getBits()) {
                     $newInvoiceCreated = $this->blockonomicsPayment->createInvoice($orderId);
                     $this->blockonomicsPayment->updateOrderStateAndStatus($orderId, 'processing');
                 }
 
                 if ($value < $item->getBits()) {
+                    $this->blockonomicsPayment->addCommentToOrder('Warning: Paid BTC amount less than expected', $orderId);
                     $this->blockonomicsPayment->updateOrderStateAndStatus($orderId, 'holded');
                 }
             }
