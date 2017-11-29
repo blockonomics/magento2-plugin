@@ -104,11 +104,14 @@ class Payment extends AbstractMethod
         $invoice->register();
         $invoice->save();
         
-        $objectManager = ObjectManager::getInstance();
-
-        $invoiceService = $this->$objectManager->create('Magento\Sales\Model\Service\InvoiceService');
-        $invoiceService->send($invoice);
-        $order->setIsCustomerNotified(true)->save();
+        try {
+            $objectManager = ObjectManager::getInstance();
+            $invoiceService = $this->$objectManager->create('Magento\Sales\Model\Service\InvoiceService');
+            $invoiceService->send($invoice);
+            $order->setIsCustomerNotified(true)->save();
+        } catch(\Exception $e) {
+            echo $e;
+        }
 
         return true;
     }
