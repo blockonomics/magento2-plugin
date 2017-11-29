@@ -98,12 +98,15 @@ class PayBitcoin extends Template
             ]
         ];
 
-        $context = stream_context_create($options);
+        try {
+            $context = stream_context_create($options);
+            $separator = $this::DEBUG ? '?reset=1&' : '?';
+            $contents = file_get_contents($this::NEW_ADDRESS_URL.$separator."match_callback=$secret", false, $context);
+            $new_address = json_decode($contents);
+        } catch(\Exception $e) {
+            return '';
+        }
 
-        $separator = $this::DEBUG ? '?reset=1&' : '?';
-
-        $contents = file_get_contents($this::NEW_ADDRESS_URL.$separator."match_callback=$secret", false, $context);
-        $new_address = json_decode($contents);
         return $new_address->address;
     }
 

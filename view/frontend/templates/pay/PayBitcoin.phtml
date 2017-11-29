@@ -28,6 +28,8 @@ $btc_href = "bitcoin:".$btc_address."?amount=".$satoshi_amount;
 
 ?>
 
+<?php if ($btc_address != ''): ?>
+
 <script type="text/x-magento-init">
 {
     "#qrcode": {
@@ -76,3 +78,12 @@ $btc_href = "bitcoin:".$btc_address."?amount=".$satoshi_amount;
         <h3>Powered by blockonomics</h3>
     </div>
 </div>
+
+<?php else: ?>
+
+<div id="address-error">
+    <h3>Could not generate new bitcoin address.</h3>
+    <i>Note to webmaster: Your webhost is blocking outgoing HTTPS connections. Blockonomics requires an outgoing HTTPS PORT (port 443) to generate new address. Check with your webhost to allow this. Also make sure that <a href="https://www.crybit.com/enable-allow_url_fopen/" target="_blank">allow_url_fopen is On</a> on your server</i>
+</div>
+
+<?php endif ?>
