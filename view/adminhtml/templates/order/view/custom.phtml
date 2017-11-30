@@ -19,7 +19,13 @@ $addr = $block->getOrderAddr();
 
 ?>
 
+
+<?php if ($txid && $addr): ?>
+
 <div class="top-margin"><b>Expected amount: </b><?php echo $expected?> BTC</div>
 <div class="top-margin"><b>Paid amount: </b> <?php echo $paid?></div>
 <div class="top-margin"><b>Bitcoin Transaction ID: </b> <a href="https://www.blockonomics.co/api/tx?txid=<?php echo $txid?>&addr=<?php echo $addr?>" target="_blank"><?php echo $txid?></a></div>
 <div class="top-margin"><b>Order address: </b> <?php echo $addr?></div>
+
+
+<?php endif ?>
