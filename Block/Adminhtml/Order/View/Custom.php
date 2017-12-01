@@ -28,49 +28,52 @@ class Custom extends Template
         $this->transactionCollection = $transactionCollection;
     }
 
-    public function getOrderPaymentAmounts() {
+    public function getOrderPaymentAmounts()
+    {
         $order_id = $this->getRequest()->getParam('order_id');
         $collection = $this->transactionCollection->addFieldToFilter('id_order', $order_id);
         $expected = '';
         $paid = '';
 
         foreach ($collection as $item) {
-        	$expected = $item->getBits();
-        	$paid = $item->getBitsPayed();
+            $expected = $item->getBits();
+            $paid = $item->getBitsPayed();
         }
 
-        if($expected && !$paid) {
-        	$paid = 'No payment made';
+        if ($expected && !$paid) {
+            $paid = 'No payment made';
         }
 
-        if($expected || $paid) {
-        	return array('expected'=>$expected, 'paid'=>$paid);
+        if ($expected || $paid) {
+            return ['expected'=>$expected, 'paid'=>$paid];
         }
 
         return null;
     }
 
-    public function getOrderTxId() {
+    public function getOrderTxId()
+    {
         $order_id = $this->getRequest()->getParam('order_id');
         $collection = $this->transactionCollection->addFieldToFilter('id_order', $order_id);
 
         $txId = '';
 
         foreach ($collection as $item) {
-        	$txId = $item->getTxId();
+            $txId = $item->getTxId();
         }
         
         return $txId;
     }
     
-    public function getOrderAddr() {
+    public function getOrderAddr()
+    {
         $order_id = $this->getRequest()->getParam('order_id');
         $collection = $this->transactionCollection->addFieldToFilter('id_order', $order_id);
         
         $addr = '';
 
         foreach ($collection as $item) {
-        	$addr = $item->getAddr();
+            $addr = $item->getAddr();
         }
         
         return $addr;

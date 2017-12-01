@@ -66,7 +66,5 @@ class PlaceOrder extends Action
         $this->getResponse()->setBody(json_encode([
             'status' => true
         ]));
-
-        return;
     }
 }

@@ -43,7 +43,7 @@ class Payment extends AbstractMethod
 
     protected $urlBuilder;
     protected $storeManager;
-    protected $_invoiceService;    
+    protected $_invoiceService;
     protected $backendSession;
 
     public function __construct(
@@ -109,8 +109,8 @@ class Payment extends AbstractMethod
             $invoiceSender = $objectManager->create('Magento\Sales\Model\Order\Email\Sender\InvoiceSender');
             $invoiceSender->send($invoice);
             $order->setIsCustomerNotified(true)->save();
-        } catch(\Exception $e) {
-            echo $e;
+        } catch (\Exception $e) {
+            return false;
         }
 
         return true;
@@ -153,7 +153,8 @@ class Payment extends AbstractMethod
      * @param Str $comment
      * @param Int $orderId
      */
-    public function addCommentToOrder($comment, $orderId = -1) {
+    public function addCommentToOrder($comment, $orderId = -1)
+    {
 
         if ($orderId == -1) {
             $orderId = $this->backendSession->getData('orderId', false);

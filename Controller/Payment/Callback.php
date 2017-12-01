@@ -83,7 +83,6 @@ class Callback extends Action
             }
 
             if ($status == 2) {
-
                 if ($value > $item->getBits()) {
                     $newInvoiceCreated = $this->blockonomicsPayment->createInvoice($orderId);
                     $this->blockonomicsPayment->updateOrderStateAndStatus($orderId, 'processing');

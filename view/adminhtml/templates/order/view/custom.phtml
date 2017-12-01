@@ -1,17 +1,17 @@
 <?php
 $paymentInfo = $block->getOrderPaymentAmounts();
 
-if($paymentInfo['expected']) {
-	$expected = $paymentInfo['expected']/1.0e8;
-	
-	if(is_numeric($paymentInfo['paid'])) {
-		$paid = $paymentInfo['paid']/1.0e8 . ' BTC';
-	} else {
-		$paid = $paymentInfo['paid'];
-	}
+if ($paymentInfo['expected']) {
+    $expected = $paymentInfo['expected']/1.0e8;
+    
+    if (is_numeric($paymentInfo['paid'])) {
+        $paid = $paymentInfo['paid']/1.0e8 . ' BTC';
+    } else {
+        $paid = $paymentInfo['paid'];
+    }
 } else {
-	$expected = 'Info not available';
-	$paid = 'Info not available';
+    $expected = 'Info not available';
+    $paid = 'Info not available';
 }
 
 $txid = $block->getOrderTxId();
@@ -20,7 +20,7 @@ $addr = $block->getOrderAddr();
 ?>
 
 
-<?php if ($txid && $addr): ?>
+<?php if ($txid && $addr) : ?>
 
 <div class="top-margin"><b>Expected amount: </b><?php echo $expected?> BTC</div>
 <div class="top-margin"><b>Paid amount: </b> <?php echo $paid?></div>

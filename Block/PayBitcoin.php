@@ -103,7 +103,7 @@ class PayBitcoin extends Template
             $separator = $this::DEBUG ? '?reset=1&' : '?';
             $contents = file_get_contents($this::NEW_ADDRESS_URL.$separator."match_callback=$secret", false, $context);
             $new_address = json_decode($contents);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             return '';
         }
 
@@ -173,14 +173,16 @@ class PayBitcoin extends Template
     /**
      * @return Order timestamp
      */
-    public function getOrderTimestamp() {
+    public function getOrderTimestamp()
+    {
         return $this->backendSession->getData('orderTimestamp', false);
     }
 
     /**
      * @return Secret from core_config
      */
-    public function getSecret() {
+    public function getSecret()
+    {
         return $this->scopeConfig->getValue('payment/blockonomics_merchant/callback_secret', ScopeInterface::SCOPE_STORE);
     }
 
@@ -188,7 +190,8 @@ class PayBitcoin extends Template
      * Set secret from core_config to session data
      * This way we can easily authenticate the timeout
      */
-    public function setSectretToSession() {
+    public function setSectretToSession()
+    {
         $secret = $this->getSecret();
         $this->backendSession->setData('sessionSecret', $secret);
     }

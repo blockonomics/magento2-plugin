@@ -2,8 +2,8 @@
 $txid = $block->getOrderTxId();
 $addr = $block->getOrderAddr();
 
-if($txid && $addr) {
-	echo "<div><b>Bitcoin Transaction ID: </b> <a href=\"https://www.blockonomics.co/api/tx?txid=$txid&addr=$addr\" target=\"_blank\">$txid</a></div>";
+if ($txid && $addr) {
+    echo "<div><b>Bitcoin Transaction ID: </b> <a href=\"https://www.blockonomics.co/api/tx?txid=$txid&addr=$addr\" target=\"_blank\">$txid</a></div>";
 }
 
 ?>
