@@ -29,3 +29,15 @@ $addr = $block->getOrderAddr();
 
 
 <?php endif ?>
+
+<?php if ($paid < $expected) : ?>
+
+<div class="top-margin error"><b>ERROR: </b> Paid BTC amount less than expected</div>
+
+<?php endif ?>
+
+<?php if ($paid > $expected) : ?>
+
+<div class="top-margin"><b>Warning: </b> Paid BTC amount more than expected</div>
+
+<?php endif ?>
