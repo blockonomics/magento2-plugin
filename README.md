@@ -39,6 +39,8 @@ Coming soon
 
 ## Screenshots ##
 
+### Checkout screen ###
 ![](assets-repo/blockonomics_magento_checkout_screen.png "Checkout screen")
 
+### Blockonomics configuration ###
 ![](assets-repo/blockonomics_magento_admin_setup.png "Blockonomics configuration")
