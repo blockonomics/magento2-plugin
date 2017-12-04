@@ -43,4 +43,7 @@ Coming soon
 ![](assets-repo/blockonomics_magento_checkout_screen.png "Checkout screen")
 
 ### Blockonomics configuration ###
-![](assets-repo/blockonomics_magento_admin_setup.png "Blockonomics configuration")
+![](assets-repo/blockonomics_magento_admin_setup.png "Admin configuration")
+
+### Admin order view ###
+![](assets-repo/blockonomics_magento_order_view.png "Order view")
