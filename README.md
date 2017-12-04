@@ -17,7 +17,7 @@ Accept bitcoin payments on your Magento 2 website with Blockonomics.
 
 Coming soon
 
-### From github ###
+### From github: ###
 
 1. Go to Magento2 root folder
 
