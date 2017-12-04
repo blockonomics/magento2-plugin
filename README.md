@@ -36,3 +36,11 @@ Coming soon
     php bin/magento setup:upgrade
     ```
 4. Enable and configure Blockonomics in Magento Admin under Stores/Configuration/Payment Methods/blockonomics
+
+## Screenshots ##
+
+Checkout screen
+![](assets-repo/blockonomics_magento_checkout_screen.png)
+
+Blockonomics configuration
+![](assets-repo/blockonomics_magento_admin_setup.png)
