@@ -1,7 +1,23 @@
-# magento2-plugin
+# Blockonomics Bitcoin Payments #
 
-Install
-=======
+Accept bitcoin payments on your Magento 2 website with Blockonomics.
+
+## Description ##
+
+- Accept bitcoin payments on your website with ease
+- No security risk, payments go directly into your own bitcoin wallet
+- All major HD wallets like trezor, blockchain.info, mycelium supported
+- No approvals of API key/documentation required
+- Supports all major fiat currencies
+- Complete checkout process happens within your website
+
+## Installation ##
+
+### From store (Preferred): ###
+
+Coming soon
+
+### From github ###
 
 1. Go to Magento2 root folder
 
