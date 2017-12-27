@@ -15,7 +15,7 @@ Accept bitcoin payments on your Magento 2 website with Blockonomics.
 
 ### From store (Preferred): ###
 
-Coming soon
+Go to the [Magento Marketplace Blockonomics page](https://marketplace.magento.com/blockonomics-module-merchant.html), follow the Magento extension installation instructions. Confiugre the extension using the [User Guide](https://marketplace.magento.com/media/catalog/product/blockonomics-module-merchant-0-1-3-ce/user_guides.pdf)
 
 ### From github: ###
 
