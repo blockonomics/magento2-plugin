@@ -19,7 +19,7 @@ class Disable extends \Magento\Config\Block\System\Config\Form\Field
     protected function _getElementHtml(AbstractElement $element)
     {
         $element->setData('readonly', 1);
-        $element->setData('placeholder', 'If URL is empty, refresh Magento cache and then come back to this page');
+        $element->setData('placeholder', 'Please refresh magento cache, and come back to this page');
         return $element->getElementHtml();
     }
 }
