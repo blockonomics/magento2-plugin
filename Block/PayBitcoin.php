@@ -111,6 +111,15 @@ class PayBitcoin extends Template
     }
 
     /**
+     * @return Altcoin enabled status from settings
+     */
+    public function getAltcoinStatus()
+    {
+        $altcoins_enabled = $this->scopeConfig->getValue('payment/blockonomics_merchant/altcoins', ScopeInterface::SCOPE_STORE);
+        return $altcoins_enabled;
+    }
+
+    /**
      * @return Convert currency to fiat currency
      */
     public function getOrderPriceInFiat()

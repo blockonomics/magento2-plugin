@@ -29,6 +29,10 @@
                     <label><![CDATA[CALLBACK URL <br /> (Copy this url and set in <a href="https://www.blockonomics.co/merchants#/page6" target="_blank">Merchants</a>)]]></label>
                     <frontend_model>Blockonomics\Merchant\Block\System\Config\Form\Field\Disable</frontend_model>
                 </field>
+                <field id="altcoins" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="5" translate="label" type="select">
+                    <label>Altcoins enabled via Shapeshift</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
 			</group> 
         </section>
     </system>
