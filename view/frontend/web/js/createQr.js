@@ -8,6 +8,17 @@
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
+var btcAddressDiv = document.getElementById("btc-address");
+var btcAddress = btcAddressDiv.dataset.address;
+
+var btcAmountDiv = document.getElementById("btc-amount");
+var btcAmount = btcAmountDiv.dataset.address;
+
+var timestampDiv = document.getElementById("order-timestamp");
+var orderTimestamp = timestampDiv.dataset.timestamp;
+
+var timeLeftDiv = document.getElementById("time-left-minutes");
+
 define([
   "jquery",
   "Blockonomics_Merchant/js/qrcode.min",
@@ -25,14 +36,6 @@ function($, qrcode, ReconnectingWebSocket, url) {
   	height: 128,
   	correctLevel : QRCode.CorrectLevel.M
   });
-
-  var btcAddressDiv = document.getElementById("btc-address");
-  var btcAddress = btcAddressDiv.dataset.address;
-
-  var timestampDiv = document.getElementById("order-timestamp");
-  var orderTimestamp = timestampDiv.dataset.timestamp;
-
-  var timeLeftSpan = document.getElementById("time-left-span");
 
   // Seconds now from epoch
 	var d = new Date();
@@ -61,7 +64,7 @@ function($, qrcode, ReconnectingWebSocket, url) {
 		var timeLeftPercentage = timeLeft / totalTime * 100;
 		timeLeftElem.style.width = timeLeftPercentage + "%";
 
-		timeLeftSpan.innerHTML = new Date(timeLeft * 1000).toISOString().substr(14, 5);
+		timeLeftDiv.innerHTML = new Date(timeLeft * 1000).toISOString().substr(14, 5);
 
 		if(timeLeft < 0) {
 			redirectToURL('blockonomics/payment/timeout?addr=' + btcAddress);
@@ -74,3 +77,39 @@ function($, qrcode, ReconnectingWebSocket, url) {
 		window.location.href = urlToRedir;
 	}
 });
+
+function pay_altcoins() {
+	document.getElementById("altcoin-waiting").style.display = "block";
+	document.getElementById("paywrapper").style.display = "none";
+	var altcoin_waiting = true;
+	url = "https://shapeshift.io/shifty.html?destination=" + btcAddress + "&amount=" + btcAmount + "&output=BTC";
+	window.open(url, '1418115287605','width=700,height=500,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=0,left=0,top=0');
+}
+
+function disableAltcoin() {
+	document.getElementById("altcoin-waiting").style.display = "none";
+	document.getElementById("paywrapper").style.display = "block";
+}
+
+function toggleCoin(coin) {
+
+	var btcBtn = document.getElementById('btc');
+	var altcoinBtn = document.getElementById('altcoin');
+
+	var btcDiv = document.getElementById('bnomics-btc-pane');
+	var altcoinDiv = document.getElementById('bnomics-altcoin-pane');
+
+	if(coin === 'btc') {
+		btcBtn.classList.add('active');
+		altcoinBtn.classList.remove('active');
+		btcDiv.style.display = "block";
+		altcoinDiv.style.display = "none";
+	}
+
+	if(coin === 'altcoin') {
+		btcBtn.classList.remove('active');
+		altcoinBtn.classList.add('active');
+		btcDiv.style.display = "none";
+		altcoinDiv.style.display = "block";
+	}
+}

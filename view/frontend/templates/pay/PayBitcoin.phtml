@@ -21,6 +21,7 @@ if ($btc_address === '') {
 $satoshi_amount = $block->getOrderPriceInBitcoin()/1.0e8;
 $fiat_amount = $block->getOrderPriceInFiat();
 $currency_code = $block->getCurrencyCode();
+$altcoins_enables = $block->getAltcoinStatus();
 
 $block->setSectretToSession();
 
@@ -38,46 +39,65 @@ $btc_href = "bitcoin:".$btc_address."?amount=".$satoshi_amount;
 }
 </script>
 
-<div id="payment-view">
-    <div id="btc-href" data-href="<?php echo $btc_href ?>"></div>
-    <div id="btc-address" data-address="<?php echo $btc_address ?>"></div>
-    <div id="order-timestamp" data-timestamp="<?php echo $orderTimestamp ?>"></div>
+<div id="btc-href" data-href="<?php echo $btc_href ?>"></div>
+<div id="btc-address" data-address="<?php echo $btc_address ?>"></div>
+<div id="btc-amount" data-address="<?php echo $satoshi_amount ?>"></div>
+<div id="order-timestamp" data-timestamp="<?php echo $orderTimestamp ?>"></div>
 
-    <div style="width: 100%;height: 7px;background: #ddd;margin: 20px 0;overflow: hidden;position: relative;">
-        <div id="time-left" style="width: 100%;height: 7px;background: #666;left: 0;position: absolute;top: 0;"></div>
+<div id="paywrapper" class="payment-wrapper center">
+
+    <?php if ($altcoins_enables) : ?>
+    <div class="altcoin-select">
+        <p>Pay with</p>
+        <button id="btc" onclick="toggleCoin('btc')" type="button" class="active"><b>BTC</b></button><!--
+    ---><button id="altcoin" onclick="toggleCoin('altcoin')" type="button"><b>Altcoins</b></button>
+    </div>
+    <?php endif ?>
+    
+    <div id="bnomics-btc-pane">
+        <h3>Order# <?php echo $block->getOrderId(); ?></h3>
+        <div class="clear"></div>
+        <div class="info center">
+            
+            <p>To pay, please send exact amount of <span>BTC</span> to the <b>given address</b></p>
+            <h2><?php echo $satoshi_amount ?> BTC</h2>
+            <hr class="amount-seperator">
+            <p>&asymp; <?php echo $fiat_amount?> <?php echo $currency_code?></p>
+            <div class="address"><b><?php echo $btc_address ?></b></div>
+        <div class="time-wrapper">
+           <div id="time-left"></div>
+            </div>
+            <p><span id="time-left-minutes"></span> min left to pay your order</p>
+            <p class="powered">Powered by Blockonomics</p>
+        </div>
+        <div class="qr-code-wrapper">
+            <a id="btc-address-a" href="bitcoin:<?php echo $btc_address ?>?amount=<?php echo $satoshi_amount ?>">
+                <div id="qrcode"></div>
+            </a>
+            <p>Click on the QR code open in the wallet</p>
+        </div>
+        <div class="clear"></div>
     </div>
 
-    <div class="left big-text">
-        <span>Order# <?php echo $block->getOrderId(); ?></span>
+    <?php if ($altcoins_enables) : ?>
+    <div id="bnomics-altcoin-pane" class="bnomics-altcoin-pane">
+        <h3>Order# <?php echo $block->getOrderId(); ?></h3>
+        <div class="clear"></div>
+        <h4>To pay, please click on the button below and choose your prefered Altcoin.</h4>
+        <a onclick="pay_altcoins()" href="#"><img style="margin: auto;" src="https://shapeshift.io/images/shifty/small_dark_altcoins.png" class="ss-button"></a>
+        <p class="powered">Powered by Blockonomics</p>
     </div>
-    <div class="right big-text">
-        <span id="time-left-span"></span>
-    </div>
-    <div class="clear"></div>
+    <?php endif ?>
 
-    <h2>To pay, send exact amount of BTC to the given address</h2>
-
-    <div id="address-div">
-        <h4>Bitcoin address</h4>
-        <a id="btc-address-a" href="<?php echo $btc_href ?>">
-            <div id="qrcode"></div>
-        </a>
-        <h4>Click on the qr code above to open in wallet</h4>
-    </div>
-
-    <div id="amount-div">
-        <h4>Amount</h4>
-        <h5><?php echo $satoshi_amount ?> BTC ⇌ <?php echo $fiat_amount?> <?php echo $currency_code?></h5>
-    </div>
-
-    <div style="clear: both;"></div>
-
-    <label id="btc-address-label"><?php echo $btc_address ?></label>
-
-    <div class="padding">
-        <h3>Powered by blockonomics</h3>
+</div>
+<div id="altcoin-waiting" class="row">
+    <div class="col-xs-12 altcoin-waiting">
+        <h3>Waiting for BTC payment from shapeshift altcoin conversion</h3>
+        <div class="bnomics-spinner"></div>
+        <h3><a href="#" onclick="disableAltcoin()">Click here</a> to cancel and go back</h3>
     </div>
 </div>
+<div class="clear"></div>
 
 <?php else : ?>
 

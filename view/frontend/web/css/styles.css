@@ -1,3 +1,27 @@
+@keyframes rotate {
+  0% {
+    transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+  }
+  50% {
+    transform: perspective(120px) rotateX(-180deg) rotateY(0deg);
+  }
+  100% {
+    transform: perspective(120px) rotateX(-180deg) rotateY(-180deg);
+  }
+}
+
+@keyframes background {
+  0% {
+    background-color: #27ae60;
+  }
+  50% {
+    background-color: #9b59b6;
+  }
+  100% {
+    background-color: #c0392b;
+  }
+}
+
 #qrcode img {
 	margin-left: auto;
 	margin-right: auto;
@@ -5,84 +29,193 @@
 	right: 0;
 	position: relative;
 	text-align: center;	
+	width: 160px;
 }
 
-#address-div, #amount-div {
-	float: left;
-	max-width: 250px;
-}
-
-#amount-div {
-	float: left;
-  margin-left: 5em;
-}
-
-#address-div h4, #amount-div h4 {
-	color: #767676;
-	font-size: 1em;
-	font-weight: 800;
-	letter-spacing: 0.05em;
-	text-transform: uppercase;
-  text-align: center;
-}
-
-#amount-div h5 {
-	line-height: 1.1;
-	font-size: 1.6rem;
-	margin-top: 2rem;
-	margin-bottom: 2rem;
-	font-weight: 500;
-}
-
-#btc-address-label {
-	text-align: center;
-	width: 100%;
-	border: 1px solid grey;
-	box-shadow: none;
-	background-color: unset;
-	font-size: 1.2em;
-	padding: 0.5em 2em 0.5em 2em;
-	max-width: 500px;
-	color: #666;
-}
-
-.red {
-	color: #FF0000;
-}
-
-.left {
-	float: left;
-}
-
-.right {
-	float: right;
-}
-
-.big-text {
-	font-size: 1.5em;
+#address-error {
+	padding: 2em;
 }
 
 .clear {
 	clear: both;
 }
 
-.padding {
-	padding: 1em;
+.center {
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;	
 }
 
-@media (max-width: 601px) {
-	#payment-view {
-		text-align: center;
-	}
-	#address-div, #amount-div {
-		float: none;
-		max-width: none;
-		margin-left: 0;
-	}
+.payment-wrapper {
+    max-width: 54em;
+    margin-bottom: 2em;
 }
 
-@media (max-width: 430px) {
-	#btc-address-label {
-		font-size: 1em;
-	}
+.payment-wrapper h3 {
+	float: right;
+}
+
+.info {
+	float: right;
+}
+
+.info h2 {
+	margin-bottom: 0.1em;
+	margin-top: 0;
+}
+
+.info p {
+	margin-top: 0.1em;
+	margin-bottom: 0.7em;
+}
+
+.info .powered {
+	font-size: 0.8em;
+	margin-top: 1.8em;
+}
+
+.info .red {
+	font-size: 0.8em;
+}
+
+.qr-code-wrapper {
+	float: left;
+	margin: 1.2em;
+}
+
+.qr-code-wrapper p {
+	font-size: 0.8em;
+	margin-top: 2em;
+}
+
+.amount-seperator {
+	width: 50px;
+	padding: 0;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.address {
+	border-style: solid;
+	border-width: 1px;
+	padding: 0.3em;
+	max-width: 31em;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.time-wrapper {
+	width: 100%;
+	height: 5px;
+	background: #ddd;
+	margin-bottom: 11px;
+	margin-top: 14px;
+	overflow: hidden;
+	position: relative;
+	max-width: 30.8em;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#time-left {
+	width: 100%;
+	height: 7px;
+	background: #666;
+	left: 0;
+	position: absolute;
+	top: 0;
+}
+
+#altcoin-waiting {
+	display: none;
+}
+
+.altcoin-waiting {
+  text-align: center;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.altcoin-waiting h4 {
+  margin-top: 1em;
+}
+
+.bnomics-spinner {
+  margin: auto;
+  width: 60px;
+  height: 60px;
+  animation: rotate 1.4s infinite ease-in-out, background 1.4s infinite ease-in-out alternate;
+}
+
+.altcoin {
+	width: 100%;
+	margin: inherit;
+}
+
+.altcoin-select p {
+	margin-right: 0.5em;
+}
+
+.altcoin-select p, .altcoin-select button {
+	display: inline-block;
+}
+
+.altcoin-select .active {
+	color: white;
+	background-color: #b9b9b9;
+}
+
+.altcoin-select button:hover {
+	background-color: #939393;
+	color: white;
+}
+
+.altcoin-select button {
+	padding-bottom: 0.2em;
+	padding-top: 0.2em;
+	border: solid;
+	border-width: 1px;
+	border-color: #979797;
+	color: #a2a2a2;
+	background-color: #f4f4f4;
+	font-size: 1.2em;
+	padding-left: 1em;
+	padding-right: 1em;
+}
+
+.altcoin-select button {
+	border-top-left-radius: 6px;
+	border-bottom-left-radius: 6px;
+}
+
+.altcoin-select button+button {
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+	border-top-right-radius: 6px;
+	border-bottom-right-radius: 6px;
+}
+
+.bnomics-altcoin-pane {
+	display: none;
+}
+
+.bnomics-altcoin-pane h4 {
+	margin-bottom: 1.5em;
+}
+
+.bnomics-altcoin-pane .powered {
+	font-size: 0.8em;
+	margin-top: 1em;
+}
+
+@media (max-width: 990px) {
+  .info, .qr-code-wrapper, .payment-wrapper h3 {
+    float: none;
+  }
+  .qr-code-wrapper .powered {
+    display: block;
+  }
+  .info .powered {
+    display: none;
+  }
 }
