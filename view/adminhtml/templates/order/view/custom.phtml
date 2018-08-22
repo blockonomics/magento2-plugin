@@ -2,6 +2,10 @@
 $paymentInfo = $block->getOrderPaymentAmounts();
 
 if ($paymentInfo['expected']) {
+
+    $satoshi_expected = intval($paymentInfo['expected']);
+    $satoshi_paid = intval($paymentInfo['paid']);
+
     $expected = $paymentInfo['expected']/1.0e8;
     
     if (is_numeric($paymentInfo['paid'])) {
@@ -20,7 +24,7 @@ $addr = $block->getOrderAddr();
 ?>
 
 
-<?php if ($txid && $addr) : ?>
+<?php if ($addr) : ?>
 
 <div class="top-margin"><b>Expected amount: </b><?php echo $expected?> BTC</div>
 <div class="top-margin"><b>Paid amount: </b> <?php echo $paid?></div>
@@ -30,13 +34,13 @@ $addr = $block->getOrderAddr();
 
 <?php endif ?>
 
-<?php if ($paid < $expected) : ?>
+<?php if ($txid && $satoshi_paid < $satoshi_expected) : ?>
 
 <div class="top-margin error"><b>ERROR: </b> Paid BTC amount less than expected</div>
 
 <?php endif ?>
 
-<?php if ($paid > $expected) : ?>
+<?php if ($txid && $satoshi_paid > $satoshi_expected) : ?>
 
 <div class="top-margin"><b>Warning: </b> Paid BTC amount more than expected</div>
 
