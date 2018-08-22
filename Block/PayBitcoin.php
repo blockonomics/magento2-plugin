@@ -153,7 +153,19 @@ class PayBitcoin extends Template
         $order = $this->getOrderById($orderId);
         $order_total_price = $order->getGrandTotal();
 
-        return intval(1.0e8*$order_total_price/$price->price);
+        $adjustment = intval($this->getPremiumAdjustment());
+        $adjusted_price = $price->price * ((100 + $adjustment) / 100);
+
+        return intval(1.0e8*$order_total_price/$adjusted_price);
+    }
+
+    /**
+     * @return Premium adjustment from settings
+     */
+    public function getPremiumAdjustment()
+    {
+        $premium = $this->scopeConfig->getValue('payment/blockonomics_merchant/premium', ScopeInterface::SCOPE_STORE);
+        return $premium;
     }
 
     /**
