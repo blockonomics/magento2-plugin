@@ -33,6 +33,11 @@
                     <label>Altcoins enabled via Shapeshift</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
+                <field id="premium" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="6" translate="label" type="text">
+                    <label><![CDATA[Premium adjustment <br /> (Allowed values between -30% and 30%)]]></label>
+                    <backend_model>Blockonomics\Merchant\Config\Model\Config\Backend\Premium\Premium</backend_model>
+                    <validate>validate-number</validate>
+                </field>
 			</group> 
         </section>
     </system>
