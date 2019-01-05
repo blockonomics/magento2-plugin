@@ -14,14 +14,14 @@
     <system>
         <section id="payment">
            <group id="blockonomics_merchant" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
-				<label>Bitcoin - Blockonomics</label>
-				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="1" translate="label" type="select">
-					<label>Enabled</label>
-					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-				</field>
-				<field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="2" translate="label" type="text">
-					<label>Title</label>
-				</field>
+                <label>Bitcoin - Blockonomics</label>
+                <field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="1" translate="label" type="select">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="2" translate="label" type="text">
+                    <label>Title</label>
+                </field>
                 <field id="app_key" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label><![CDATA[BLOCKONOMICS API KEY <br /> (Generate from <a href="https://www.blockonomics.co/blockonomics#/settings" target="_blank">Wallet Watcher</a> > Settings)]]></label>
                 </field>
@@ -30,7 +30,7 @@
                     <frontend_model>Blockonomics\Merchant\Block\System\Config\Form\Field\Disable</frontend_model>
                 </field>
                 <field id="altcoins" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="5" translate="label" type="select">
-                    <label>Altcoins enabled via Shapeshift</label>
+                    <label>Altcoins enabled via Flyp.me</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
                 <field id="premium" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="6" translate="label" type="text">
@@ -38,7 +38,7 @@
                     <backend_model>Blockonomics\Merchant\Config\Model\Config\Backend\Premium\Premium</backend_model>
                     <validate>validate-number</validate>
                 </field>
-			</group> 
+            </group> 
         </section>
     </system>
 </config>
