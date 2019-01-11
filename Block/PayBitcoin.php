@@ -216,4 +216,15 @@ class PayBitcoin extends Template
         $secret = $this->getSecret();
         $this->backendSession->setData('sessionSecret', $secret);
     }
+
+    public function setUuid($uuid)
+    {
+        $this->backendSession->setData('uuid', $uuid);
+    }
+
+    public function getUuid()
+    {
+        return $this->backendSession->getData('uuid' , false);
+    }
+
 }

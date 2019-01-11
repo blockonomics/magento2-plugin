@@ -120,7 +120,7 @@
 	max-width:300px;
 }
 
-#alt_status_1, #alt_status_2, #alt_status_3 {
+.altcoin-status {
 	display: none;
 }
 
@@ -168,7 +168,7 @@
 	top: 0;
 }
 
-#altcoin-waiting, .altcoin-status {
+#altcoin-waiting {
 	display: none;
 }
 

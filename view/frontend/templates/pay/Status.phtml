@@ -1,36 +1,7 @@
 <?php
-/**
- * Blockonomics schema installation
- *
- * @category    Blockonomics
- * @package     Blockonomics_Merchant
- * @author      Blockonomics
- * @copyright   Blockonomics (https://blockonomics.com)
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
- */
-
-$btc_address = $block->getOrderBitcoinAddress();
-
-if ($btc_address === '') {
-    $btc_address = $block->getNewAddress();
-    $orderTimestamp = $block->createNewBitcoinTransaction($btc_address);
-} else {
-    $orderTimestamp = $block->getOrderTimestamp();
-}
-
-$satoshi_amount = $block->getOrderPriceInBitcoin()/1.0e8;
-$fiat_amount = $block->getOrderPriceInFiat();
-$currency_code = $block->getCurrencyCode();
-$altcoins_enables = $block->getAltcoinStatus();
-
-$block->setSectretToSession();
-
-$btc_href = "bitcoin:".$btc_address."?amount=".$satoshi_amount;
-
+$uuid = $block->getUuid();
 ?>
-
-<?php if ($btc_address != '') : ?>
-
+<div id="flyp-uuid" data-uuid="<?php echo $uuid; ?>"></div>
 <script type="text/x-magento-init">
 {
     "#qrcode": {
@@ -38,65 +9,6 @@ $btc_href = "bitcoin:".$btc_address."?amount=".$satoshi_amount;
     }
 }
 </script>
-<div id="btc-href" data-href="<?php echo $btc_href ?>"></div>
-<div id="btc-address" data-address="<?php echo $btc_address ?>"></div>
-<div id="btc-amount" data-amount="<?php echo $satoshi_amount ?>"></div>
-<div id="order-timestamp" data-timestamp="<?php echo $orderTimestamp ?>"></div>
-<div id="system-url" data-orderid="<?php echo $block->getOrderId(); ?>"></div>
-
-<div id="paywrapper" class="payment-wrapper center">
-
-    <?php if ($altcoins_enables) : ?>
-    <div class="altcoin-select">
-        <p>Pay with</p>
-        <button id="btc" onclick="toggleCoin('btc')" type="button" class="active bnomics-paywith-btc"><b>BTC</b></button><!--
-    ---><button id="altcoin" onclick="toggleCoin('altcoin')" type="button" class="bnomics-paywith-alt"><b>Altcoins</b></button>
-    </div>
-    <?php endif ?>
-    
-    <div id="bnomics-btc-pane">
-        <h3>Order# <?php echo $block->getOrderId(); ?></h3>
-        <div class="clear"></div>
-        <div class="info center">           
-            <p>To pay, please send exact amount of <span>BTC</span> to the <b>given address</b></p>
-            <h2><?php echo $satoshi_amount ?> BTC</h2>
-            <hr class="amount-seperator">
-            <p>&asymp; <?php echo $fiat_amount?> <?php echo $currency_code?></p>
-            <input id="address" class="address" value="<?php echo $btc_address ?>" type="text" onclick="btc_copy_click()" readonly />
-            <i class="material-icons content-copy" onclick="btc_copy_click()">content_copy</i>
-            <div id="btc-copy-text" class="btc-copy-text copy-text">Copied to clipboard</div>
-        <div class="time-wrapper">
-           <div id="time-left"></div>
-            </div>
-            <p><span id="time-left-minutes"></span> min left to pay your order</p>
-            <p class="powered">Powered by Blockonomics</p>
-        </div>
-        <div class="qr-code-wrapper">
-            <a id="btc-address-a" href="bitcoin:<?php echo $btc_address ?>?amount=<?php echo $satoshi_amount ?>">
-                <div id="qrcode"></div>
-            </a>
-            <p>Click on the QR code to open in wallet</p>
-        </div>
-        <div class="clear"></div>
-    </div>
-
-    <?php if ($altcoins_enables) : ?>
-    <div id="bnomics-altcoin-pane" class="bnomics-altcoin-pane">
-        <h3>Order# <?php echo $block->getOrderId(); ?></h3>
-        <div class="clear"></div>
-        <h4>To pay, please choose your prefered Altcoin and click on the button below.</h4>
-        <br>
-        <select id="altcoin_select" onchange="altcoin_select()">
-            <option value="ETH" id="ethereum">Ethereum</option>
-            <option value="LTC" id="litecoin">Litecoin</option>
-        </select>
-        <br><br>
-        <a onclick="pay_altcoins()" href="#"><button><i id="pay_with_icon" class="cf cf-eth"></i> Pay with <span id="alt_selected">ETH</span></button></a>
-        <p class="powered">Powered by Blockonomics</p>
-    </div>
-    <?php endif ?>
-
-</div>
 <div id="altcoin-waiting" class="row payment-wrapper center">
     <div class="altcoin-waiting">
         <!-- WAITING -->
@@ -206,7 +118,7 @@ $btc_href = "bitcoin:".$btc_address."?amount=".$satoshi_amount;
                     <h2><i class="material-icons bnomics-alt-icon">autorenew</i></h2>
                     <div class="bnomics-order-status-wrapper">
                       <span class="bnomics-order-status-title">
-                        <p>If you don't get refunded in a few hours, contact <a href="mailto:hello@flyp.me">hello@flyp.me</a> with the following uuid:<br><span id="alt-uuid">uuid</span></p>
+                        <p>If you don't get refunded in a few hours, contact <a href="mailto:hello@flyp.me">hello@flyp.me</a> with the following uuid:<br><span id="alt-uuid"></span></p>
                       </span>
                     </div>
                   </div>
@@ -238,15 +150,4 @@ $btc_href = "bitcoin:".$btc_address."?amount=".$satoshi_amount;
             </div>
           </div>
         </div>
-    </div>
 </div>
-<div class="clear"></div>
-
-<?php else : ?>
-
-<div id="address-error">
-    <h3>Could not generate new bitcoin address.</h3>
-    <i>Note to webmaster: Your webhost is blocking outgoing HTTPS connections. Blockonomics requires an outgoing HTTPS (port 443) to generate new address. Check with your webhost to allow this. Also make sure that <a href="https://www.crybit.com/enable-allow_url_fopen/" target="_blank">allow_url_fopen is On</a> on your server. If issue persists, log a ticket on <a href="https://blockonomics.freshdesk.com/support/solutions/articles/33000215104-troubleshooting-unable-to-generate-new-address" target="_blank">http://blockonomics.freshdesk.com/</a></i>
-</div>
-
-<?php endif ?>
