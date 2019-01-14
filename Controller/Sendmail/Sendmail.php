@@ -58,14 +58,13 @@ class Sendmail extends \Magento\Framework\App\Action\Action
     $this->_escaper = $escaper;
     }
     /**
-    * Post user question
+    * Send altcoin email
     *
     * @return void
     * @throws \Exception
     */
     public function execute()
     {
-    // $post = $this->getRequest()->getPost();
     if (!$this->getRequest()->getParam('id')) {
         $response = $this->resultFactory
         ->create(\Magento\Framework\Controller\ResultFactory::TYPE_JSON)
@@ -81,24 +80,18 @@ class Sendmail extends \Magento\Framework\App\Action\Action
             $email = $order->getCustomerEmail();
             $name = $order->getCustomerName();
             $post['link'] = $this->getSystemUrl() . 'blockonomics/payment/status?uuid=' . $post['uuid'];
-            // $post['name'] = "Darren";
-            // $post['email'] = "darrenwestwood86@yahoo.com";
             $this->inlineTranslation->suspend();
             try {
                 $postObject = new \Magento\Framework\DataObject();
-                $postObject->setData($post);
-                // $sender = [
-                // 'name' => $this->_escaper->escapeHtml($post['name']),
-                // 'email' => $this->_escaper->escapeHtml($post['email']),
-                // ]; 
+                $postObject->setData($post); 
                 $error = false;
 
                 $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
                 $transport = $this->_transportBuilder
-                ->setTemplateIdentifier('blockonomics_email_template') // this code we have mentioned in the email_templates.xml
+                ->setTemplateIdentifier('blockonomics_email_template')
                 ->setTemplateOptions(
                 [
-                'area' => \Magento\Framework\App\Area::AREA_FRONTEND, // this is using frontend area to get the template file
+                'area' => \Magento\Framework\App\Area::AREA_FRONTEND,
                 'store' => \Magento\Store\Model\Store::DEFAULT_STORE_ID,
                 ]
                 )
@@ -128,7 +121,6 @@ class Sendmail extends \Magento\Framework\App\Action\Action
         }
 
     }
-
     /**
     * Return email for sender header
     * @return mixed
