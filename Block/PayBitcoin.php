@@ -83,6 +83,34 @@ class PayBitcoin extends Template
     }
 
     /**
+     * @return False if no errors
+     */
+    private function checkForErrors($responseObj) {
+        if(!isset($responseObj->response_code)) {
+            $error = 'Your webhost is blocking outgoing HTTPS connections';
+        } else {
+            switch ($responseObj->response_code) {
+                case 200:
+                    break;
+                case 401:
+                    $error = 'API key is incorrect.';
+                    break;
+                case 500:
+                    $error = $responseObj->message;
+                    break;
+                default:
+                    $error = 'Error while generating new bitcoin address.';
+                    break;
+            }
+        }
+        if(isset($error)) {
+            return $error;
+        }
+        // No errors
+        return null;
+    }
+
+    /**
      * @return New bitcoin address from Blockonomics API
      */
     public function getNewAddress()
@@ -90,24 +118,34 @@ class PayBitcoin extends Template
         $api_key = $this->scopeConfig->getValue('payment/blockonomics_merchant/app_key', ScopeInterface::SCOPE_STORE);
         $secret = $this->scopeConfig->getValue('payment/blockonomics_merchant/callback_secret', ScopeInterface::SCOPE_STORE);
 
-        $options = [
-            'http' => [
-                'header'  => 'Authorization: Bearer '.$api_key,
-                'method'  => 'POST',
-                'content' => ''
-            ]
-        ];
-
-        try {
-            $context = stream_context_create($options);
-            $separator = $this::DEBUG ? '?reset=1&' : '?';
-            $contents = file_get_contents($this::NEW_ADDRESS_URL.$separator."match_callback=$secret", false, $context);
-            $new_address = json_decode($contents);
-        } catch (\Exception $e) {
-            return '';
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://www.blockonomics.co/api/new_address?match_callback=$secret");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        $header = "Authorization: Bearer " . $api_key;
+        $headers = array();
+        $headers[] = $header;
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        $contents = curl_exec($ch);
+        if (curl_errno($ch)) {
+            echo 'Error:' . curl_error($ch);
         }
+        $responseObj = json_decode($contents);
+        //Create response object if it does not exist
+        if (!isset($responseObj)) $responseObj = new \stdClass();
+        $responseObj->response_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close ($ch);
+        
+        $error = $this->checkForErrors($responseObj);
 
-        return $new_address->address;
+        if ($error) {
+            $responseObj->address = '';
+            $responseObj->error = $error;
+        } else {
+            $address = $responseObj->address;
+        }
+        
+        return $responseObj;
     }
 
     /**
@@ -144,17 +182,22 @@ class PayBitcoin extends Template
     {
         $currency_code = $this->getCurrencyCode();
 
-        $options = [ 'http' => [ 'method'  => 'GET'] ];
-        $context = stream_context_create($options);
-        $contents = file_get_contents($this::PRICE_URL. "?currency=$currency_code", false, $context);
-        $price = json_decode($contents);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://www.blockonomics.co/api/price?currency=".$currency_code);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $contents = curl_exec($ch);
+        if (curl_errno($ch)) {
+            echo 'Error:' . curl_error($ch);
+        }
+        curl_close ($ch);
 
+        $price = json_decode($contents)->price;
         $orderId = $this->getOrderId();
         $order = $this->getOrderById($orderId);
         $order_total_price = $order->getGrandTotal();
 
         $adjustment = intval($this->getPremiumAdjustment());
-        $adjusted_price = $price->price * ((100 + $adjustment) / 100);
+        $adjusted_price = $price * ((100 + $adjustment) / 100);
 
         return intval(1.0e8*$order_total_price/$adjusted_price);
     }
