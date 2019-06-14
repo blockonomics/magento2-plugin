@@ -23,10 +23,10 @@
 					<label>Title</label>
 				</field>
                 <field id="app_key" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="0">
-                    <label><![CDATA[BLOCKONOMICS API KEY <br /> (Generate from <a href="https://www.blockonomics.co/blockonomics#/settings" target="_blank">Wallet Watcher</a> > Settings)]]></label>
+                    <label><![CDATA[BLOCKONOMICS API KEY]]></label>
                 </field>
                 <field id="callback_url" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="0">
-                    <label><![CDATA[CALLBACK URL <br /> (Copy this url and set in <a href="https://www.blockonomics.co/merchants#/page6" target="_blank">Merchants</a>)]]></label>
+                    <label><![CDATA[CALLBACK URL <br /> (Copy this url and set in <a href="https://www.blockonomics.co/merchants" target="_blank">Merchants</a>)]]></label>
                     <frontend_model>Blockonomics\Merchant\Block\System\Config\Form\Field\Disable</frontend_model>
                 </field>
                 <field id="altcoins" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="5" translate="label" type="select">
