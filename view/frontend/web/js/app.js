@@ -118,7 +118,7 @@ function pay_altcoins() {
 					if (btcAmount <= alt_minimum || btcAmount >= alt_maximum) {
 						//Order amount too low for altcoin payment
 						update_altcoin_status('low_high');
-						clearInterval(interval_check);
+						stop_interval();
 					} else {
 						//Display altcoin order info
 						document.getElementById("alt-address").value = values[1]['deposit_address'];
@@ -147,16 +147,20 @@ function pay_altcoins() {
 							altMinutesLeft.innerHTML = result;
 
 							if (altCurrentTime <= 0) {
-								document.getElementById("alt-time-wrapper").style.display = "none";
-								document.getElementById("alt-time-left-minutes").style.display = "none";
+								var time_wrapper = document.getElementById("alt-time-wrapper");
+								if(time_wrapper !== null){
+									time_wrapper.style.display = "none";
+								}
+								var time_left = document.getElementById("alt-time-wrapper");
+								if(time_left !== null){
+									time_left.style.display = "none";
+								}
 							}
 						}, 1000);
 						//Update altcoin status to waiting
 						update_altcoin_status('waiting');
 						//Start checking the order status
-						interval_check = setInterval(function(response) {
-							checkOrder(values[1]['order']['uuid']);
-						}, 10000);
+						start_check_order();
 					}
 					resolve(values);
 				})
@@ -185,7 +189,7 @@ function pay_altcoins() {
 				if (this.readyState == 4 && this.status == 200) {
 					var response = JSON.parse(this.responseText);
 					var uuid = response['order']['uuid'];
-					refund_uuid = uuid;
+					flyp_uuid = uuid;
 					document.getElementById("alt-uuid").innerHTML = uuid;
 					if (uuid) {
 						//Accept the altcoin order using the uuid
@@ -215,9 +219,10 @@ function pay_altcoins() {
 //Send altcoin refund email 
 function send_refund_email() {
 	//Send the Email
+	var systemUrlDiv = document.getElementById("system-url");
 	var orderId = systemUrlDiv.dataset.orderid;
 	send_email = false;
-	var params = "id="+orderId+"&uuid="+refund_uuid;
+	var params = "id="+orderId+"&uuid="+flyp_uuid;
 
 	require([
 	    "jquery"
@@ -241,13 +246,41 @@ function send_refund_email() {
     });
 }
 
+function get_uuid() {
+    return flyp_uuid;
+}
+
+function wait_for_refund() {
+    //Make sure only one interval is running
+    stop_interval();
+    uuid = get_uuid();
+    check_interval = setInterval(function(response) {
+        info_order(uuid);
+    }, 30000);
+}
+
+//Start checking the altcoin payment status every 10 sec
+function start_check_order() {
+    //Make sure only one interval is running
+    stop_interval();
+    uuid = get_uuid();
+	check_interval = setInterval(function(response) {
+	  check_order(uuid);
+	}, 10000);
+}
+
+//Stop checking the altcoin payment status every 10 sec
+function stop_interval() {
+    clearInterval(check_interval);
+}
+
 //Process altcoin response
 function process_alt_response(data) {
     switch (data.payment_status) {
         case "PAYMENT_RECEIVED":
         case "PAYMENT_CONFIRMED":
             update_altcoin_status('received');
-            clearInterval(interval_check);
+            stop_interval();
             break;
         case "OVERPAY_RECEIVED":
         case "UNDERPAY_RECEIVED":
@@ -257,7 +290,7 @@ function process_alt_response(data) {
                 if ('txid'in data) {
                     //Refund has been sent
                     update_altcoin_status('refunded-txid');
-                    clearInterval(interval_check);
+                    stop_interval();
 	          		document.getElementById("alt-refund-txid").innerHTML = response['txid'];
 	          		document.getElementById("alt-refund-url").innerHTML = response['txurl'];
                     break;
@@ -271,7 +304,7 @@ function process_alt_response(data) {
             }
             //Refund address has not been added
             update_altcoin_status('add_refund');
-            clearInterval(interval_check);
+            stop_interval();
             //Send email if not sent
             if (send_email) {
                 send_refund_email();
@@ -286,19 +319,19 @@ function process_alt_response(data) {
                     break;
                 case "EXPIRED":
                     update_altcoin_status('expired');
-                    clearInterval(interval_check);
+                    stop_interval();
                     break;
             }
     }
 }
 
-var refund_uuid;
+var flyp_uuid;
 //Add a refund address to altcoin order
 function add_refund() {
 	var refund_address = document.getElementById("bnomics-refund-input").value;
 
 	var flypObj = new Object();
-    flypObj.uuid = refund_uuid;
+    flypObj.uuid = flyp_uuid;
     flypObj.address = refund_address;
     var flypObjString= JSON.stringify(flypObj);
     var refund = new XMLHttpRequest();
@@ -306,9 +339,7 @@ function add_refund() {
 		if (this.readyState == 4 && this.status == 200) {
 			address_present = true
 			update_altcoin_status('refunded');
-			interval_check = setInterval(function(response) {
-			  checkOrder(refund_uuid);
-			}, 10000);
+			info_order(flyp_uuid);
 		}
 	};
 	refund.open("POST", "https://flyp.me/api/v1/order/addrefund", true);
@@ -324,7 +355,7 @@ function disableAltcoin() {
 	document.getElementById("alt-address").value = "";
 	altcoin_waiting = false;
 	clearInterval(interval);
-	clearInterval(interval_check);
+	stop_interval();
 }
 
 function toggleCoin(coin) {
@@ -350,10 +381,10 @@ function toggleCoin(coin) {
 	}
 }
 var interval;
-var interval_check;
+var check_interval;
 var send_email = false;
 //Check the altcoin payment status
-function checkOrder(uuid){
+function check_order(uuid){
 	var flypObj = new Object();
     flypObj.uuid = uuid;
     var systemUrlDiv = document.getElementById("system-url");
@@ -372,11 +403,10 @@ function checkOrder(uuid){
 
 var address_present = false;
 //Check the full altcoin payment info
-function infoOrder(uuid){
+function info_order(uuid){
 	//Fetch the altcoin info using uuid
 	var flypObj = new Object();
     flypObj.uuid = uuid;
-    refund_uuid = uuid;
     document.getElementById("alt-uuid").innerHTML = uuid;
     var flypObjUUID = JSON.stringify(flypObj);
 	var check = new XMLHttpRequest();
@@ -446,10 +476,7 @@ function altcoin_select() {
 document.addEventListener('DOMContentLoaded', function() {
 	if(document.getElementById('flyp-uuid') !== null){
 		var flypDiv = document.getElementById("flyp-uuid");
-		var flypUuid = flypDiv.dataset.uuid;
-		infoOrder(flypUuid);
-		interval_check = setInterval(function(response) {
-		  checkOrder(flypUuid);
-		}, 10000);
+		flyp_uuid = flypDiv.dataset.uuid;
+		info_order(flyp_uuid);
 	}
 });
