@@ -32,8 +32,10 @@ $btc_href = "bitcoin:".$btc_address."?amount=".$satoshi_amount;
 <?php if ($btc_address != '') : ?>
 
 <script type="text/x-magento-init">
-"*": {
-    "Blockonomics_Merchant/js/app": {}
+{
+    "*": {
+        "Blockonomics_Merchant/js/app": {}
+    }
 }
 </script>
 <div id="btc-href" data-href="<?php echo $btc_href ?>"></div>
