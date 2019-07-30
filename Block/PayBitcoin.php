@@ -128,7 +128,7 @@ class PayBitcoin extends Template
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         $contents = curl_exec($ch);
         if (curl_errno($ch)) {
-            echo 'Error:' . curl_error($ch);
+            throw new Exception(curl_error($ch));
         }
         $responseObj = json_decode($contents);
         //Create response object if it does not exist
@@ -187,7 +187,7 @@ class PayBitcoin extends Template
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $contents = curl_exec($ch);
         if (curl_errno($ch)) {
-            echo 'Error:' . curl_error($ch);
+            throw new Exception(curl_error($ch));
         }
         curl_close ($ch);
 
