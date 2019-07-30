@@ -1,0 +1,13 @@
+<!--@subject ETH Refund @-->
+<!--@vars {
+"var data.email":"Sender Email",
+"var data.name":"Sender Name"
+} @-->
+{{template config_path="design/email/header_template"}} 
+<table><tr class="email-intro"><td>
+ <p class="greeting">{{trans "Your order couldn\'t be processed as you paid less than expected. The amount you paid will be refunded."}}</p>
+ <p class="greeting">{{trans "Visit the link below to enter your refund address."}}</p>
+ <p class="greeting"><a href='{{trans "%refund_link" refund_link=$data.link}}' target="_blank">{{trans "%refund_link" refund_link=$data.link}}</a></p>
+ </td></tr>
+</table>
+{{template config_path="design/email/footer_template"}}

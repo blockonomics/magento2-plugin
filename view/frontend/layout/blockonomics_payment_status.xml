@@ -12,16 +12,13 @@
 -->
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
 	  <head>
-      <css src="Blockonomics_Merchant::css/icons/icons.css" />
-      <css src="Blockonomics_Merchant::css/cryptofont/cryptofont.min.css" />
-      <css src="Blockonomics_Merchant::css/styles.css" />
+        <css src="Blockonomics_Merchant::css/styles.css" />
     </head>
     <body>
         <referenceContainer name="content">
             <block class="Blockonomics\Merchant\Block\PayBitcoin"
-                   name="PayBitcoin.view"
-                   template="Blockonomics_Merchant::pay/PayBitcoin.phtml"
-                   cacheable="false" />
+                   name="Status.view"
+                   template="Blockonomics_Merchant::pay/Status.phtml"/>
         </referenceContainer>
     </body>
 </page>
