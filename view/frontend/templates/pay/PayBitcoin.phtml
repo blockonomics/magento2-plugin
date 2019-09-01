@@ -13,7 +13,7 @@ $btc_address = $block->getOrderBitcoinAddress();
 
 if ($btc_address === '') {
     $responseObj = $block->getNewAddress();
-    $orderTimestamp = $block->createNewBitcoinTransaction($btc_address);
+    $orderTimestamp = $block->createNewBitcoinTransaction($responseObj->address);
 } else {
     $orderTimestamp = $block->getOrderTimestamp();
 }
