@@ -13,13 +13,12 @@ $btc_address = $block->getOrderBitcoinAddress();
 
 if ($btc_address === '') {
     $responseObj = $block->getNewAddress();
-    $orderTimestamp = $block->createNewBitcoinTransaction($responseObj->address);
+    if ($responseObj->address != '') {
+        $btc_address = $responseObj->address;
+    }
+    $orderTimestamp = $block->createNewBitcoinTransaction($btc_address);
 } else {
     $orderTimestamp = $block->getOrderTimestamp();
-}
-
-if ($responseObj->address != '') {
-    $btc_address = $responseObj->address;
 }
 
 $satoshi_amount = $block->getOrderPriceInBitcoin()/1.0e8;
